@@ -2,10 +2,7 @@ package com.tilldawn.controller;
 
 import com.badlogic.gdx.graphics.Color;
 import com.tilldawn.Main;
-import com.tilldawn.model.App;
-import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Result;
-import com.tilldawn.model.User;
+import com.tilldawn.model.*;
 import com.tilldawn.view.AppMenuView;
 import com.tilldawn.view.GameView;
 import com.tilldawn.view.MainMenuView;
@@ -29,7 +26,9 @@ public class RegisterMenuController {
             String username = view.getUsername().getText();
             String password = view.getPassword().getText();
             String confirmedPassword = view.getConfirmedPassword().getText();
-            Result result = register(username, password, confirmedPassword);
+            String question = view.getQuestions().getSelected();
+            String answer = view.getAnswer().getText();
+            Result result = register(username, password, confirmedPassword, question, answer);
             if (result.getError())
                 view.setResult(result);
             else {
@@ -39,28 +38,35 @@ public class RegisterMenuController {
         }
     }
 
-    private Result register(String username, String password, String confirmedPassword) {
+    private Result register(String username,
+                            String password,
+                            String confirmedPassword,
+                            String questionString,
+                            String answer) {
         if (App.getUser(username) != null)
-            return new Result("Username already exists", Color.RED);
+            return new Result(Output.UsernameExists.getString(), Color.RED);
         if (!password.equals(confirmedPassword))
-            return new Result("Reentered password doesn't match", Color.RED);
+            return new Result(Output.ReenterPasswordError.getString(), Color.RED);
         Result passwordResult = isPasswordWeak(password);
         if (passwordResult.getError())
             return passwordResult;
+        Output question = Output.getPhrase(questionString);
+        assert question != null;
         User user = new User(username, password);
+        user.setSecurityQuestion(new SecurityQuestion(question, answer));
         App.addUser(user);
         return new Result("Successful registration", Color.GREEN, false);
     }
 
     private Result isPasswordWeak(String password) {
         if (password.length() < 8)
-            return new Result("Password must be at least 8 characters", Color.RED);
+            return new Result(Output.PasswordLength.getString(), Color.RED);
         if (!password.matches(".*[@_()*&%$#].*"))
-            return new Result("Password must contain special characters", Color.RED);
+            return new Result(Output.PasswordSpecialCharacter.getString(), Color.RED);
         if (!password.matches(".*[0-9].*"))
-            return new Result("Password must contain numbers", Color.RED);
+            return new Result(Output.PasswordNumber.getString(), Color.RED);
         if (!password.matches(".*[A-Z].*"))
-            return new Result("Password must contain capital letters", Color.RED);
+            return new Result(Output.PasswordCapitalLetter.getString(), Color.RED);
         return new Result("Strong password", Color.GREEN, false);
     }
 }

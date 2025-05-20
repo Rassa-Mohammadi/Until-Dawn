@@ -2,6 +2,7 @@ package com.tilldawn.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -9,10 +10,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.LoginMenuController;
 import com.tilldawn.model.GameAssetManager;
+import com.tilldawn.model.Output;
 import com.tilldawn.model.Result;
 
 public class LoginMenuView implements Screen {
     private LoginMenuController controller;
+    private Texture appBackgroundTexture;
     public Table table;
     private Stage stage;
     private Label menuTitle;
@@ -25,13 +28,16 @@ public class LoginMenuView implements Screen {
     public LoginMenuView(LoginMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.menuTitle = new Label("Login Menu", skin);
+        this.menuTitle = new Label(Output.LoginMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
+        appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         loginResult = new Result();
-        usernameField = new TextField("Enter username", skin);
-        passwordField = new TextField("Enter password", skin);
-        submitButton = new TextButton("Submit", skin);
-        this.backButton = new TextButton("Back", skin);
+        usernameField = new TextField("", skin);
+        usernameField.setMessageText(Output.EnterUsername.getString());
+        passwordField = new TextField("", skin);
+        passwordField.setMessageText(Output.EnterPassword.getString());
+        submitButton = new TextButton(Output.Submit.getString(), skin);
+        this.backButton = new TextButton(Output.Back.getString(), skin);
 
         this.controller.setView(this);
     }
@@ -43,7 +49,10 @@ public class LoginMenuView implements Screen {
 
         table.setFillParent(true);
         table.center();
-        table.row().pad(0, 0, 140, 0);
+
+        GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
+
+        table.row().pad(0, 0, 100, 0);
         table.add(menuTitle);
         table.row().pad(10, 0, 10, 0);
         table.add(loginResult.getMessage());
@@ -93,5 +102,29 @@ public class LoginMenuView implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public Result getLoginResult() {
+        return loginResult;
+    }
+
+    public TextField getUsernameField() {
+        return usernameField;
+    }
+
+    public TextField getPasswordField() {
+        return passwordField;
+    }
+
+    public TextButton getSubmitButton() {
+        return submitButton;
+    }
+
+    public TextButton getBackButton() {
+        return backButton;
+    }
+
+    public void setResult(Result result) {
+        loginResult.set(result);
     }
 }

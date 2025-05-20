@@ -3,7 +3,16 @@ package com.tilldawn.model;
 import java.util.ArrayList;
 
 public class App {
+    private static boolean isFrench = false;
     private static ArrayList<User> users = new ArrayList<>();
+    private static User loggedInUser = null;
+    private static ArrayList<Output> questions;
+
+    static {
+        questions = new ArrayList<>();
+        questions.add(Output.FatherName);
+        questions.add(Output.Turk);
+    }
 
     public static User getUser(String username) {
         for (User user : users) {
@@ -15,5 +24,21 @@ public class App {
 
     public static void addUser(User User) {
         users.add(User);
+    }
+
+    public static void changeLanguage() {
+        isFrench = !isFrench;
+    }
+
+    public static boolean isFrench() {
+        return isFrench;
+    }
+
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public static void setLoggedInUser(User loggedInUser) {
+        App.loggedInUser = loggedInUser;
     }
 }

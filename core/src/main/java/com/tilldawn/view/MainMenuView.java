@@ -2,6 +2,7 @@ package com.tilldawn.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -11,12 +12,15 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.MainMenuController;
+import com.tilldawn.model.GameAssetManager;
+import com.tilldawn.model.Output;
 
 public class MainMenuView implements Screen {
     private MainMenuController controller;
     public Table table;
     private Stage stage;
     private Label menuTitle;
+    private Texture appBackgroundTexture;
     private TextButton settingButton;
     private TextButton profileButton;
     private TextButton pregameButton;
@@ -26,12 +30,13 @@ public class MainMenuView implements Screen {
     public MainMenuView(MainMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.menuTitle = new Label("Main Menu", skin);
+        this.menuTitle = new Label(Output.MainMenu.getString(), skin);
         this.menuTitle.setFontScale(2.5f);
-        this.settingButton = new TextButton("Settings", skin);
-        this.profileButton = new TextButton("Profile", skin);
-        this.scoreboardButton = new TextButton("Scoreboard", skin);
-        this.backButton = new TextButton("Back", skin);
+        appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
+        this.settingButton = new TextButton(Output.Settings.getString(), skin);
+        this.profileButton = new TextButton(Output.Profile.getString(), skin);
+        this.scoreboardButton = new TextButton(Output.Scoreboard.getString(), skin);
+        this.backButton = new TextButton(Output.Back.getString(), skin);
 
         this.controller.setView(this);
     }
@@ -43,6 +48,9 @@ public class MainMenuView implements Screen {
 
         table.setFillParent(true);
         table.center();
+
+        GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
+
         table.row().pad(0, 0, 80, 0);
         table.add(menuTitle);
         table.row().pad(10, 0, 10, 0);

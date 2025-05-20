@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.AppMenuController;
 import com.tilldawn.model.GameAssetManager;
+import com.tilldawn.model.Output;
 
 public class AppMenuView implements Screen {
     public Table table;
@@ -22,6 +23,7 @@ public class AppMenuView implements Screen {
     private final Image appBackgroundImage;
     private final TextButton registerButton;
     private final TextButton loginButton;
+    private final TextButton changeLanguageButton;
     private final TextButton exitButton;
     private final AppMenuController controller;
 
@@ -31,9 +33,10 @@ public class AppMenuView implements Screen {
         this.gameTitleImage = new Image(gameTitleTexture);
         this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.appBackgroundImage = new Image(appBackgroundTexture);
-        this.registerButton = new TextButton("Register", skin);
-        this.loginButton = new TextButton("Login", skin);
-        this.exitButton = new TextButton("Exit", skin);
+        this.registerButton = new TextButton(Output.Register.getString(), skin);
+        this.loginButton = new TextButton(Output.Login.getString(), skin);
+        this.changeLanguageButton = new TextButton(Output.ChangeLanguage.getString(), skin);
+        this.exitButton = new TextButton(Output.Exit.getString(), skin);
         this.table = new Table();
 
         controller.setView(this);
@@ -53,11 +56,13 @@ public class AppMenuView implements Screen {
         table.add(gameTitleImage).width(400).height(200).pad(10);
 
         table.row().pad(10, 0, 10, 0);
-        table.add(registerButton).width(400);
+        table.add(registerButton).width(GameAssetManager.fieldLength);
         table.row().pad(10, 0, 10, 0);
-        table.add(loginButton).width(400);
+        table.add(loginButton).width(GameAssetManager.fieldLength);
         table.row().pad(10, 0, 10, 0);
-        table.add(exitButton).width(400);
+        table.add(changeLanguageButton).width(500);
+        table.row().pad(10, 0, 10, 0);
+        table.add(exitButton).width(GameAssetManager.backButtonLength);
 
         stage.addActor(table);
     }
@@ -109,21 +114,7 @@ public class AppMenuView implements Screen {
         return exitButton;
     }
 
-    private void addLeaves() {
-        float imageRatio = appBackgroundImage.getWidth() / appBackgroundImage.getHeight();
-        float fitHeight = stage.getHeight();
-        float fitWidth = fitHeight * imageRatio;
-        // left side leaves
-        appBackgroundImage.setPosition(0, 0);
-        appBackgroundImage.setSize(fitWidth, fitHeight);
-        table.addActor(appBackgroundImage);
-
-        // right side leaves
-        TextureRegion region = new TextureRegion(appBackgroundTexture);
-        region.flip(true, false);
-        Image image = new Image(region);
-        image.setPosition(stage.getWidth() - fitWidth, 0);
-        image.setSize(fitWidth, fitHeight);
-        table.addActor(image);
+    public TextButton getChangeLanguageButton() {
+        return changeLanguageButton;
     }
 }

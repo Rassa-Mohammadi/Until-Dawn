@@ -2,37 +2,59 @@ package com.tilldawn.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.RegisterMenuController;
 import com.tilldawn.model.GameAssetManager;
+import com.tilldawn.model.Output;
 import com.tilldawn.model.Result;
+
+import static com.badlogic.gdx.utils.JsonValue.ValueType.array;
 
 public class RegisterMenuView implements Screen {
     public Table table;
     private RegisterMenuController controller;
     private Stage stage;
     private Label menuTitle;
+    private Texture appBackgroundTexture;
     private Result registerResult;
     private TextField username;
     private TextField password;
     private TextField confirmedPassword;
+    private SelectBox<String> questions;
+    private TextField answer;
     private TextButton submitButton;
     private TextButton backButton;
 
+    {
+        questions = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
+        Array<String> array = new Array<>();
+        array.add(Output.Turk.getString());
+        array.add(Output.FatherName.getString());
+        questions.setItems(array);
+    }
+
     public RegisterMenuView(RegisterMenuController controller, Skin skin) {
         this.controller = controller;
-        this.menuTitle = new Label("Register Menu", skin);
+        this.menuTitle = new Label(Output.RegisterMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
+        appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.registerResult = new Result();
-        this.username = new TextField("Enter username", skin);
-        this.password = new TextField("Enter password", skin);
-        this.confirmedPassword = new TextField("Enter password again", skin);
-        this.submitButton = new TextButton("Submit", skin);
-        this.backButton = new TextButton("Back", skin);
+        this.username = new TextField("", skin);
+        this.username.setMessageText(Output.EnterUsername.getString());
+        this.password = new TextField("", skin);
+        this.password.setMessageText(Output.EnterPassword.getString());
+        this.confirmedPassword = new TextField("", skin);
+        this.confirmedPassword.setMessageText(Output.EnterPasswordAgain.getString());
+        this.answer = new TextField("", skin);
+        this.answer.setMessageText(Output.Answer.getString());
+        this.submitButton = new TextButton(Output.Submit.getString(), skin);
+        this.backButton = new TextButton(Output.Back.getString(), skin);
         this.table = new Table();
         this.controller.setView(this);
     }
@@ -44,7 +66,10 @@ public class RegisterMenuView implements Screen {
 
         table.setFillParent(true);
         table.center();
-        table.row().pad(0, 0, 140, 0);
+
+        GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
+
+        table.row().pad(0, 0, 80, 0);
         table.add(menuTitle);
         table.row().pad(10, 0, 10, 0);
         table.add(registerResult.getMessage());
@@ -54,6 +79,10 @@ public class RegisterMenuView implements Screen {
         table.add(password).width(GameAssetManager.fieldLength);
         table.row().pad(10, 0, 10, 0);
         table.add(confirmedPassword).width(GameAssetManager.fieldLength);
+        table.row().pad(10, 0, 10, 0);
+        table.add(questions).width(GameAssetManager.selectBoxLength);
+        table.row().pad(10, 0, 10, 0);
+        table.add(answer).width(GameAssetManager.fieldLength);
         table.row().pad(10, 0, 10, 0);
         table.add(submitButton).width(GameAssetManager.fieldLength);
         table.row().pad(10, 0, 10, 0);
@@ -120,5 +149,13 @@ public class RegisterMenuView implements Screen {
 
     public void setResult(Result result) {
         registerResult.set(result);
+    }
+
+    public SelectBox<String> getQuestions() {
+        return questions;
+    }
+
+    public TextField getAnswer() {
+        return answer;
     }
 }

@@ -13,6 +13,7 @@ import com.tilldawn.Main;
 public class GameAssetManager {
     public final static int fieldLength = 400;
     public final static int backButtonLength = 200;
+    public final static int selectBoxLength = 600;
     private static GameAssetManager gameAssetManager;
     private final Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
 
