@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.tilldawn.Main;
 import com.tilldawn.model.*;
 import com.tilldawn.view.AppMenuView;
-import com.tilldawn.view.GameView;
-import com.tilldawn.view.MainMenuView;
 import com.tilldawn.view.RegisterMenuView;
 
 public class RegisterMenuController {
@@ -29,7 +27,7 @@ public class RegisterMenuController {
             String question = view.getQuestions().getSelected();
             String answer = view.getAnswer().getText();
             Result result = register(username, password, confirmedPassword, question, answer);
-            if (result.getError())
+            if (result.hasError())
                 view.setResult(result);
             else {
                 Main.getMain().getScreen().dispose();
@@ -45,10 +43,14 @@ public class RegisterMenuController {
                             String answer) {
         if (App.getUser(username) != null)
             return new Result(Output.UsernameExists.getString(), Color.RED);
+        if (password.isEmpty() || confirmedPassword.isEmpty())
+            return new Result(Output.PasswordEmpty.getString(), Color.RED);
+        if (answer.isEmpty())
+            return new Result(Output.AnswerEmpty.getString(), Color.RED);
         if (!password.equals(confirmedPassword))
             return new Result(Output.ReenterPasswordError.getString(), Color.RED);
-        Result passwordResult = isPasswordWeak(password);
-        if (passwordResult.getError())
+        Result passwordResult = User.isPasswordWeak(password);
+        if (passwordResult.hasError())
             return passwordResult;
         Output question = Output.getPhrase(questionString);
         assert question != null;
@@ -56,17 +58,5 @@ public class RegisterMenuController {
         user.setSecurityQuestion(new SecurityQuestion(question, answer));
         App.addUser(user);
         return new Result("Successful registration", Color.GREEN, false);
-    }
-
-    private Result isPasswordWeak(String password) {
-        if (password.length() < 8)
-            return new Result(Output.PasswordLength.getString(), Color.RED);
-        if (!password.matches(".*[@_()*&%$#].*"))
-            return new Result(Output.PasswordSpecialCharacter.getString(), Color.RED);
-        if (!password.matches(".*[0-9].*"))
-            return new Result(Output.PasswordNumber.getString(), Color.RED);
-        if (!password.matches(".*[A-Z].*"))
-            return new Result(Output.PasswordCapitalLetter.getString(), Color.RED);
-        return new Result("Strong password", Color.GREEN, false);
     }
 }

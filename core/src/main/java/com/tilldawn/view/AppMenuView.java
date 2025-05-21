@@ -1,5 +1,6 @@
 package com.tilldawn.view;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,6 +24,7 @@ public class AppMenuView implements Screen {
     private final Image appBackgroundImage;
     private final TextButton registerButton;
     private final TextButton loginButton;
+    private final TextButton playAsGuestButton;
     private final TextButton changeLanguageButton;
     private final TextButton exitButton;
     private final AppMenuController controller;
@@ -35,6 +37,7 @@ public class AppMenuView implements Screen {
         this.appBackgroundImage = new Image(appBackgroundTexture);
         this.registerButton = new TextButton(Output.Register.getString(), skin);
         this.loginButton = new TextButton(Output.Login.getString(), skin);
+        this.playAsGuestButton = new TextButton(Output.PlayAsGuest.getString(), skin);
         this.changeLanguageButton = new TextButton(Output.ChangeLanguage.getString(), skin);
         this.exitButton = new TextButton(Output.Exit.getString(), skin);
         this.table = new Table();
@@ -56,13 +59,16 @@ public class AppMenuView implements Screen {
         table.add(gameTitleImage).width(400).height(200).pad(10);
 
         table.row().pad(10, 0, 10, 0);
-        table.add(registerButton).width(GameAssetManager.fieldLength);
+        table.add(registerButton).fillX();
         table.row().pad(10, 0, 10, 0);
-        table.add(loginButton).width(GameAssetManager.fieldLength);
+        table.add(loginButton).fillX();
         table.row().pad(10, 0, 10, 0);
-        table.add(changeLanguageButton).width(500);
+        table.add(changeLanguageButton).fillX();
         table.row().pad(10, 0, 10, 0);
-        table.add(exitButton).width(GameAssetManager.backButtonLength);
+        table.add(playAsGuestButton).fillX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(exitButton).fillX();
+        table.pack();
 
         stage.addActor(table);
     }

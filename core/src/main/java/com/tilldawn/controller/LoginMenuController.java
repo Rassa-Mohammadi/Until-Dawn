@@ -6,6 +6,7 @@ import com.tilldawn.model.*;
 import com.tilldawn.view.AppMenuView;
 import com.tilldawn.view.LoginMenuView;
 import com.tilldawn.view.MainMenuView;
+import com.tilldawn.view.RecoverPasswordMenu;
 
 public class LoginMenuController {
     private LoginMenuView view;
@@ -17,21 +18,37 @@ public class LoginMenuController {
     public void handleLoginMenuButtons() {
         if (view == null)
             return;
+        String username = view.getUsernameField().getText();
+        String password = view.getPasswordField().getText();
         if (view.getBackButton().isPressed()) {
             Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
         }
         else if (view.getSubmitButton().isPressed()) {
-            String username = view.getUsernameField().getText();
-            String password = view.getPasswordField().getText();
             Result result = login(username, password);
-            if (result.getError())
+            if (result.hasError())
                 view.setResult(result);
             else {
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }
         }
+        else if (view.getForgetPasswordButton().isPressed()) {
+            User user = App.getUser(username);
+            if (user == null)
+                view.setResult(new Result(Output.UsernameNotFound.getString(), Color.RED));
+            else {
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new RecoverPasswordMenu(user, new RecoverPasswordController(), GameAssetManager.getGameAssetManager().getSkin()));
+            }
+        }
+    }
+
+    private Result checkUsername(String username) {
+        User user = App.getUser(username);
+        if (user == null)
+            return new Result(Output.UsernameNotFound.getString(), Color.RED);
+        return new Result("go to recovery menu", Color.GREEN, false);
     }
 
     private Result login(String username, String password) {

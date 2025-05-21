@@ -25,7 +25,8 @@ public class MainMenuView implements Screen {
     private TextButton profileButton;
     private TextButton pregameButton;
     private TextButton scoreboardButton;
-    private TextButton backButton;
+    private TextButton hintButton;
+    private TextButton logoutButton;
 
     public MainMenuView(MainMenuController controller, Skin skin) {
         this.controller = controller;
@@ -35,8 +36,10 @@ public class MainMenuView implements Screen {
         appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.settingButton = new TextButton(Output.Settings.getString(), skin);
         this.profileButton = new TextButton(Output.Profile.getString(), skin);
+        this.pregameButton = new TextButton(Output.Pregame.getString(), skin);
         this.scoreboardButton = new TextButton(Output.Scoreboard.getString(), skin);
-        this.backButton = new TextButton(Output.Back.getString(), skin);
+        this.hintButton = new TextButton(Output.Hint.getString(), skin);
+        this.logoutButton = new TextButton(Output.Logout.getString(), skin);
 
         this.controller.setView(this);
     }
@@ -51,16 +54,19 @@ public class MainMenuView implements Screen {
 
         GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
 
-        table.row().pad(0, 0, 80, 0);
-        table.add(menuTitle);
+        table.top().add(menuTitle).padTop(20);
         table.row().pad(10, 0, 10, 0);
-        table.add(settingButton).width(400);
+        table.add(settingButton).fillX();
         table.row().pad(10, 0, 10, 0);
-        table.add(profileButton).width(400);
+        table.add(profileButton).fillX();
         table.row().pad(10, 0, 10, 0);
-        table.add(scoreboardButton).width(400);
+        table.add(scoreboardButton).fillX();
         table.row().pad(10, 0, 10, 0);
-        table.add(backButton).width(400);
+        table.add(pregameButton).fillX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(hintButton).fillX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(logoutButton);
 
         stage.addActor(table);
     }
@@ -72,7 +78,7 @@ public class MainMenuView implements Screen {
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-//        controller.handleMainMenuButtons();
+        controller.handleMainMenuButtons();
     }
 
     @Override
@@ -98,5 +104,25 @@ public class MainMenuView implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public TextButton getSettingButton() {
+        return settingButton;
+    }
+
+    public TextButton getProfileButton() {
+        return profileButton;
+    }
+
+    public TextButton getPregameButton() {
+        return pregameButton;
+    }
+
+    public TextButton getScoreboardButton() {
+        return scoreboardButton;
+    }
+
+    public TextButton getLogoutButton() {
+        return logoutButton;
     }
 }

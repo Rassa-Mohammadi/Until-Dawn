@@ -2,7 +2,6 @@ package com.tilldawn.model;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class Result {
@@ -69,7 +68,7 @@ public class Result {
         return message.getColor();
     }
 
-    public boolean getError() {
+    public boolean hasError() {
         return isError;
     }
 }

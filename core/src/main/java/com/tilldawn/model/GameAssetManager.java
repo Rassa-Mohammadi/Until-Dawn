@@ -1,6 +1,5 @@
 package com.tilldawn.model;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,7 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.tilldawn.Main;
+import com.tilldawn.model.music.MusicPlayer;
+import com.tilldawn.model.music.Track;
 
 public class GameAssetManager {
     public final static int fieldLength = 400;
@@ -16,8 +16,11 @@ public class GameAssetManager {
     public final static int selectBoxLength = 600;
     private static GameAssetManager gameAssetManager;
     private final Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
+    private MusicPlayer musicPlayer = new MusicPlayer();
 
-    private GameAssetManager() {}
+    private GameAssetManager() {
+        musicPlayer.setCurrentTrack(Track.GrassWalk);
+    }
 
     public static GameAssetManager getGameAssetManager() {
         if (gameAssetManager == null)
@@ -46,5 +49,9 @@ public class GameAssetManager {
         imageCopy.setPosition(stage.getWidth() - fitWidth, 0);
         imageCopy.setSize(fitWidth, fitHeight);
         table.addActor(imageCopy);
+    }
+
+    public MusicPlayer getMusicPlayer() {
+        return musicPlayer;
     }
 }

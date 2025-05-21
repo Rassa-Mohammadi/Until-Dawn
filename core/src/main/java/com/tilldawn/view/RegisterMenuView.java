@@ -14,8 +14,6 @@ import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.Output;
 import com.tilldawn.model.Result;
 
-import static com.badlogic.gdx.utils.JsonValue.ValueType.array;
-
 public class RegisterMenuView implements Screen {
     public Table table;
     private RegisterMenuController controller;
@@ -45,6 +43,7 @@ public class RegisterMenuView implements Screen {
         menuTitle.setFontScale(2.5f);
         appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.registerResult = new Result();
+        registerResult.getMessage().setFontScale(2f);
         this.username = new TextField("", skin);
         this.username.setMessageText(Output.EnterUsername.getString());
         this.password = new TextField("", skin);
@@ -69,8 +68,7 @@ public class RegisterMenuView implements Screen {
 
         GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
 
-        table.row().pad(0, 0, 80, 0);
-        table.add(menuTitle);
+        table.top().add(menuTitle).padTop(20);
         table.row().pad(10, 0, 10, 0);
         table.add(registerResult.getMessage());
         table.row().pad(10, 0, 10, 0);
@@ -80,13 +78,13 @@ public class RegisterMenuView implements Screen {
         table.row().pad(10, 0, 10, 0);
         table.add(confirmedPassword).width(GameAssetManager.fieldLength);
         table.row().pad(10, 0, 10, 0);
-        table.add(questions).width(GameAssetManager.selectBoxLength);
+        table.add(questions);
         table.row().pad(10, 0, 10, 0);
         table.add(answer).width(GameAssetManager.fieldLength);
         table.row().pad(10, 0, 10, 0);
-        table.add(submitButton).width(GameAssetManager.fieldLength);
+        table.add(submitButton);
         table.row().pad(10, 0, 10, 0);
-        table.add(backButton).width(GameAssetManager.backButtonLength);
+        table.add(backButton);
 
         stage.addActor(table);
     }

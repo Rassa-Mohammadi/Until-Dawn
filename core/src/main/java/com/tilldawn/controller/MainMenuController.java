@@ -1,11 +1,34 @@
 package com.tilldawn.controller;
 
+import com.tilldawn.Main;
+import com.tilldawn.model.App;
+import com.tilldawn.model.GameAssetManager;
+import com.tilldawn.view.AppMenuView;
 import com.tilldawn.view.MainMenuView;
+import com.tilldawn.view.SettingMenuView;
 
 public class MainMenuController {
     private MainMenuView view;
 
     public void setView(MainMenuView view) {
         this.view = view;
+    }
+
+    public void handleMainMenuButtons() {
+        if (view == null)
+            return;
+        if (view.getLogoutButton().isPressed()) {
+            logout();
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+        }
+        else if (view.getSettingButton().isPressed()) {
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new SettingMenuView(new SettingMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+        }
+    }
+
+    private void logout() {
+        App.setLoggedInUser(null);
     }
 }
