@@ -1,16 +1,21 @@
 package com.tilldawn.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.SettingMenuController;
 import com.tilldawn.model.GameAssetManager;
+import com.tilldawn.model.KeyBind;
 import com.tilldawn.model.Output;
 import com.tilldawn.model.music.Track;
 
@@ -22,16 +27,22 @@ public class SettingMenuView implements Screen {
     private Label menuTitle;
     private Slider volumeSlider;
     private SelectBox<String> musicSelectBox;
+    private TextButton upButton;
+    private TextButton downButton;
+    private TextButton rightButton;
+    private TextButton leftButton;
+    private TextButton reloadButton;
     private TextButton backButton;
-
+    private boolean isWaiting = false;
+// TODO: disconnect and reconnect sfx
     {
-        musicSelectBox = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
+        musicSelectBox = new SelectBox<>(GameAssetManager.getInstance().getSkin());
         Array<String> array = new Array<>();
         for (Track track : Track.values()) {
             array.add(track.getName());
         }
         musicSelectBox.setItems(array);
-        musicSelectBox.setSelected(GameAssetManager.getGameAssetManager().getMusicPlayer().getCurrentTrack().getName());
+        musicSelectBox.setSelected(GameAssetManager.getInstance().getMusicPlayer().getCurrentTrack().getName());
     }
 
     public SettingMenuView(SettingMenuController controller, Skin skin) {
@@ -41,9 +52,14 @@ public class SettingMenuView implements Screen {
         this.menuTitle = new Label(Output.SettingMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.volumeSlider = new Slider(0, 1, 0.01f, false, skin);
-        volumeSlider.setValue(GameAssetManager.getGameAssetManager().getMusicPlayer().getVolume());
+        volumeSlider.setValue(GameAssetManager.getInstance().getMusicPlayer().getVolume());
+        this.upButton = new TextButton(Input.Keys.toString(KeyBind.Up.getKeyCode()), skin);
+        this.downButton = new TextButton(Input.Keys.toString(KeyBind.Down.getKeyCode()), skin);
+        this.rightButton = new TextButton(Input.Keys.toString(KeyBind.Right.getKeyCode()), skin);
+        this.leftButton = new TextButton(Input.Keys.toString(KeyBind.Left.getKeyCode()), skin);
+        this.reloadButton = new TextButton(Input.Keys.toString(KeyBind.Reload.getKeyCode()), skin);
         this.backButton = new TextButton(Output.Back.getString(), skin);
-
+        setListeners();
         this.controller.setView(this);
     }
 
@@ -55,15 +71,20 @@ public class SettingMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
 
-        table.top().add(menuTitle).padTop(20);
-        table.row().pad(10, 0, 10, 0);
-        table.add(volumeSlider).width(500).row();
-        table.row().pad(10, 0, 10, 0);
-        table.add(musicSelectBox).width(500).row();
-        table.row().pad(10, 0, 10, 0);
-        table.add(backButton);
+        table.top().add(menuTitle).padTop(20).row();
+        Label label = new Label(Output.MusicVolume.getString(), GameAssetManager.getInstance().getSkin());
+        table.add(label).padTop(20).row();
+        table.add(volumeSlider).width(500).pad(10).padBottom(20).row();
+        label = new Label(Output.MusicTrack.getString(), GameAssetManager.getInstance().getSkin());
+        table.add(label).padTop(20).row();
+        table.add(musicSelectBox).width(500).pad(10).padBottom(20).row();
+        label = new Label(Output.KeyBinds.getString(), GameAssetManager.getInstance().getSkin());
+        table.add(label).padTop(20).row();
+        Table buttonTable = createButtonTable();
+        table.add(buttonTable).row();
+        table.add(backButton).pad(10);
 
         stage.addActor(table);
     }
@@ -73,9 +94,11 @@ public class SettingMenuView implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
         Main.getBatch().end();
+        int keycode;
+        if ((keycode = controller.getPressedKey()) != -1 && isWaiting)
+            controller.bindKey(keycode);
         stage.act(delta);
         stage.draw();
-        controller.handleSettingMenuButtons();
     }
 
     @Override
@@ -113,5 +136,100 @@ public class SettingMenuView implements Screen {
 
     public TextButton getBackButton() {
         return backButton;
+    }
+
+    public void setWaiting(boolean waiting) {
+        isWaiting = waiting;
+    }
+
+    private Table createButtonTable() {
+        Table result = new Table();
+        Label label = new Label(Output.Up.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10);
+        result.add(upButton).pad(10);
+        label = new Label(Output.Down.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10);
+        result.add(downButton).pad(10);
+        label = new Label(Output.Right.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10);
+        result.add(rightButton).pad(10);
+        label = new Label(Output.Left.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10);
+        result.add(leftButton).pad(10);
+        label = new Label(Output.Reload.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10);
+        result.add(reloadButton).pad(10).row();
+        return result;
+    }
+
+    private void setListeners() {
+        volumeSlider.addListener(event -> {
+            GameAssetManager.getInstance().getMusicPlayer().setVolume(volumeSlider.getValue());
+            return false;
+        });
+
+        musicSelectBox.addListener(event -> {
+            if (event instanceof ChangeListener.ChangeEvent) {
+                GameAssetManager.getInstance().getMusicPlayer().setCurrentTrack(
+                    Track.getByName(musicSelectBox.getSelected())
+                );
+            }
+            return false;
+        });
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (isWaiting)
+                    return;
+                controller.back();
+            }
+        });
+
+        upButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (isWaiting)
+                    return;
+                controller.setKey(upButton, KeyBind.Up);
+            }
+        });
+
+        downButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (isWaiting)
+                    return;
+                controller.setKey(downButton, KeyBind.Down);
+            }
+        });
+
+        rightButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (isWaiting)
+                    return;
+                controller.setKey(rightButton, KeyBind.Right);
+            }
+        });
+
+        leftButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (isWaiting)
+                    return;
+                controller.setKey(leftButton, KeyBind.Left);
+            }
+        });
+
+        reloadButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (isWaiting)
+                    return;
+                controller.setKey(reloadButton, KeyBind.Reload);
+            }
+        });
     }
 }

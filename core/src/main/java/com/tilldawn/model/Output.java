@@ -6,7 +6,9 @@ public enum Output {
     EnterPassword("Enter password", "Entrez un mot de passe"),
     EnterPasswordAgain("Enter password Again", "Entrez à nouveau le mot de passe"),
     Answer("Answer", "La Réponse"),
+    EnterNewUsername("Enter new username", "Entrez un nouveau nom d'utilisateur"),
     EnterNewPassword("Enter new password", "Entrez un nouveau mot de passe"),
+    EnterOldPassword("Enter old password", "Entrez l'ancien mot de passe"),
     // buttons
     Register("Register", "S'inscrire"),
     Login("Login", "Se connecter"),
@@ -21,12 +23,20 @@ public enum Output {
     ChangeLanguage("Change Language", "Changer de Langue"),
     PlayAsGuest("Play as Guest", "jouer en tant qu'invité"),
     Logout("Logout", "Déconnexion"),
+    ChangeUsername("Change username", "Changer le nom d'utilisateur"),
+    ChangePassword("Change password", "Changer le mot de passe"),
+    Avatar("Avatar", "Avatar"),
+    OpenFiles("Open Files", "Ouvrir des fichiers"),
+    DeleteAcount("Delete Acount", "Supprimer le compte"),
+    ForgotPassword("forgot password?", "mot de passe oublié?"),
     // titles
     RegisterMenu("Register Menu", "Menu d'inscription"),
     LoginMenu("Login Menu", "Menu de connexion"),
     MainMenu("Main Menu", "Menu principal"),
     SettingMenu("Setting Menu", "Menu de configuration"),
     RecoverPassword("Recover Password", "Récupérer le mot de passe"),
+    ProfileMenu("Profile Menu", "Menu de profil"),
+    AvatarMenu("Avatar Menu", "Menu de avatar"),
     // errors
     UsernameExists("Username already exists", "Ce nom d'utilisateur existe déjà"),
     PasswordEmpty("Password is empty", "Le mot de passe est vide"),
@@ -39,11 +49,19 @@ public enum Output {
     UsernameNotFound("username not found", "nom d'utilisateur introuvable"),
     IncorrectPassword("Password is incorrect", "le mot de passe est incorrect"),
     IncorrectAnswer("Wrong answer", "Le mot de passe est incorrect"),
+    SamePassword("The new password must be different from the previous password", "Le nouveau mot de passe doit être différent du mot de passe précédent"),
     // Security Questions
     FatherName("What is your father name?", "quel est le nom de ton père"),
     Turk("Are you Turk?", "Es tu Turk?"),
     // labels
-    ForgotPassword("forgot password?", "mot de passe oublié?");
+    MusicVolume("Music volume", "Volume de la musique"),
+    MusicTrack("Music track", "Morceau de musique"),
+    KeyBinds("Key binds", "Raccourcis clavier"),
+    Up("Up", "Haut"),
+    Down("Down", "Bas"),
+    Right("Right", "Droite"),
+    Left("Left", "Gauche"),
+    Reload("Reload", "Recharger");
 
     private final String english;
     private final String french;

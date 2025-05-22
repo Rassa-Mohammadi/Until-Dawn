@@ -1,15 +1,18 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	font: {
-		file: font-export.fnt
+		file: "Fonts/lantern_lightred.fnt"
 	}
+    font2: {
+      file: font-export.fnt
+    }
 	subtitle: {
 		file: font-subtitle-export.fnt
 	}
 	title: {
 		file: font-title-export.fnt
 	}
-}
+},
 com.badlogic.gdx.graphics.Color: {
 	black: {
 		r: 0
@@ -185,8 +188,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: {
-		font: subtitle
-		fontColor: red
+		font: font
 		background: select-box
 		scrollStyle: default
 		listStyle: default
@@ -210,30 +212,30 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 		handle: split-pane-vertical
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-	default: {
-		font: subtitle
-		fontColor: field
-		up: button
-		down: button-pressed
-	}
-	toggle: {
-		font: subtitle
-		fontColor: field
-		up: button
-		down: button-pressed
-		checked: button-pressed
-	}
-	arcade: {
-		font: font
-		fontColor: field
-		up: button-arcade
-		down: button-arcade-pressed
-	}
-}
+  com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+    default: {
+      font: subtitle
+      fontColor: field
+      up: button
+      down: button-pressed
+    }
+    toggle: {
+      font: subtitle
+      fontColor: field
+      up: button
+      down: button-pressed
+      checked: button-pressed
+    }
+    arcade: {
+      font: font
+      fontColor: field
+      up: button-arcade
+      down: button-arcade-pressed
+    }
+  }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: font
+		font: font2
 		fontColor: black
 		background: textfield
 		cursor: black

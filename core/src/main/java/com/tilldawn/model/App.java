@@ -9,6 +9,7 @@ public class App {
     private static ArrayList<Output> questions;
 
     static {
+        loggedInUser = new User("rassa", "R@Ssa1384"); // TODO
         questions = new ArrayList<>();
         questions.add(Output.FatherName);
         questions.add(Output.Turk);
@@ -40,5 +41,9 @@ public class App {
 
     public static void setLoggedInUser(User loggedInUser) {
         App.loggedInUser = loggedInUser;
+    }
+
+    public static void deleteUser(User user) {
+        users.remove(user);
     }
 }

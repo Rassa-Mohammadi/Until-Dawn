@@ -1,10 +1,8 @@
 package com.tilldawn.view;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Scaling;
@@ -53,7 +51,7 @@ public class AppMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
 
         gameTitleImage.setScaling(Scaling.fit);
         table.add(gameTitleImage).width(400).height(200).pad(10);

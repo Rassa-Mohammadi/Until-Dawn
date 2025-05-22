@@ -52,7 +52,7 @@ public class MainMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
 
         table.top().add(menuTitle).padTop(20);
         table.row().pad(10, 0, 10, 0);

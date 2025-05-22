@@ -1,19 +1,31 @@
 package com.tilldawn.model;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Scaling;
 
 public class User {
     private String username;
     private String password;
+    private int points = 0;
     private SecurityQuestion securityQuestion = null;
+    private String avatarPath;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        avatarPath = GameAssetManager.getInstance().getRandomAvatar();
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -30,6 +42,26 @@ public class User {
 
     public SecurityQuestion getSecurityQuestion() {
         return securityQuestion;
+    }
+
+    public Texture getAvatarTexture() {
+        return new Texture(avatarPath);
+    }
+
+    public void setAvatar(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
+
+    public void getInfo(Table table) {
+        Image avatar = new Image(getAvatarTexture());
+        avatar.setScaling(Scaling.fit);
+        table.add(avatar).size(300).row();
+        Label label = new Label("Username: " + username, GameAssetManager.getInstance().getSkin());
+        label.setFontScale(1.2f);
+        table.add(label).pad(10).row();
+        label = new Label("Points: " + points, GameAssetManager.getInstance().getSkin());
+        label.setFontScale(1.2f);
+        table.add(label).pad(10).row();
     }
 
     public static Result isPasswordWeak(String password) {

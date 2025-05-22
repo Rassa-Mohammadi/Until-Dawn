@@ -1,6 +1,5 @@
 package com.tilldawn.view;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,7 +35,6 @@ public class RecoverPasswordMenu implements Screen {
         this.menuTitle = new Label(Output.RecoverPassword.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.recoveryResult = new Result();
-        recoveryResult.getMessage().setFontScale(2f);
         this.securityQuestion = new Label(user.getSecurityQuestion().getQuestion().getString(), skin);
         securityQuestion.setFontScale(1.75f);
         this.questionAnswer = new TextField("", skin);
@@ -57,7 +55,7 @@ public class RecoverPasswordMenu implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
 
         table.top().add(menuTitle).padTop(20).padBottom(20);
         table.row().pad(10, 0, 10, 0);

@@ -22,7 +22,7 @@ public class LoginMenuController {
         String password = view.getPasswordField().getText();
         if (view.getBackButton().isPressed()) {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+            Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
         }
         else if (view.getSubmitButton().isPressed()) {
             Result result = login(username, password);
@@ -30,7 +30,7 @@ public class LoginMenuController {
                 view.setResult(result);
             else {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+                Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
             }
         }
         else if (view.getForgetPasswordButton().isPressed()) {
@@ -39,7 +39,7 @@ public class LoginMenuController {
                 view.setResult(new Result(Output.UsernameNotFound.getString(), Color.RED));
             else {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new RecoverPasswordMenu(user, new RecoverPasswordController(), GameAssetManager.getGameAssetManager().getSkin()));
+                Main.getMain().setScreen(new RecoverPasswordMenu(user, new RecoverPasswordController(), GameAssetManager.getInstance().getSkin()));
             }
         }
     }

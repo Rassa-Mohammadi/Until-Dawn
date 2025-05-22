@@ -18,7 +18,7 @@ public class RegisterMenuController {
             return;
         if (view.getBackButton().isChecked()) {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+            Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
         }
         else if (view.getSubmitButton().isPressed()) {
             String username = view.getUsername().getText();
@@ -31,7 +31,7 @@ public class RegisterMenuController {
                 view.setResult(result);
             else {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+                Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
             }
         }
     }

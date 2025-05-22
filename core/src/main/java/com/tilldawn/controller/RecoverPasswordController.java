@@ -26,7 +26,7 @@ public class RecoverPasswordController {
             return;
         if (view.getBackButton().isPressed()) {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+            Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getInstance().getSkin()));
         }
         else if (view.getSubmitButton().isPressed()) {
             String answer = view.getQuestionAnswer().getText();
@@ -36,7 +36,7 @@ public class RecoverPasswordController {
                 view.setResult(result);
             else {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+                Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getInstance().getSkin()));
             }
         }
     }

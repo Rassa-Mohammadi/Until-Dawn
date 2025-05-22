@@ -1,7 +1,9 @@
 package com.tilldawn.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class Result {
@@ -10,33 +12,24 @@ public class Result {
     private boolean isError = true;
 
     public Result() {
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont();
-
-        message = new Label("", labelStyle);
+        message = new Label("", GameAssetManager.getInstance().getSkin());
         message.setVisible(false);
-        message.setFontScale(1.5f);
+        message.setFontScale(1f);
     }
 
     public Result(String message, Color color) {
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont();
-
-        this.message = new Label(message, labelStyle);
+        this.message = new Label(message, GameAssetManager.getInstance().getSkin());
         this.message.setVisible(true);
-        this.message.setFontScale(1.5f);
+        this.message.setFontScale(1f);
         this.message.setColor(color);
         this.displayTime = 3f;
         this.isError = true;
     }
 
     public Result(String message, Color color, boolean isError) {
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont();
-
-        this.message = new Label(message, labelStyle);
+        this.message = new Label(message, GameAssetManager.getInstance().getSkin());
         this.message.setVisible(true);
-        this.message.setFontScale(1.5f);
+        this.message.setFontScale(1f);
         this.message.setColor(color);
         this.displayTime = 3f;
         this.isError = isError;

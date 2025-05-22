@@ -30,7 +30,7 @@ public class RegisterMenuView implements Screen {
     private TextButton backButton;
 
     {
-        questions = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
+        questions = new SelectBox<>(GameAssetManager.getInstance().getSkin());
         Array<String> array = new Array<>();
         array.add(Output.Turk.getString());
         array.add(Output.FatherName.getString());
@@ -43,7 +43,6 @@ public class RegisterMenuView implements Screen {
         menuTitle.setFontScale(2.5f);
         appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.registerResult = new Result();
-        registerResult.getMessage().setFontScale(2f);
         this.username = new TextField("", skin);
         this.username.setMessageText(Output.EnterUsername.getString());
         this.password = new TextField("", skin);
@@ -66,7 +65,7 @@ public class RegisterMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
 
         table.top().add(menuTitle).padTop(20);
         table.row().pad(10, 0, 10, 0);

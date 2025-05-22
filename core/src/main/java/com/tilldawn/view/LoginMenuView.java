@@ -2,19 +2,12 @@ package com.tilldawn.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
-import com.tilldawn.controller.AppMenuController;
 import com.tilldawn.controller.LoginMenuController;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.Output;
@@ -40,7 +33,6 @@ public class LoginMenuView implements Screen {
         menuTitle.setFontScale(2.5f);
         appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         loginResult = new Result();
-        loginResult.getMessage().setFontScale(2f);
         usernameField = new TextField("", skin);
         usernameField.setMessageText(Output.EnterUsername.getString());
         passwordField = new TextField("", skin);
@@ -60,7 +52,7 @@ public class LoginMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getGameAssetManager().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
 
         table.top().add(menuTitle).padTop(20);
         table.row().pad(10, 0, 10, 0);
