@@ -3,12 +3,15 @@ package com.tilldawn.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.LoginMenuController;
+import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.Output;
 import com.tilldawn.model.Result;
@@ -40,7 +43,7 @@ public class LoginMenuView implements Screen {
         submitButton = new TextButton(Output.Submit.getString(), skin);
         forgetPasswordButton = new TextButton(Output.ForgotPassword.getString(), skin);
         this.backButton = new TextButton(Output.Back.getString(), skin);
-
+        setListeners();
         this.controller.setView(this);
     }
 
@@ -79,7 +82,6 @@ public class LoginMenuView implements Screen {
         loginResult.update(delta);
         stage.act(delta);
         stage.draw();
-        controller.handleLoginMenuButtons();
     }
 
     @Override
@@ -107,31 +109,32 @@ public class LoginMenuView implements Screen {
 
     }
 
-    public Result getLoginResult() {
-        return loginResult;
-    }
+    private void setListeners() {
+        submitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                loginResult.set(controller.login(usernameField.getText(), passwordField.getText()));
+            }
+        });
 
-    public TextField getUsernameField() {
-        return usernameField;
-    }
+        forgetPasswordButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                loginResult.set(controller.recoverPassword(usernameField.getText()));
+            }
+        });
 
-    public TextField getPasswordField() {
-        return passwordField;
-    }
-
-    public TextButton getSubmitButton() {
-        return submitButton;
-    }
-
-    public TextButton getBackButton() {
-        return backButton;
-    }
-
-    public void setResult(Result result) {
-        loginResult.set(result);
-    }
-
-    public TextButton getForgetPasswordButton() {
-        return forgetPasswordButton;
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.back();
+            }
+        });
     }
 }

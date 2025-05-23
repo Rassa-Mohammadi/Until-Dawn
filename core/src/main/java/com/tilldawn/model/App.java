@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class App {
     private static boolean isFrench = false;
+    private static boolean sfxEnabled = true;
     private static ArrayList<User> users = new ArrayList<>();
     private static User loggedInUser = null;
     private static ArrayList<Output> questions;
@@ -33,6 +34,14 @@ public class App {
 
     public static boolean isFrench() {
         return isFrench;
+    }
+
+    public static void setSfxEnabled(boolean sfxEnabled) {
+        App.sfxEnabled = sfxEnabled;
+    }
+
+    public static boolean isSfxEnabled() {
+        return sfxEnabled;
     }
 
     public static User getLoggedInUser() {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.SettingMenuController;
+import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.KeyBind;
 import com.tilldawn.model.Output;
@@ -32,9 +34,10 @@ public class SettingMenuView implements Screen {
     private TextButton rightButton;
     private TextButton leftButton;
     private TextButton reloadButton;
+    private CheckBox sfxCheckBox;
     private TextButton backButton;
     private boolean isWaiting = false;
-// TODO: disconnect and reconnect sfx
+
     {
         musicSelectBox = new SelectBox<>(GameAssetManager.getInstance().getSkin());
         Array<String> array = new Array<>();
@@ -58,6 +61,8 @@ public class SettingMenuView implements Screen {
         this.rightButton = new TextButton(Input.Keys.toString(KeyBind.Right.getKeyCode()), skin);
         this.leftButton = new TextButton(Input.Keys.toString(KeyBind.Left.getKeyCode()), skin);
         this.reloadButton = new TextButton(Input.Keys.toString(KeyBind.Reload.getKeyCode()), skin);
+        this.sfxCheckBox = new CheckBox("SFX", skin);
+        sfxCheckBox.setChecked(App.isSfxEnabled());
         this.backButton = new TextButton(Output.Back.getString(), skin);
         setListeners();
         this.controller.setView(this);
@@ -84,6 +89,7 @@ public class SettingMenuView implements Screen {
         table.add(label).padTop(20).row();
         Table buttonTable = createButtonTable();
         table.add(buttonTable).row();
+        table.add(sfxCheckBox).pad(10).row();
         table.add(backButton).pad(10);
 
         stage.addActor(table);
@@ -182,6 +188,8 @@ public class SettingMenuView implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (isWaiting)
                     return;
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
                 controller.back();
             }
         });
@@ -223,12 +231,18 @@ public class SettingMenuView implements Screen {
         });
 
         reloadButton.addListener(new ClickListener() {
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (isWaiting)
                     return;
                 controller.setKey(reloadButton, KeyBind.Reload);
+            }
+        });
+
+        sfxCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                App.setSfxEnabled(sfxCheckBox.isChecked());
             }
         });
     }

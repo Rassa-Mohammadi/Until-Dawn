@@ -12,34 +12,30 @@ public class ProfileMenuController {
         this.view = view;
     }
 
-    public void handleProfileMenuButtons() {
-        if (view == null)
-            return;
-        if (view.getChangeUsername().isPressed()) {
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new ChangeUsernameMenuView(new ChangeUsernameMenuController(), GameAssetManager.getInstance().getSkin()));
-        }
-        else if (view.getChangePassword().isPressed()) {
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(), GameAssetManager.getInstance().getSkin()));
-        }
-        else if (view.getAvatarButton().isPressed()) {
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new AvatarMenuView(new AvatarMenuController(), GameAssetManager.getInstance().getSkin()));
-        }
-        else if (view.getBackButton().isPressed()) {
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
-        }
-        else if (view.getDeleteAccountButton().isPressed()) {
-            deleteAccount();
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
-        }
+    public void goToChangeUsernameMenu() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new ChangeUsernameMenuView(new ChangeUsernameMenuController(), GameAssetManager.getInstance().getSkin()));
+    }
+
+    public void goToChangePasswordMenu() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(), GameAssetManager.getInstance().getSkin()));
+    }
+
+    public void goToAvatarMenu() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new AvatarMenuView(new AvatarMenuController(), GameAssetManager.getInstance().getSkin()));
+    }
+
+    public void back() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 
     public void deleteAccount() {
         App.deleteUser(App.getLoggedInUser());
         App.setLoggedInUser(null);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 }

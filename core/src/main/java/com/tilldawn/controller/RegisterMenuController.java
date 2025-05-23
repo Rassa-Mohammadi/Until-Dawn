@@ -13,30 +13,7 @@ public class RegisterMenuController {
         this.view = view;
     }
 
-    public void handleRegisterMenuButtons() {
-        if (view == null)
-            return;
-        if (view.getBackButton().isChecked()) {
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
-        }
-        else if (view.getSubmitButton().isPressed()) {
-            String username = view.getUsername().getText();
-            String password = view.getPassword().getText();
-            String confirmedPassword = view.getConfirmedPassword().getText();
-            String question = view.getQuestions().getSelected();
-            String answer = view.getAnswer().getText();
-            Result result = register(username, password, confirmedPassword, question, answer);
-            if (result.hasError())
-                view.setResult(result);
-            else {
-                Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
-            }
-        }
-    }
-
-    private Result register(String username,
+    public Result register(String username,
                             String password,
                             String confirmedPassword,
                             String questionString,
@@ -57,6 +34,13 @@ public class RegisterMenuController {
         User user = new User(username, password);
         user.setSecurityQuestion(new SecurityQuestion(question, answer));
         App.addUser(user);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
         return new Result("Successful registration", Color.GREEN, false);
+    }
+
+    public void back() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 }

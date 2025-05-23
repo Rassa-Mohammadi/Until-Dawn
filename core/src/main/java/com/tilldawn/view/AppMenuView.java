@@ -3,13 +3,17 @@ package com.tilldawn.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.AppMenuController;
+import com.tilldawn.controller.RegisterMenuController;
+import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.Output;
 
@@ -19,7 +23,6 @@ public class AppMenuView implements Screen {
     private final Texture gameTitleTexture;
     private final Image gameTitleImage;
     private final Texture appBackgroundTexture;
-    private final Image appBackgroundImage;
     private final TextButton registerButton;
     private final TextButton loginButton;
     private final TextButton playAsGuestButton;
@@ -32,14 +35,13 @@ public class AppMenuView implements Screen {
         this.gameTitleTexture = new Texture(Gdx.files.internal("Images/Sprite/T_20Logo.png"));
         this.gameTitleImage = new Image(gameTitleTexture);
         this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
-        this.appBackgroundImage = new Image(appBackgroundTexture);
         this.registerButton = new TextButton(Output.Register.getString(), skin);
         this.loginButton = new TextButton(Output.Login.getString(), skin);
         this.playAsGuestButton = new TextButton(Output.PlayAsGuest.getString(), skin);
         this.changeLanguageButton = new TextButton(Output.ChangeLanguage.getString(), skin);
         this.exitButton = new TextButton(Output.Exit.getString(), skin);
         this.table = new Table();
-
+        setListeners();
         controller.setView(this);
     }
 
@@ -78,7 +80,6 @@ public class AppMenuView implements Screen {
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-        controller.handleMainMenuButtons();
     }
 
     @Override
@@ -106,19 +107,50 @@ public class AppMenuView implements Screen {
 
     }
 
-    public TextButton getRegisterButton() {
-        return registerButton;
-    }
+    private void setListeners() {
+        registerButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.goToRegisterMenu();
+            }
+        });
 
-    public TextButton getLoginButton() {
-        return loginButton;
-    }
+        loginButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.goToLoginMenu();
+            }
+        });
 
-    public TextButton getExitButton() {
-        return exitButton;
-    }
+        playAsGuestButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                // TODO
+            }
+        });
 
-    public TextButton getChangeLanguageButton() {
-        return changeLanguageButton;
+        changeLanguageButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.changeLanguage();
+            }
+        });
+
+        exitButton.addListener(new ClickListener() {
+           @Override
+           public void clicked(InputEvent event, float x, float y) {
+               if (App.isSfxEnabled())
+                   GameAssetManager.getInstance().getButtonClick().play(1.0f);
+               controller.exit();
+           }
+        });
     }
 }

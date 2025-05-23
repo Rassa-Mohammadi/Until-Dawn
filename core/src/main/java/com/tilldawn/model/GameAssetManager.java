@@ -1,6 +1,7 @@
 package com.tilldawn.model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +13,18 @@ import com.badlogic.gdx.utils.Array;
 import com.tilldawn.model.music.MusicPlayer;
 import com.tilldawn.model.music.Track;
 
+class SFXManager {
+    private Sound buttonClick;
+
+    {
+        buttonClick = Gdx.audio.newSound(Gdx.files.internal("SFX/AudioClip/UI Click 36.wav"));
+    }
+
+    public Sound getButtonClick() {
+        return buttonClick;
+    }
+}
+
 public class GameAssetManager {
     public final static int fieldLength = 400;
     public final static int backButtonLength = 200;
@@ -20,6 +33,7 @@ public class GameAssetManager {
     private final Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     private Array<String> avatarFiles;
     private MusicPlayer musicPlayer = new MusicPlayer();
+    private SFXManager sfxManager = new SFXManager();
 
     {
         avatarFiles = new Array<>();
@@ -72,5 +86,9 @@ public class GameAssetManager {
 
     public Array<String> getAvatarFiles() {
         return avatarFiles;
+    }
+
+    public Sound getButtonClick() {
+        return sfxManager.getButtonClick();
     }
 }

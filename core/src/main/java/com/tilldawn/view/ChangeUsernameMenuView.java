@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.ChangeUsernameMenuController;
+import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.Output;
 import com.tilldawn.model.Result;
@@ -99,12 +100,16 @@ public class ChangeUsernameMenuView implements Screen {
         changeUsernameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
                 changeResult.set(controller.changeUsername(newUsernameField.getText()));
             }
         });
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
                 controller.back();
             }
         });

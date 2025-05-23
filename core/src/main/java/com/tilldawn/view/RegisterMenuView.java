@@ -3,13 +3,16 @@ package com.tilldawn.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.RegisterMenuController;
+import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.Output;
 import com.tilldawn.model.Result;
@@ -54,6 +57,7 @@ public class RegisterMenuView implements Screen {
         this.submitButton = new TextButton(Output.Submit.getString(), skin);
         this.backButton = new TextButton(Output.Back.getString(), skin);
         this.table = new Table();
+        setListeners();
         this.controller.setView(this);
     }
 
@@ -96,7 +100,6 @@ public class RegisterMenuView implements Screen {
         registerResult.update(delta);
         stage.act(delta);
         stage.draw();
-        controller.handleRegisterMenuButtons();
     }
 
     @Override
@@ -124,35 +127,28 @@ public class RegisterMenuView implements Screen {
 
     }
 
-    public TextField getPassword() {
-        return password;
-    }
-
-    public TextField getUsername() {
-        return username;
-    }
-
-    public TextField getConfirmedPassword() {
-        return confirmedPassword;
-    }
-
-    public TextButton getSubmitButton() {
-        return submitButton;
-    }
-
-    public TextButton getBackButton() {
-        return backButton;
-    }
-
-    public void setResult(Result result) {
-        registerResult.set(result);
-    }
-
-    public SelectBox<String> getQuestions() {
-        return questions;
-    }
-
-    public TextField getAnswer() {
-        return answer;
+    private void setListeners() {
+        submitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                registerResult.set(controller.register(
+                    username.getText(),
+                    password.getText(),
+                    confirmedPassword.getText(),
+                    questions.getSelected(),
+                    answer.getText()
+                ));
+            }
+        });
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.back();
+            }
+        });
     }
 }

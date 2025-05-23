@@ -15,25 +15,19 @@ public class MainMenuController {
         this.view = view;
     }
 
-    public void handleMainMenuButtons() {
-        if (view == null)
-            return;
-        if (view.getLogoutButton().isPressed()) {
-            logout();
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
-        }
-        else if (view.getSettingButton().isPressed()) {
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new SettingMenuView(new SettingMenuController(), GameAssetManager.getInstance().getSkin()));
-        }
-        else if (view.getProfileButton().isPressed()) {
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new ProfileMenuView(new ProfileMenuController(), GameAssetManager.getInstance().getSkin()));
-        }
+    public void goToProfile() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new ProfileMenuView(new ProfileMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 
-    private void logout() {
+    public void goToSetting() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new SettingMenuView(new SettingMenuController(), GameAssetManager.getInstance().getSkin()));
+    }
+
+    public void logout() {
         App.setLoggedInUser(null);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 }

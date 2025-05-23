@@ -3,8 +3,10 @@ package com.tilldawn.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
@@ -36,6 +38,7 @@ public class ProfileMenuView implements Screen {
         this.avatarButton = new TextButton(Output.Avatar.getString(), skin);
         this.deleteAccountButton = new TextButton(Output.DeleteAcount.getString(), skin);
         this.backButton = new TextButton(Output.Back.getString(), skin);
+        setListeners();
         this.controller.setView(this);
     }
 
@@ -55,8 +58,7 @@ public class ProfileMenuView implements Screen {
         buttonTable.add(deleteAccountButton).pad(10).fillX().row();
         buttonTable.add(avatarButton).pad(10).fillX().row();
         buttonTable.add(backButton).pad(10).row();
-        Table contentTable = new Table();
-        App.getLoggedInUser().getInfo(contentTable);
+        Table contentTable = App.getLoggedInUser().getInfo();
 
         table.add(menuTitle).colspan(2).center().pad(30).row();
         table.add(buttonTable).left().pad(20);
@@ -72,7 +74,6 @@ public class ProfileMenuView implements Screen {
         Main.getBatch().end();
         stage.act(delta);
         stage.draw();
-        controller.handleProfileMenuButtons();
     }
 
     @Override
@@ -100,23 +101,46 @@ public class ProfileMenuView implements Screen {
 
     }
 
-    public TextButton getChangeUsername() {
-        return changeUsername;
-    }
-
-    public TextButton getChangePassword() {
-        return changePassword;
-    }
-
-    public TextButton getBackButton() {
-        return backButton;
-    }
-
-    public TextButton getAvatarButton() {
-        return avatarButton;
-    }
-
-    public TextButton getDeleteAccountButton() {
-        return deleteAccountButton;
+    private void setListeners() {
+        changeUsername.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.goToChangeUsernameMenu();
+            }
+        });
+        changePassword.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.goToChangePasswordMenu();
+            }
+        });
+        deleteAccountButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.deleteAccount();
+            }
+        });
+        avatarButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.goToAvatarMenu();
+            }
+        });
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.back();
+            }
+        });
     }
 }

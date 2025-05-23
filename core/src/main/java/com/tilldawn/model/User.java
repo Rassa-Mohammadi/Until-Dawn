@@ -52,7 +52,8 @@ public class User {
         this.avatarPath = avatarPath;
     }
 
-    public void getInfo(Table table) {
+    public Table getInfo() {
+        Table table = new Table();
         Image avatar = new Image(getAvatarTexture());
         avatar.setScaling(Scaling.fit);
         table.add(avatar).size(300).row();
@@ -62,6 +63,7 @@ public class User {
         label = new Label("Points: " + points, GameAssetManager.getInstance().getSkin());
         label.setFontScale(1.2f);
         table.add(label).pad(10).row();
+        return table;
     }
 
     public static Result isPasswordWeak(String password) {

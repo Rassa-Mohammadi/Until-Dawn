@@ -89,7 +89,6 @@ public class AvatarMenuView implements Screen {
         Main.getBatch().end();
         stage.act(delta);
         stage.draw();
-//        controller.handleProfileMenuButtons();
     }
 
     @Override
@@ -126,6 +125,8 @@ public class AvatarMenuView implements Screen {
             avatarImage.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (App.isSfxEnabled())
+                        GameAssetManager.getInstance().getButtonClick().play(1.0f);
                     App.getLoggedInUser().setAvatar(avatarFile);
                     currentAvatar.setDrawable(new TextureRegionDrawable(new TextureRegion(avatarTexture)));
                 }
@@ -139,6 +140,8 @@ public class AvatarMenuView implements Screen {
         chooseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
                 String avatarFile = controller.getFilePath();
                 if (avatarFile == null)
                     return;
@@ -151,6 +154,8 @@ public class AvatarMenuView implements Screen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
                 controller.back();
             }
         });

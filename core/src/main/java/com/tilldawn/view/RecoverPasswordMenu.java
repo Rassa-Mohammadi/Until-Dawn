@@ -3,16 +3,15 @@ package com.tilldawn.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.RecoverPasswordController;
-import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Output;
-import com.tilldawn.model.Result;
-import com.tilldawn.model.User;
+import com.tilldawn.model.*;
 
 public class RecoverPasswordMenu implements Screen {
     private RecoverPasswordController controller;
@@ -43,6 +42,7 @@ public class RecoverPasswordMenu implements Screen {
         newPassword.setMessageText(Output.EnterNewPassword.getString());
         this.submitButton = new TextButton(Output.Submit.getString(), skin);
         this.backButton = new TextButton(Output.Back.getString(), skin);
+        setListeners();
         this.controller.setView(this);
         this.controller.setUser(user);
     }
@@ -82,7 +82,6 @@ public class RecoverPasswordMenu implements Screen {
         recoveryResult.update(delta);
         stage.act(delta);
         stage.draw();
-        controller.handleRecoverPasswordMenuButtons();
     }
 
     @Override
@@ -110,24 +109,22 @@ public class RecoverPasswordMenu implements Screen {
 
     }
 
-    public TextButton getBackButton() {
-        return backButton;
+    private void setListeners() {
+        submitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                recoveryResult.set(controller.recoverPassword(questionAnswer.getText(), newPassword.getText()));
+            }
+        });
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.back();
+            }
+        });
     }
-
-    public TextButton getSubmitButton() {
-        return submitButton;
-    }
-
-    public TextField getQuestionAnswer() {
-        return questionAnswer;
-    }
-
-    public TextField getNewPassword() {
-        return newPassword;
-    }
-
-    public void setResult(Result result) {
-        recoveryResult.set(result);
-    }
-
 }

@@ -3,15 +3,18 @@ package com.tilldawn.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.MainMenuController;
+import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.Output;
 
@@ -40,7 +43,7 @@ public class MainMenuView implements Screen {
         this.scoreboardButton = new TextButton(Output.Scoreboard.getString(), skin);
         this.hintButton = new TextButton(Output.Hint.getString(), skin);
         this.logoutButton = new TextButton(Output.Logout.getString(), skin);
-
+        setListeners();
         this.controller.setView(this);
     }
 
@@ -53,20 +56,18 @@ public class MainMenuView implements Screen {
         table.center();
 
         GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        Table userInfo = App.getLoggedInUser().getInfo();
+        Table buttonTable = new Table();
+        buttonTable.add(settingButton).pad(10).fillX();
+        buttonTable.add(profileButton).pad(10).fillX().row();
+        buttonTable.add(scoreboardButton).pad(10).fillX();
+        buttonTable.add(pregameButton).pad(10).fillX().row();
+        buttonTable.add(hintButton).pad(10).fillX();
+        buttonTable.add(logoutButton).pad(10).fillX().row();
 
-        table.top().add(menuTitle).padTop(20);
-        table.row().pad(10, 0, 10, 0);
-        table.add(settingButton).fillX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(profileButton).fillX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(scoreboardButton).fillX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(pregameButton).fillX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(hintButton).fillX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(logoutButton);
+        table.add(menuTitle).colspan(2).center().pad(30).row();
+        table.add(buttonTable).left().pad(20);
+        table.add(userInfo).right().pad(20);
 
         stage.addActor(table);
     }
@@ -78,7 +79,6 @@ public class MainMenuView implements Screen {
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-        controller.handleMainMenuButtons();
     }
 
     @Override
@@ -106,23 +106,54 @@ public class MainMenuView implements Screen {
 
     }
 
-    public TextButton getSettingButton() {
-        return settingButton;
-    }
-
-    public TextButton getProfileButton() {
-        return profileButton;
-    }
-
-    public TextButton getPregameButton() {
-        return pregameButton;
-    }
-
-    public TextButton getScoreboardButton() {
-        return scoreboardButton;
-    }
-
-    public TextButton getLogoutButton() {
-        return logoutButton;
+    private void setListeners() {
+        settingButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.goToSetting();
+            }
+        });
+        profileButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.goToProfile();
+            }
+        });
+        pregameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                // TODO
+            }
+        });
+        scoreboardButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                // TODO
+            }
+        });
+        hintButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                // TODO
+            }
+        });
+        logoutButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.logout();
+            }
+        });
     }
 }
