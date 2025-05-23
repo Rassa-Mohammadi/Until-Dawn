@@ -1,11 +1,14 @@
 package com.tilldawn.model.enums;
 
+import com.badlogic.gdx.Input;
+
 public enum KeyBind {
-    Up(51), // key code of W
-    Down(47), // key code of S
-    Left(29), // key code of A
-    Right(32), // key code of D
-    Reload(46); // key code of R
+    Up(Input.Keys.W), // key code of W
+    Down(Input.Keys.S), // key code of S
+    Left(Input.Keys.A), // key code of A
+    Right(Input.Keys.D), // key code of D
+    Reload(Input.Keys.R), // key code of R
+    Shoot(Input.Buttons.LEFT + 1000); // mouse keys are saved +1000
 
     private int keyCode;
 
@@ -19,5 +22,21 @@ public enum KeyBind {
 
     public void setKeyCode(int keyCode) {
         this.keyCode = keyCode;
+    }
+
+    public String getKeyName() {
+        return getKeyName(keyCode);
+    }
+
+    public static String getKeyName(int keyCode) {
+        if (keyCode < 1000)
+            return Input.Keys.toString(keyCode);
+        if (keyCode - 1000 == Input.Buttons.LEFT)
+            return "Left";
+        if (keyCode - 1000 == Input.Buttons.RIGHT)
+            return "Right";
+        if (keyCode - 1000 == Input.Buttons.MIDDLE)
+            return "Middle";
+        return null;
     }
 }

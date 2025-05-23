@@ -29,6 +29,12 @@ public class SettingMenuController {
                 return i;
             }
         }
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))
+            return Input.Buttons.LEFT + 1000;
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT))
+            return Input.Buttons.RIGHT + 1000;
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.MIDDLE))
+            return Input.Buttons.MIDDLE + 1000;
         return -1;
     }
 
@@ -41,7 +47,7 @@ public class SettingMenuController {
     }
 
     public void bindKey(int keycode) {
-        button.setText(Input.Keys.toString(keycode));
+        button.setText(KeyBind.getKeyName(keycode));
         keyBind.setKeyCode(keycode);
         view.setWaiting(false);
     }

@@ -2,6 +2,10 @@ package com.tilldawn.model.enums;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.tilldawn.model.GameAssetManager;
 import org.w3c.dom.Text;
 
 public enum Hero {
@@ -27,6 +31,16 @@ public enum Hero {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public Table getDescription() {
+        Table result = new Table();
+        result.center();
+        Image heroImage = new Image(texture);
+        result.add(heroImage).pad(10).row();
+        result.add(new Label("HP: " + hp, GameAssetManager.getInstance().getSkin())).pad(10).row();
+        result.add(new Label("Speed: " + speed, GameAssetManager.getInstance().getSkin())).pad(10).row();
+        return result;
     }
 
     public static Texture getTexture(String heroName) {

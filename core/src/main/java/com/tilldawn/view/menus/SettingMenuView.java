@@ -34,6 +34,7 @@ public class SettingMenuView implements Screen {
     private TextButton rightButton;
     private TextButton leftButton;
     private TextButton reloadButton;
+    private TextButton shootButton;
     private CheckBox sfxCheckBox;
     private TextButton backButton;
     private boolean isWaiting = false;
@@ -56,11 +57,12 @@ public class SettingMenuView implements Screen {
         menuTitle.setFontScale(2.5f);
         this.volumeSlider = new Slider(0, 1, 0.01f, false, skin);
         volumeSlider.setValue(GameAssetManager.getInstance().getMusicPlayer().getVolume());
-        this.upButton = new TextButton(Input.Keys.toString(KeyBind.Up.getKeyCode()), skin);
-        this.downButton = new TextButton(Input.Keys.toString(KeyBind.Down.getKeyCode()), skin);
-        this.rightButton = new TextButton(Input.Keys.toString(KeyBind.Right.getKeyCode()), skin);
-        this.leftButton = new TextButton(Input.Keys.toString(KeyBind.Left.getKeyCode()), skin);
-        this.reloadButton = new TextButton(Input.Keys.toString(KeyBind.Reload.getKeyCode()), skin);
+        this.upButton = new TextButton(KeyBind.Up.getKeyName(), skin);
+        this.downButton = new TextButton(KeyBind.Down.getKeyName(), skin);
+        this.rightButton = new TextButton(KeyBind.Right.getKeyName(), skin);
+        this.leftButton = new TextButton(KeyBind.Left.getKeyName(), skin);
+        this.reloadButton = new TextButton(KeyBind.Reload.getKeyName(), skin);
+        this.shootButton = new TextButton(KeyBind.Shoot.getKeyName(), skin);
         this.sfxCheckBox = new CheckBox("SFX", skin);
         sfxCheckBox.setChecked(App.isSfxEnabled());
         this.backButton = new TextButton(Output.Back.getString(), skin);
@@ -164,7 +166,10 @@ public class SettingMenuView implements Screen {
         result.add(leftButton).pad(10);
         label = new Label(Output.Reload.getString(), GameAssetManager.getInstance().getSkin());
         result.add(label).pad(10);
-        result.add(reloadButton).pad(10).row();
+        result.add(reloadButton).pad(10);
+        label = new Label(Output.Shoot.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10);
+        result.add(shootButton).pad(10);
         return result;
     }
 
@@ -236,6 +241,15 @@ public class SettingMenuView implements Screen {
                 if (isWaiting)
                     return;
                 controller.setKey(reloadButton, KeyBind.Reload);
+            }
+        });
+
+        shootButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (isWaiting)
+                    return;
+                controller.setKey(shootButton, KeyBind.Reload);
             }
         });
 

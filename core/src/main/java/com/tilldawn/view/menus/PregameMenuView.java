@@ -71,8 +71,8 @@ public class PregameMenuView implements Screen {
         table.add(getDuraionTable()).pad(50).center().width(350);
         table.add(getHeroesTable()).pad(50).right().width(350);
         table.row();
-        table.add(playButton).colspan(3).pad(10).center().row();
-        table.add(backButton).colspan(3).center();
+        table.add(playButton).colspan(3).pad(10).center().width(GameAssetManager.backButtonLength).row();
+        table.add(backButton).colspan(3).center().width(GameAssetManager.backButtonLength);
         stage.addActor(table);
     }
 

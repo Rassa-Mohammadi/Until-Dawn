@@ -33,6 +33,8 @@ public enum Output {
     DeleteAcount("Delete Acount", "Supprimer le compte"),
     ForgotPassword("forgot password?", "mot de passe oublié?"),
     Play("Play", "Jouer"),
+    AbilityDescription("Abilities Description", "Description des capacités"),
+    CheatCodes("Cheat codes", "Codes de triche"),
     // titles
     RegisterMenu("Register Menu", "Menu d'inscription"),
     LoginMenu("Login Menu", "Menu de connexion"),
@@ -42,6 +44,9 @@ public enum Output {
     ProfileMenu("Profile Menu", "Menu de profil"),
     AvatarMenu("Avatar Menu", "Menu de avatar"),
     PregameMenu("Pregame Menu", "Menu d'avant-match"),
+    HintMenu("Hint Menu", "Menu d'indices"),
+    AbilitiesMenu("Abilities Menu", "Menu des capacités"),
+    CheatCodesMenu("Cheat Codes Menu", "Menu des codes de triche"),
     // errors
     UsernameExists("Username already exists", "Ce nom d'utilisateur existe déjà"),
     PasswordEmpty("Password is empty", "Le mot de passe est vide"),
@@ -67,10 +72,16 @@ public enum Output {
     Right("Right", "Droite"),
     Left("Left", "Gauche"),
     Reload("Reload", "Recharger"),
+    Shoot("Shoot", "Tirer"),
     SelectWeapon("Select weapon", "Sélectionner une arme"),
     SelectHero("Select hero", "Sélectionner le héros"),
     GameDuration("Game duration: ", "Durée du jeu: "),
-    SelectGameDuration("Select game duration", "Sélectionner la durée du jeu");
+    SelectGameDuration("Select game duration", "Sélectionner la durée du jeu"),
+    Vitality("Increases HP by one", "Augmente les PV d'un"),
+    Damager("Increases weapon damage by 25% for 10 seconds", "Augmente les dégâts de l'arme de 25 % pendant 10 secondes"),
+    Procrease("Increases weapon projectile by one", "Augmente le projectile de l'arme d'un"),
+    Ammocrease("Increases weapon's ammo limit by five", "Augmente la limite de munitions de l'arme de cinq"),
+    Speedy("Doubles player's speed for 10 seconds", "Double la vitesse du joueur pendant 10 secondes");
 
     private final String english;
     private final String french;
