@@ -1,13 +1,13 @@
-package com.tilldawn.controller;
+package com.tilldawn.controller.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.tilldawn.Main;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.KeyBind;
-import com.tilldawn.view.MainMenuView;
-import com.tilldawn.view.SettingMenuView;
+import com.tilldawn.model.enums.KeyBind;
+import com.tilldawn.view.menus.MainMenuView;
+import com.tilldawn.view.menus.SettingMenuView;
 
 public class SettingMenuController {
     private SettingMenuView view;

@@ -1,4 +1,4 @@
-package com.tilldawn.view;
+package com.tilldawn.view.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -13,10 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
-import com.tilldawn.controller.MainMenuController;
+import com.tilldawn.controller.menus.MainMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Output;
+import com.tilldawn.model.enums.Output;
 
 public class MainMenuView implements Screen {
     private MainMenuController controller;
@@ -29,6 +29,7 @@ public class MainMenuView implements Screen {
     private TextButton pregameButton;
     private TextButton scoreboardButton;
     private TextButton hintButton;
+    private TextButton loadGameButton;
     private TextButton logoutButton;
 
     public MainMenuView(MainMenuController controller, Skin skin) {
@@ -42,6 +43,7 @@ public class MainMenuView implements Screen {
         this.pregameButton = new TextButton(Output.Pregame.getString(), skin);
         this.scoreboardButton = new TextButton(Output.Scoreboard.getString(), skin);
         this.hintButton = new TextButton(Output.Hint.getString(), skin);
+        this.loadGameButton = new TextButton(Output.LoadGame.getString(), skin);
         this.logoutButton = new TextButton(Output.Logout.getString(), skin);
         setListeners();
         this.controller.setView(this);
@@ -63,7 +65,8 @@ public class MainMenuView implements Screen {
         buttonTable.add(scoreboardButton).pad(10).fillX();
         buttonTable.add(pregameButton).pad(10).fillX().row();
         buttonTable.add(hintButton).pad(10).fillX();
-        buttonTable.add(logoutButton).pad(10).fillX().row();
+        buttonTable.add(loadGameButton).pad(10).fillX().row();
+        buttonTable.add(logoutButton).colspan(2).center().pad(10).fillX().row();
 
         table.add(menuTitle).colspan(2).center().pad(30).row();
         table.add(buttonTable).left().pad(20);
@@ -128,7 +131,7 @@ public class MainMenuView implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
                     GameAssetManager.getInstance().getButtonClick().play(1.0f);
-                // TODO
+                controller.goToPregame();
             }
         });
         scoreboardButton.addListener(new ClickListener() {

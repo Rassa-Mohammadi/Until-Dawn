@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Scaling;
+import com.tilldawn.model.enums.Hero;
+import com.tilldawn.model.enums.Output;
+import com.tilldawn.model.enums.Weapon;
 
 public class User {
     private String username;
@@ -13,6 +16,10 @@ public class User {
     private int points = 0;
     private SecurityQuestion securityQuestion = null;
     private String avatarPath;
+    private boolean isGuest = false;
+    private Weapon weapon = Weapon.Revolver;
+    private Hero hero = Hero.Shana;
+    private Integer gameDuration = 5;
 
     public User(String username, String password) {
         this.username = username;
@@ -50,6 +57,30 @@ public class User {
 
     public void setAvatar(String avatarPath) {
         this.avatarPath = avatarPath;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public Integer getGameDuration() {
+        return gameDuration;
+    }
+
+    public void setGameDuration(Integer gameDuration) {
+        this.gameDuration = gameDuration;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
     public Table getInfo() {

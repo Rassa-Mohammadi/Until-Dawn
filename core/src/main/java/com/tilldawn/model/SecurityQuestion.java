@@ -1,5 +1,7 @@
 package com.tilldawn.model;
 
+import com.tilldawn.model.enums.Output;
+
 public class SecurityQuestion {
     private Output question;
     private String answer;

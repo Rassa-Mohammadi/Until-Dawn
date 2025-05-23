@@ -1,9 +1,10 @@
-package com.tilldawn.controller;
+package com.tilldawn.controller.menus;
 
 import com.tilldawn.Main;
+import com.tilldawn.controller.menus.profile.ProfileMenuController;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.view.AvatarMenuView;
-import com.tilldawn.view.ProfileMenuView;
+import com.tilldawn.view.menus.AvatarMenuView;
+import com.tilldawn.view.menus.profile.ProfileMenuView;
 
 import javax.swing.*;
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.tilldawn.view;
+package com.tilldawn.view.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,11 +14,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
-import com.tilldawn.controller.SettingMenuController;
+import com.tilldawn.controller.menus.SettingMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.KeyBind;
-import com.tilldawn.model.Output;
+import com.tilldawn.model.enums.KeyBind;
+import com.tilldawn.model.enums.Output;
 import com.tilldawn.model.music.Track;
 
 public class SettingMenuView implements Screen {

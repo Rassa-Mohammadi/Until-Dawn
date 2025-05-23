@@ -1,10 +1,12 @@
-package com.tilldawn.model;
+package com.tilldawn.model.enums;
+
+import com.tilldawn.model.App;
 
 public enum Output {
     // fields
     EnterUsername("Enter username", "Entrez un nom d'utilisateur"),
     EnterPassword("Enter password", "Entrez un mot de passe"),
-    EnterPasswordAgain("Enter password Again", "Entrez à nouveau le mot de passe"),
+    EnterPasswordAgain("Enter password again", "Entrez à nouveau le mot de passe"),
     Answer("Answer", "La Réponse"),
     EnterNewUsername("Enter new username", "Entrez un nouveau nom d'utilisateur"),
     EnterNewPassword("Enter new password", "Entrez un nouveau mot de passe"),
@@ -20,6 +22,7 @@ public enum Output {
     Scoreboard("Scoreboard", "Tableau des scores"),
     Pregame("Pregame", "Avant-match"),
     Hint("Hint", "Indice"),
+    LoadGame("Load game", "Charger le jeu"),
     ChangeLanguage("Change Language", "Changer de Langue"),
     PlayAsGuest("Play as Guest", "jouer en tant qu'invité"),
     Logout("Logout", "Déconnexion"),
@@ -29,6 +32,7 @@ public enum Output {
     OpenFiles("Open Files", "Ouvrir des fichiers"),
     DeleteAcount("Delete Acount", "Supprimer le compte"),
     ForgotPassword("forgot password?", "mot de passe oublié?"),
+    Play("Play", "Jouer"),
     // titles
     RegisterMenu("Register Menu", "Menu d'inscription"),
     LoginMenu("Login Menu", "Menu de connexion"),
@@ -37,6 +41,7 @@ public enum Output {
     RecoverPassword("Recover Password", "Récupérer le mot de passe"),
     ProfileMenu("Profile Menu", "Menu de profil"),
     AvatarMenu("Avatar Menu", "Menu de avatar"),
+    PregameMenu("Pregame Menu", "Menu d'avant-match"),
     // errors
     UsernameExists("Username already exists", "Ce nom d'utilisateur existe déjà"),
     PasswordEmpty("Password is empty", "Le mot de passe est vide"),
@@ -61,7 +66,11 @@ public enum Output {
     Down("Down", "Bas"),
     Right("Right", "Droite"),
     Left("Left", "Gauche"),
-    Reload("Reload", "Recharger");
+    Reload("Reload", "Recharger"),
+    SelectWeapon("Select weapon", "Sélectionner une arme"),
+    SelectHero("Select hero", "Sélectionner le héros"),
+    GameDuration("Game duration: ", "Durée du jeu: "),
+    SelectGameDuration("Select game duration", "Sélectionner la durée du jeu");
 
     private final String english;
     private final String french;

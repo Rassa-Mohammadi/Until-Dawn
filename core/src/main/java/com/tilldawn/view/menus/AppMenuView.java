@@ -1,4 +1,4 @@
-package com.tilldawn.view;
+package com.tilldawn.view.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,11 +11,10 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
-import com.tilldawn.controller.AppMenuController;
-import com.tilldawn.controller.RegisterMenuController;
+import com.tilldawn.controller.menus.AppMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Output;
+import com.tilldawn.model.enums.Output;
 
 public class AppMenuView implements Screen {
     public Table table;

@@ -1,9 +1,15 @@
-package com.tilldawn.controller;
+package com.tilldawn.controller.menus.profile;
 
 import com.tilldawn.Main;
+import com.tilldawn.controller.menus.AppMenuController;
+import com.tilldawn.controller.menus.AvatarMenuController;
+import com.tilldawn.controller.menus.MainMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.view.*;
+import com.tilldawn.view.menus.*;
+import com.tilldawn.view.menus.profile.ChangePasswordMenuView;
+import com.tilldawn.view.menus.profile.ChangeUsernameMenuView;
+import com.tilldawn.view.menus.profile.ProfileMenuView;
 
 public class ProfileMenuController {
     private ProfileMenuView view;

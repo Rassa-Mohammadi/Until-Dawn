@@ -1,12 +1,13 @@
-package com.tilldawn.controller;
+package com.tilldawn.controller.menus;
 
 import com.badlogic.gdx.graphics.Color;
 import com.tilldawn.Main;
 import com.tilldawn.model.*;
-import com.tilldawn.view.AppMenuView;
-import com.tilldawn.view.LoginMenuView;
-import com.tilldawn.view.MainMenuView;
-import com.tilldawn.view.RecoverPasswordMenu;
+import com.tilldawn.model.enums.Output;
+import com.tilldawn.view.menus.AppMenuView;
+import com.tilldawn.view.menus.LoginMenuView;
+import com.tilldawn.view.menus.MainMenuView;
+import com.tilldawn.view.menus.RecoverPasswordMenu;
 
 public class LoginMenuController {
     private LoginMenuView view;

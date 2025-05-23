@@ -2,9 +2,9 @@ package com.tilldawn;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tilldawn.controller.AppMenuController;
+import com.tilldawn.controller.menus.AppMenuController;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.view.AppMenuView;
+import com.tilldawn.view.menus.AppMenuView;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {

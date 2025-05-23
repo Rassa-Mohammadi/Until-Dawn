@@ -1,4 +1,4 @@
-package com.tilldawn.model;
+package com.tilldawn.model.enums;
 
 public enum KeyBind {
     Up(51), // key code of W

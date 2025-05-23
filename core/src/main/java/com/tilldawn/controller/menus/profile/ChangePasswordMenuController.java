@@ -1,10 +1,11 @@
-package com.tilldawn.controller;
+package com.tilldawn.controller.menus.profile;
 
 import com.badlogic.gdx.graphics.Color;
 import com.tilldawn.Main;
 import com.tilldawn.model.*;
-import com.tilldawn.view.ChangePasswordMenuView;
-import com.tilldawn.view.ProfileMenuView;
+import com.tilldawn.model.enums.Output;
+import com.tilldawn.view.menus.profile.ChangePasswordMenuView;
+import com.tilldawn.view.menus.profile.ProfileMenuView;
 
 public class ChangePasswordMenuController {
     private ChangePasswordMenuView view;

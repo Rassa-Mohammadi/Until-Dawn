@@ -1,4 +1,4 @@
-package com.tilldawn.view;
+package com.tilldawn.view.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -16,10 +16,10 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
-import com.tilldawn.controller.AvatarMenuController;
+import com.tilldawn.controller.menus.AvatarMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Output;
+import com.tilldawn.model.enums.Output;
 
 public class AvatarMenuView implements Screen {
     private AvatarMenuController controller;
@@ -65,7 +65,6 @@ public class AvatarMenuView implements Screen {
         Table options = new Table();
         label = new Label("Choose an avatar:", GameAssetManager.getInstance().getSkin());
         label.setFontScale(1.5f);
-        label.setColor(Color.YELLOW);
         options.add(label).padBottom(15).row();
         options.add(avatarGrid).width(400);
         Table contentTable = new Table();

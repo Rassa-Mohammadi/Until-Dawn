@@ -1,10 +1,11 @@
-package com.tilldawn.controller;
+package com.tilldawn.controller.menus;
 
 import com.badlogic.gdx.graphics.Color;
 import com.tilldawn.Main;
 import com.tilldawn.model.*;
-import com.tilldawn.view.AppMenuView;
-import com.tilldawn.view.RegisterMenuView;
+import com.tilldawn.model.enums.Output;
+import com.tilldawn.view.menus.AppMenuView;
+import com.tilldawn.view.menus.RegisterMenuView;
 
 public class RegisterMenuController {
     private RegisterMenuView view;

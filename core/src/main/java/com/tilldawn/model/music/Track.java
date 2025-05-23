@@ -2,7 +2,8 @@ package com.tilldawn.model.music;
 
 public enum Track {
     GrassWalk("Grass Walk", "SFX/AudioClip/Grasswalk.mp3"),
-    CrazyDave("Crazy Dave", "SFX/AudioClip/Crazy Dave.mp3");
+    CrazyDave("Crazy Dave", "SFX/AudioClip/Crazy Dave.mp3"),
+    Loonboon("Loonboon", "SFX/AudioClip/Loonboon.mp3"),;
 
     private final String name;
     private final String address;

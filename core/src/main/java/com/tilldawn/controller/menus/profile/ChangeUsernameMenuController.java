@@ -1,10 +1,11 @@
-package com.tilldawn.controller;
+package com.tilldawn.controller.menus.profile;
 
 import com.badlogic.gdx.graphics.Color;
 import com.tilldawn.Main;
 import com.tilldawn.model.*;
-import com.tilldawn.view.ChangeUsernameMenuView;
-import com.tilldawn.view.ProfileMenuView;
+import com.tilldawn.model.enums.Output;
+import com.tilldawn.view.menus.profile.ChangeUsernameMenuView;
+import com.tilldawn.view.menus.profile.ProfileMenuView;
 
 public class ChangeUsernameMenuController {
     private ChangeUsernameMenuView view;

@@ -1,4 +1,4 @@
-package com.tilldawn.view;
+package com.tilldawn.view.menus.profile;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -13,10 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
-import com.tilldawn.controller.ChangeUsernameMenuController;
+import com.tilldawn.controller.menus.profile.ChangeUsernameMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Output;
+import com.tilldawn.model.enums.Output;
 import com.tilldawn.model.Result;
 
 public class ChangeUsernameMenuView implements Screen {

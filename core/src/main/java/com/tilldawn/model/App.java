@@ -1,5 +1,7 @@
 package com.tilldawn.model;
 
+import com.tilldawn.model.enums.Output;
+
 import java.util.ArrayList;
 
 public class App {
