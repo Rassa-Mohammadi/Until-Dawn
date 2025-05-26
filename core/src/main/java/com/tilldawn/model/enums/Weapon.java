@@ -2,6 +2,7 @@ package com.tilldawn.model.enums;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.w3c.dom.Text;
 
 public enum Weapon {
@@ -11,7 +12,7 @@ public enum Weapon {
 
     private final int damage;
     private final int projectile;
-    private final int reloadTime;
+    private final float reloadTime;
     private final int maxAmmo;
     private final Texture texture;
 
@@ -29,6 +30,26 @@ public enum Weapon {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public Sprite getSprite() {
+        return new Sprite(texture);
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getProjectile() {
+        return projectile;
+    }
+
+    public float getReloadTime() {
+        return reloadTime;
+    }
+
+    public int getMaxAmmo() {
+        return maxAmmo;
     }
 
     public static Texture getTexture(String weaponName) {

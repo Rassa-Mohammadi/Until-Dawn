@@ -35,6 +35,8 @@ public enum Output {
     Play("Play", "Jouer"),
     AbilityDescription("Abilities Description", "Description des capacités"),
     CheatCodes("Cheat codes", "Codes de triche"),
+    Resume("Resume", "Reprendre"),
+    GiveUp("Give Up", "Abandonner"),
     // titles
     RegisterMenu("Register Menu", "Menu d'inscription"),
     LoginMenu("Login Menu", "Menu de connexion"),
@@ -47,6 +49,7 @@ public enum Output {
     HintMenu("Hint Menu", "Menu d'indices"),
     AbilitiesMenu("Abilities Menu", "Menu des capacités"),
     CheatCodesMenu("Cheat Codes Menu", "Menu des codes de triche"),
+    PauseMenu("Pause Menu", "Menu de pause"),
     // errors
     UsernameExists("Username already exists", "Ce nom d'utilisateur existe déjà"),
     PasswordEmpty("Password is empty", "Le mot de passe est vide"),

@@ -30,9 +30,15 @@ public enum KeyBind {
     }
 
     public boolean isPressed() {
-        if (keyCode > 1000)
-            return Gdx.input.isButtonPressed(keyCode);
+        if (keyCode >= 1000)
+            return Gdx.input.isButtonPressed(keyCode - 1000);
         return Gdx.input.isKeyPressed(keyCode);
+    }
+
+    public boolean isJustPressed() {
+        if (keyCode >= 1000)
+            return Gdx.input.isButtonJustPressed(keyCode - 1000);
+        return Gdx.input.isKeyJustPressed(keyCode);
     }
 
     public static String getKeyName(int keyCode) {

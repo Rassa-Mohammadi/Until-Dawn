@@ -140,6 +140,10 @@ public enum Hero {
         return idleAnimation;
     }
 
+    public Animation<Texture> getRunAnimation() {
+        return runAnimation;
+    }
+
     public Table getDescription() {
         Table result = new Table();
         result.center();

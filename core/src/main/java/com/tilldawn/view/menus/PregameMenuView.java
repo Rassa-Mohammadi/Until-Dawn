@@ -165,7 +165,7 @@ public class PregameMenuView implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
                     GameAssetManager.getInstance().getButtonClick().play(1.0f);
-                // TODO
+                controller.goToGame();
             }
         });
 

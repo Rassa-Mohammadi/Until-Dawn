@@ -30,7 +30,9 @@ public class GameAssetManager {
     public final static int backButtonLength = 200;
     public final static int selectBoxLength = 600;
     private static GameAssetManager instance;
-    private Texture cursorTexture;
+    private final Texture cursorTexture;
+    private final Texture bulletTexture;
+    private final Texture ammoTexture;
     private final Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     private Array<String> avatarFiles;
     private MusicPlayer musicPlayer = new MusicPlayer();
@@ -46,6 +48,8 @@ public class GameAssetManager {
 
     private GameAssetManager() {
         cursorTexture = new Texture("Images/Texture2D/T_Cursor.png");
+        bulletTexture = new Texture("Images/Texture2D/bullet.png");
+        ammoTexture = new Texture("Images/Texture2D/T_AmmoIcon.png");
         musicPlayer.setCurrentTrack(Track.GrassWalk);
     }
 
@@ -96,5 +100,13 @@ public class GameAssetManager {
 
     public Texture getCursorTexture() {
         return cursorTexture;
+    }
+
+    public Texture getBulletTexture() {
+        return bulletTexture;
+    }
+
+    public Texture getAmmoTexture() {
+        return ammoTexture;
     }
 }

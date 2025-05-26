@@ -7,13 +7,15 @@ import com.tilldawn.Main;
 import com.tilldawn.model.Player;
 
 public class WorldController {
+    private Player player;
     private Sprite background;
 
-    public WorldController() {
+    public WorldController(Player player) {
+        this.player = player;
         this.background = new Sprite(new Texture(Gdx.files.internal("Images/Texture2D/background.png")));
     }
 
-    public void update(Player player) {
+    public void update() {
         background.setCenter(
             Gdx.graphics.getWidth() / 2f - player.getX(),
             Gdx.graphics.getHeight() / 2f - player.getY()

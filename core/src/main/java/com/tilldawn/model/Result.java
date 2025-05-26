@@ -47,7 +47,7 @@ public class Result {
         if (displayTime > 0f) {
             displayTime -= deltaTime;
             if (displayTime < 1f)
-                message.setColor(1, 0, 0, displayTime);
+                message.setColor(message.getColor().r, message.getColor().g, message.getColor().b, displayTime);
             if (displayTime <= 0f)
                 this.message.setVisible(false);
         }

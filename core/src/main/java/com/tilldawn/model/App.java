@@ -5,6 +5,8 @@ import com.tilldawn.model.enums.Output;
 import java.util.ArrayList;
 
 public class App {
+    public static final int playerMovementCoefficient = 70;
+    public static final int bulletMovementCoefficient = 350;
     private static boolean isFrench = false;
     private static boolean sfxEnabled = true;
     private static ArrayList<User> users = new ArrayList<>();

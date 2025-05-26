@@ -17,7 +17,7 @@ public class User {
     protected SecurityQuestion securityQuestion = null;
     protected String avatarPath;
     protected boolean isGuest = false;
-    protected Weapon weapon = Weapon.Revolver;
+    protected Weapon weapon = Weapon.SMG;
     protected Hero hero = Hero.Shana;
     protected Integer gameDuration = 5;
     protected boolean autoReload = false;

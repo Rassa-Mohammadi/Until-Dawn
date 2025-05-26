@@ -1,6 +1,7 @@
 package com.tilldawn.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -74,6 +75,8 @@ public class GameView implements Screen, InputProcessor {
     @Override
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0, 1);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+            controller.goToPauseMenu();
         Main.getBatch().begin();
         controller.updateGame();
         Main.getBatch().end();

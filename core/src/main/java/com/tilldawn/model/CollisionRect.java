@@ -14,4 +14,9 @@ public class CollisionRect {
     public boolean collide(CollisionRect other) {
         return x < other.x + other.width && y < other.y + other.height && x > other.x && y > other.y;
     }
+
+    public void move(float deltaX, float deltaY) {
+        x += deltaX;
+        y += deltaY;
+    }
 }
