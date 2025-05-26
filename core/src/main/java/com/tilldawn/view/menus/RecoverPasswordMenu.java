@@ -82,6 +82,7 @@ public class RecoverPasswordMenu implements Screen {
         Main.getBatch().end();
         recoveryResult.update(delta);
         stage.act(delta);
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 

@@ -78,6 +78,7 @@ public class AppMenuView implements Screen {
         Main.getBatch().begin();
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 
@@ -130,7 +131,8 @@ public class AppMenuView implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
                     GameAssetManager.getInstance().getButtonClick().play(1.0f);
-                // TODO
+                controller.createGuest();
+                controller.goToGameMenu();
             }
         });
 

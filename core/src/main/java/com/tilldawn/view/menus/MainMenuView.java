@@ -81,6 +81,7 @@ public class MainMenuView implements Screen {
         Main.getBatch().begin();
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 

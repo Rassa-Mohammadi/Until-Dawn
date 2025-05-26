@@ -11,15 +11,16 @@ import com.tilldawn.model.enums.Output;
 import com.tilldawn.model.enums.Weapon;
 
 public class User {
-    private String username;
-    private String password;
-    private int points = 0;
-    private SecurityQuestion securityQuestion = null;
-    private String avatarPath;
-    private boolean isGuest = false;
-    private Weapon weapon = Weapon.Revolver;
-    private Hero hero = Hero.Shana;
-    private Integer gameDuration = 5;
+    protected String username;
+    protected String password;
+    protected int points = 0;
+    protected SecurityQuestion securityQuestion = null;
+    protected String avatarPath;
+    protected boolean isGuest = false;
+    protected Weapon weapon = Weapon.Revolver;
+    protected Hero hero = Hero.Shana;
+    protected Integer gameDuration = 5;
+    protected boolean autoReload = false;
 
     public User(String username, String password) {
         this.username = username;
@@ -81,6 +82,14 @@ public class User {
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public boolean isAutoReload() {
+        return autoReload;
+    }
+
+    public void setAutoReload(boolean autoReload) {
+        this.autoReload = autoReload;
     }
 
     public Table getInfo() {

@@ -99,6 +99,7 @@ public class RegisterMenuView implements Screen {
         Main.getBatch().end();
         registerResult.update(delta);
         stage.act(delta);
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 

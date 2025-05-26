@@ -81,6 +81,7 @@ public class LoginMenuView implements Screen {
         Main.getBatch().end();
         loginResult.update(delta);
         stage.act(delta);
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 

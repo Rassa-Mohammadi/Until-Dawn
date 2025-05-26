@@ -1,8 +1,11 @@
 package com.tilldawn.controller.menus;
 
 import com.tilldawn.Main;
+import com.tilldawn.controller.GameController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
+import com.tilldawn.model.User;
+import com.tilldawn.view.GameView;
 import com.tilldawn.view.menus.*;
 
 public class AppMenuController {
@@ -26,6 +29,16 @@ public class AppMenuController {
         App.changeLanguage();
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new AppMenuView(new AppMenuController(), GameAssetManager.getInstance().getSkin()));
+    }
+
+    public void createGuest() {
+        User user = new User("Guest", "Guest Password");
+        App.setLoggedInUser(user);
+    }
+
+    public void goToGameMenu() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new GameView(new GameController(), GameAssetManager.getInstance().getSkin()));
     }
 
     public void exit() {

@@ -81,7 +81,10 @@ public enum Output {
     Damager("Increases weapon damage by 25% for 10 seconds", "Augmente les dégâts de l'arme de 25 % pendant 10 secondes"),
     Procrease("Increases weapon projectile by one", "Augmente le projectile de l'arme d'un"),
     Ammocrease("Increases weapon's ammo limit by five", "Augmente la limite de munitions de l'arme de cinq"),
-    Speedy("Doubles player's speed for 10 seconds", "Double la vitesse du joueur pendant 10 secondes");
+    Speedy("Doubles player's speed for 10 seconds", "Double la vitesse du joueur pendant 10 secondes"),
+    // check box
+    BlackAndWhite("Black and white", "Noir et Blanc"),
+    AutoReload("Auto Reload", "Rechargement Automatique"),;
 
     private final String english;
     private final String french;

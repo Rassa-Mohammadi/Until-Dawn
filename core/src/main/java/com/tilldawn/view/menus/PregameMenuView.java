@@ -34,14 +34,14 @@ public class PregameMenuView implements Screen {
     private Image heroImage;
     private SelectBox<String> heroesSelectBox;
     private Label gameDuration;
-    private SelectBox<Integer> gameDurationSelectBox;
+    private Slider gameDurationSlider;
+    private final int[] durations = {2, 5, 10, 20};
     private TextButton playButton;
     private TextButton backButton;
 
     {
         initWeaponSelectBox();
         initHeroesSelectBox();
-        initGameDurationSelectBox();
     }
 
     public PregameMenuView(PregameMenuController controller, Skin skin) {
@@ -52,6 +52,7 @@ public class PregameMenuView implements Screen {
         menuTitle.setFontScale(2.5f);
         this.backButton = new TextButton(Output.Back.getString(), skin);
         this.playButton = new TextButton(Output.Play.getString(), skin);
+        this.gameDurationSlider = new Slider(0, 3, 1, false, skin);
         setListeners();
         this.controller.setView(this);
     }
@@ -82,6 +83,7 @@ public class PregameMenuView implements Screen {
         Main.getBatch().begin();
         Main.getBatch().end();
         stage.act(delta);
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 
@@ -134,8 +136,9 @@ public class PregameMenuView implements Screen {
 
     private Table getDuraionTable() {
         Table result = new Table();
+        int currentDuration = durations[(int) gameDurationSlider.getValue()];
         gameDuration = new Label(
-            Output.GameDuration.getString() + gameDurationSelectBox.getSelected(),
+            Output.GameDuration.getString() + currentDuration,
             GameAssetManager.getInstance().getSkin()
         );
         gameDuration.setColor(Color.GREEN);
@@ -143,7 +146,7 @@ public class PregameMenuView implements Screen {
         Label label = new Label(Output.SelectGameDuration.getString(), GameAssetManager.getInstance().getSkin());
         result.add(label).center().pad(10).row();
         result.add(gameDuration).padBottom(30).row();
-        result.add(gameDurationSelectBox).fillX().pad(10).row();
+        result.add(gameDurationSlider).fillX().pad(10).row();
         return result;
     }
 
@@ -182,12 +185,10 @@ public class PregameMenuView implements Screen {
             }
             return false;
         });
-        gameDurationSelectBox.addListener(event -> {
-            if (event instanceof ChangeListener.ChangeEvent) {
-                Integer newGameDuration = gameDurationSelectBox.getSelected();
-                App.getLoggedInUser().setGameDuration(newGameDuration);
-                 gameDuration.setText(Output.GameDuration.getString() + newGameDuration);
-            }
+        gameDurationSlider.addListener(event -> {
+            Integer newGameDuration = durations[(int) gameDurationSlider.getValue()];
+            App.getLoggedInUser().setGameDuration(newGameDuration);
+            gameDuration.setText(Output.GameDuration.getString() + newGameDuration);
             return false;
         });
     }
@@ -210,16 +211,5 @@ public class PregameMenuView implements Screen {
         }
         heroesSelectBox.setItems(array);
         heroesSelectBox.setSelected(App.getLoggedInUser().getHero().getName());
-    }
-
-    private void initGameDurationSelectBox() {
-        gameDurationSelectBox = new SelectBox<>(GameAssetManager.getInstance().getSkin());
-        Array<Integer> array = new Array<>();
-        array.add(2);
-        array.add(5);
-        array.add(10);
-        array.add(20);
-        gameDurationSelectBox.setItems(array);
-        gameDurationSelectBox.setSelected(App.getLoggedInUser().getGameDuration());
     }
 }

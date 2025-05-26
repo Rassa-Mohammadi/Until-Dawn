@@ -1,5 +1,6 @@
 package com.tilldawn.model.enums;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public enum KeyBind {
@@ -26,6 +27,12 @@ public enum KeyBind {
 
     public String getKeyName() {
         return getKeyName(keyCode);
+    }
+
+    public boolean isPressed() {
+        if (keyCode > 1000)
+            return Gdx.input.isButtonPressed(keyCode);
+        return Gdx.input.isKeyPressed(keyCode);
     }
 
     public static String getKeyName(int keyCode) {

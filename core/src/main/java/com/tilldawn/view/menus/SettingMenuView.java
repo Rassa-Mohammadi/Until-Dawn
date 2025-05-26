@@ -36,6 +36,8 @@ public class SettingMenuView implements Screen {
     private TextButton reloadButton;
     private TextButton shootButton;
     private CheckBox sfxCheckBox;
+    private CheckBox blackAndWhiteCheckBox;
+    private CheckBox autoReloadCheckBox;
     private TextButton backButton;
     private boolean isWaiting = false;
 
@@ -65,6 +67,10 @@ public class SettingMenuView implements Screen {
         this.shootButton = new TextButton(KeyBind.Shoot.getKeyName(), skin);
         this.sfxCheckBox = new CheckBox("SFX", skin);
         sfxCheckBox.setChecked(App.isSfxEnabled());
+        this.blackAndWhiteCheckBox = new CheckBox(Output.BlackAndWhite.getString(), skin);
+        blackAndWhiteCheckBox.setChecked(Main.getMain().isBlackAndWhite());
+        this.autoReloadCheckBox = new CheckBox(Output.AutoReload.getString(), skin);
+        autoReloadCheckBox.setChecked(App.getLoggedInUser().isAutoReload());
         this.backButton = new TextButton(Output.Back.getString(), skin);
         setListeners();
         this.controller.setView(this);
@@ -80,18 +86,23 @@ public class SettingMenuView implements Screen {
 
         GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
 
-        table.top().add(menuTitle).padTop(20).row();
+        table.top().add(menuTitle).row();
         Label label = new Label(Output.MusicVolume.getString(), GameAssetManager.getInstance().getSkin());
+        label.setFontScale(1.5f);
         table.add(label).padTop(20).row();
         table.add(volumeSlider).width(500).pad(10).padBottom(20).row();
         label = new Label(Output.MusicTrack.getString(), GameAssetManager.getInstance().getSkin());
+        label.setFontScale(1.5f);
         table.add(label).padTop(20).row();
         table.add(musicSelectBox).width(500).pad(10).padBottom(20).row();
         label = new Label(Output.KeyBinds.getString(), GameAssetManager.getInstance().getSkin());
+        label.setFontScale(1.5f);
         table.add(label).padTop(20).row();
         Table buttonTable = createButtonTable();
         table.add(buttonTable).row();
         table.add(sfxCheckBox).pad(10).row();
+        table.add(blackAndWhiteCheckBox).pad(10).row();
+        table.add(autoReloadCheckBox).pad(10).row();
         table.add(backButton).pad(10);
 
         stage.addActor(table);
@@ -106,6 +117,7 @@ public class SettingMenuView implements Screen {
         if ((keycode = controller.getPressedKey()) != -1 && isWaiting)
             controller.bindKey(keycode);
         stage.act(delta);
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 
@@ -257,6 +269,23 @@ public class SettingMenuView implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 App.setSfxEnabled(sfxCheckBox.isChecked());
+            }
+        });
+
+        blackAndWhiteCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (blackAndWhiteCheckBox.isChecked())
+                    Main.getMain().setBlackAndWhiteShader();
+                else
+                    Main.getMain().removeBlackAndWhiteShader();
+            }
+        });
+
+        autoReloadCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                App.getLoggedInUser().setAutoReload(autoReloadCheckBox.isChecked());
             }
         });
     }

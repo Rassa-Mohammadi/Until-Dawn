@@ -1,0 +1,23 @@
+package com.tilldawn.controller;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.tilldawn.Main;
+import com.tilldawn.model.Player;
+
+public class WorldController {
+    private Sprite background;
+
+    public WorldController() {
+        this.background = new Sprite(new Texture(Gdx.files.internal("Images/Texture2D/background.png")));
+    }
+
+    public void update(Player player) {
+        background.setCenter(
+            Gdx.graphics.getWidth() / 2f - player.getX(),
+            Gdx.graphics.getHeight() / 2f - player.getY()
+        );
+        background.draw(Main.getBatch());
+    }
+}
