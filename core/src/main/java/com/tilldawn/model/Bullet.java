@@ -60,4 +60,8 @@ public class Bullet {
     public CollisionRect getCollisionRect() {
         return collisionRect;
     }
+
+    public boolean isFriendly() {
+        return isFriendly;
+    }
 }

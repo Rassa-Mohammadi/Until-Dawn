@@ -85,6 +85,7 @@ public enum Output {
     Procrease("Increases weapon projectile by one", "Augmente le projectile de l'arme d'un"),
     Ammocrease("Increases weapon's ammo limit by five", "Augmente la limite de munitions de l'arme de cinq"),
     Speedy("Doubles player's speed for 10 seconds", "Double la vitesse du joueur pendant 10 secondes"),
+    Level("Level ", "Niveau "),
     // check box
     BlackAndWhite("Black and white", "Noir et Blanc"),
     AutoReload("Auto Reload", "Rechargement Automatique"),;

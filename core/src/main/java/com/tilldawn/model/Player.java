@@ -13,7 +13,11 @@ public class Player extends User {
     private float posX, posY;
     private int hp;
     private boolean isRunning = false;
+    private boolean isAutoAim = false;
     private int ammo;
+    private int kills;
+    private int xps;
+    private int level;
 
     public Player(User user) {
         super(user.username, user.password);
@@ -28,6 +32,9 @@ public class Player extends User {
         weaponSprite.setScale(3f);
         this.hp = hero.getHp();
         this.ammo = weapon.getMaxAmmo();
+        this.kills = 0;
+        this.xps = 0;
+        this.level = 1;
     }
 
     public void updateSprite() {
@@ -126,5 +133,46 @@ public class Player extends User {
         invincibleTime -= Gdx.graphics.getDeltaTime();
         if (invincibleTime <= 0f)
             invincibleTime = 0f;
+    }
+
+    public int getProjectile() {
+        return weapon.getProjectile();
+    }
+
+    public boolean isAutoAim() {
+        return isAutoAim;
+    }
+
+    public void setAutoAim(boolean autoAim) {
+        isAutoAim = autoAim;
+    }
+
+    public void addKill(int amount) {
+        kills += amount;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void addXp(int amount) {
+        xps += amount;
+    }
+
+    public int getXps() {
+        return xps;
+    }
+
+    public boolean hasLevelUp() {
+        if (xps >= 20 * level) {
+            xps -= 20 * level;
+            ++level;
+            return true;
+        }
+        return false;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }

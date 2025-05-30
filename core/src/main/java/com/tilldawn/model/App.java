@@ -8,6 +8,7 @@ public class App {
     public static final int playerMovementCoefficient = 70;
     public static final int friendlyBulletMovementCoefficient = 800;
     public static final int nonFriendlyBulletMovementCoefficient = 200;
+    public static final int monsterMovementCoefficient = 40;
     private static boolean isFrench = false;
     private static boolean sfxEnabled = true;
     private static ArrayList<User> users = new ArrayList<>();

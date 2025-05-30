@@ -9,20 +9,20 @@ public enum MonsterType {
         new Texture("Images/Sprite/T_TreeMonster_0.png"),
         new Texture("Images/Sprite/T_TreeMonster_1.png"),
         new Texture("Images/Sprite/T_TreeMonster_2.png")
-    ), 1),
+    ), Float.MAX_VALUE, 0),
     TentacleMonster(new Animation<>(
-        0.12f,
+        0.2f,
         new Texture("Images/Sprite/BrainMonster_0.png"),
         new Texture("Images/Sprite/BrainMonster_1.png"),
         new Texture("Images/Sprite/BrainMonster_2.png"),
         new Texture("Images/Sprite/BrainMonster_3.png")
-    ), 25),
+    ), 25, 1),
     EyeBat(new Animation<>(
         0.12f,
         new Texture("Images/Sprite/T_EyeBat_0.png"),
         new Texture("Images/Sprite/T_EyeBat_1.png"),
         new Texture("Images/Sprite/T_EyeBat_2.png")
-    ), 50);
+    ), 50, 2);
 
     public static final Animation<Texture> deathAnimation = new Animation<>(
         0.12f,
@@ -33,10 +33,12 @@ public enum MonsterType {
     );
     private final Animation<Texture> animation;
     private final float hp;
+    private final int speed;
 
-    MonsterType(Animation<Texture> animation, float hp) {
+    MonsterType(Animation<Texture> animation, float hp, int speed) {
         this.animation = animation;
         this.hp = hp;
+        this.speed = speed;
         this.animation.setPlayMode(Animation.PlayMode.LOOP);
     }
 
@@ -47,5 +49,9 @@ public enum MonsterType {
 
     public float getHp() {
         return hp;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }

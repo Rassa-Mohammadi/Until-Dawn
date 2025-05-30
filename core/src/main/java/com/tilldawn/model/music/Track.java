@@ -1,6 +1,7 @@
 package com.tilldawn.model.music;
 
 public enum Track {
+    LuxAeterna("Lux Aeterna", "SFX/AudioClip/Lux Aeterna.mp3"),
     GrassWalk("Grass Walk", "SFX/AudioClip/Grasswalk.mp3"),
     CrazyDave("Crazy Dave", "SFX/AudioClip/Crazy Dave.mp3"),
     Loonboon("Loonboon", "SFX/AudioClip/Loonboon.mp3");

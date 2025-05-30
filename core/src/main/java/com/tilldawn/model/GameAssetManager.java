@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -36,7 +37,9 @@ public class GameAssetManager {
     private final Texture cursorTexture;
     private final Texture bulletTexture;
     private final Texture ammoTexture;
-
+    private final Texture aimTexture;
+    private final Texture killTexture;
+    private final Animation<Texture> xpDropAnimation;
     private final Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     private Array<String> avatarFiles;
     private MusicPlayer musicPlayer = new MusicPlayer();
@@ -55,7 +58,13 @@ public class GameAssetManager {
         cursorTexture = new Texture("Images/Texture2D/T_Cursor.png");
         bulletTexture = new Texture("Images/Texture2D/bullet.png");
         ammoTexture = new Texture("Images/Texture2D/T_AmmoIcon.png");
-        musicPlayer.setCurrentTrack(Track.GrassWalk);
+        aimTexture = new Texture("Images/Sprite/T_HitMarkerFX_2.png");
+        killTexture = new Texture("Images/Sprite/T_HitMarkerFX_1.png");
+        xpDropAnimation = new Animation<>(0.3f,
+            new Texture("Images/Sprite/T_ChargeUp_0.png"),
+            new Texture("Images/Sprite/T_ChargeUp_1.png")
+        );
+        musicPlayer.setCurrentTrack(Track.LuxAeterna);
     }
 
     public static GameAssetManager getInstance() {
@@ -117,5 +126,17 @@ public class GameAssetManager {
 
     public Texture getAmmoTexture() {
         return ammoTexture;
+    }
+
+    public Texture getAimTexture() {
+        return aimTexture;
+    }
+
+    public Texture getKillTexture() {
+        return killTexture;
+    }
+
+    public Animation<Texture> getXpDropAnimation() {
+        return xpDropAnimation;
     }
 }

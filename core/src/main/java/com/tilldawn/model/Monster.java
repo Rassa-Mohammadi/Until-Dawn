@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.tilldawn.model.enums.MonsterType;
 
 public class Monster {
@@ -13,12 +14,14 @@ public class Monster {
     private float posX, posY;
     private float hp;
     private boolean isExploding = false;
+    private float knockbackTimer = 0f;
 
     public Monster(MonsterType type, float posX, float posY) {
         this.type = type;
         this.hp = type.getHp();
         this.spriteTime = 0f;
         this.sprite = new Sprite(type.getAnimation().getKeyFrame(0f));
+        sprite.setSize(sprite.getWidth() * 2, sprite.getHeight() * 2);
         this.posX = posX;
         this.posY = posY;
     }
@@ -36,6 +39,16 @@ public class Monster {
             spriteTime = 0f;
         }
         sprite.setRegion(animation.getKeyFrame(spriteTime));
+    }
+
+    public void move(Vector2 direction) {
+        if (knockbackTimer > 0f) {
+            posX -= direction.x * knockbackTimer;
+            posY -= direction.y * knockbackTimer;
+        } else {
+            posX += direction.x;
+            posY += direction.y;
+        }
     }
 
     public Sprite getSprite() {
@@ -74,12 +87,25 @@ public class Monster {
         return hp;
     }
 
+    public MonsterType getType() {
+        return type;
+    }
+
     public boolean isExploding() {
         return isExploding;
     }
 
     public void setExploding(boolean exploding) {
         isExploding = exploding;
+    }
+
+    public void setKnockback() {
+        knockbackTimer = 1f;
+    }
+
+    public void updateKnockback() {
+        if (knockbackTimer > 0f)
+            knockbackTimer -= Gdx.graphics.getDeltaTime();
     }
 
     public boolean isDead() {
