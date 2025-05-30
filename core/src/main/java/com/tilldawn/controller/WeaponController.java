@@ -16,13 +16,11 @@ public class WeaponController {
     private Player player;
     private ArrayList<Bullet> bullets;
     private float currentAngle;
-    private int ammo;
     private float reloadTime = 0f;
     private boolean isReloading = false;
 
     public WeaponController(Player player) {
         this.player = player;
-        this.ammo = player.getWeapon().getMaxAmmo();
         this.bullets = new ArrayList<>();
         this.currentAngle = calcCurrentAngle();
     }
@@ -36,19 +34,18 @@ public class WeaponController {
         updateBullets();
         player.getWeaponSprite().draw(Main.getBatch());
         drawBullets();
-        drawAmmo();
     }
 
     private void handleReloading() {
         if (KeyBind.Reload.isJustPressed())
             startReload();
-        else if (player.isAutoReload() && ammo == 0 && !isReloading)
+        else if (player.isAutoReload() && player.getAmmo() == 0 && !isReloading)
             startReload();
     }
 
     private void startReload() {
         isReloading = true;
-        int amount = player.getWeapon().getMaxAmmo() - ammo;
+        int amount = player.getWeapon().getMaxAmmo() - player.getAmmo();
         reloadTime = player.getWeapon().getReloadTime() * amount / player.getWeapon().getMaxAmmo();
     }
 
@@ -57,28 +54,33 @@ public class WeaponController {
             return;
         reloadTime -= Gdx.graphics.getDeltaTime();
         if (reloadTime <= 0f) {
-            ammo = player.getWeapon().getMaxAmmo();
+            player.setAmmo(player.getWeapon().getMaxAmmo());
             isReloading = false;
         }
     }
 
     private void handleShoot() {
-        if (ammo == 0)
+        if (player.getAmmo() == 0 || isReloading)
             return;
         if (KeyBind.Shoot.isJustPressed()) {
             bullets.add(new Bullet(
                 Gdx.graphics.getWidth() / 2f + player.getX(),
                 Gdx.graphics.getHeight() / 2f + player.getY(),
-                currentAngle)
+                currentAngle,
+                true)
             );
-            --ammo;
+            player.addAmmo(-1);
         }
     }
 
     private void updateBullets() {
+        ArrayList<Bullet> removableBullets = new ArrayList<>();
         for (Bullet bullet : bullets) {
             bullet.move();
+            if (bullet.isOut())
+                removableBullets.add(bullet);
         }
+        bullets.removeAll(removableBullets);
     }
 
     private void drawBullets() {
@@ -91,14 +93,6 @@ public class WeaponController {
         }
     }
 
-    private void drawAmmo() {
-        for (int i = 0; i < ammo; i++) {
-            Sprite ammoSprite = new Sprite(GameAssetManager.getInstance().getAmmoTexture());
-            ammoSprite.setPosition(5 + ammoSprite.getWidth() * i, Gdx.graphics.getHeight() - ammoSprite.getHeight() - 5);
-            ammoSprite.draw(Main.getBatch());
-        }
-    }
-
     private float calcCurrentAngle() {
         float cursorX = Gdx.input.getX();
         float cursorY = Gdx.input.getY();
@@ -106,5 +100,9 @@ public class WeaponController {
             -cursorY + Gdx.graphics.getHeight() / 2f,
             cursorX - Gdx.graphics.getWidth() / 2f
         ) * MathUtils.radiansToDegrees;
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
     }
 }

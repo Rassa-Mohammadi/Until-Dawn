@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.tilldawn.Main;
+import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.Player;
 
 public class WorldController {
@@ -12,7 +13,7 @@ public class WorldController {
 
     public WorldController(Player player) {
         this.player = player;
-        this.background = new Sprite(new Texture(Gdx.files.internal("Images/Texture2D/background.png")));
+        this.background = new Sprite(GameAssetManager.getInstance().getBackgroundTexture());
     }
 
     public void update() {

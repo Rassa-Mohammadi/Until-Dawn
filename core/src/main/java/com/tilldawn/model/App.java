@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 public class App {
     public static final int playerMovementCoefficient = 70;
-    public static final int bulletMovementCoefficient = 350;
+    public static final int friendlyBulletMovementCoefficient = 800;
+    public static final int nonFriendlyBulletMovementCoefficient = 200;
     private static boolean isFrench = false;
     private static boolean sfxEnabled = true;
     private static ArrayList<User> users = new ArrayList<>();

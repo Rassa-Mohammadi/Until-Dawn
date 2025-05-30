@@ -40,25 +40,6 @@ public class PauseMenuView implements Screen {
         this.controller.setView(this, pausedGame);
     }
 
-    private void setListeners() {
-        resumeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
-                controller.resume();
-            }
-        });
-        giveUpButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
-                controller.giveUp();
-            }
-        });
-    }
-
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
@@ -109,5 +90,24 @@ public class PauseMenuView implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    private void setListeners() {
+        resumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.resume();
+            }
+        });
+        giveUpButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                controller.giveUp();
+            }
+        });
     }
 }

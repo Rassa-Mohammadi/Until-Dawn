@@ -17,6 +17,7 @@ public class PlayerController {
     }
 
     public void update() {
+        player.updateInvincibleTime();
         player.updateSprite();
         handleWalk();
         handleFlip();
@@ -24,25 +25,30 @@ public class PlayerController {
     }
 
     private void handleWalk() {
-        player.setRunning(true);
-        if (KeyBind.Up.isPressed())
+        player.setRunning(false);
+        if (KeyBind.Up.isPressed()) {
             player.addY(player.getSpeed());
-        else if (KeyBind.Down.isPressed())
+            player.setRunning(true);
+        }
+        if (KeyBind.Down.isPressed()) {
             player.addY(-player.getSpeed());
-        else if (KeyBind.Left.isPressed()) {
+            player.setRunning(true);
+        }
+        if (KeyBind.Left.isPressed()) {
             player.addX(-player.getSpeed());
             isFacedRight = false;
+            player.setRunning(true);
         }
-        else if (KeyBind.Right.isPressed()) {
+        if (KeyBind.Right.isPressed()) {
             player.addX(player.getSpeed());
             isFacedRight = true;
+            player.setRunning(true);
         }
-        else
-            player.setRunning(false);
     }
 
     private void handleFlip() {
         if (!isFacedRight)
             player.getPlayerSprite().setFlip(true, false);
     }
+
 }

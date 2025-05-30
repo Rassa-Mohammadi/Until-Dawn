@@ -8,10 +8,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class Player extends User {
     private Sprite playerSprite;
     private Sprite weaponSprite;
-    private float time = 0f;
+    private float spriteTime = 0f;
+    private float invincibleTime = 0f;
     private float posX, posY;
-    private float hp;
+    private int hp;
     private boolean isRunning = false;
+    private int ammo;
 
     public Player(User user) {
         super(user.username, user.password);
@@ -25,16 +27,15 @@ public class Player extends User {
         weaponSprite.setCenter(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         weaponSprite.setScale(3f);
         this.hp = hero.getHp();
+        this.ammo = weapon.getMaxAmmo();
     }
 
     public void updateSprite() {
-        time += Gdx.graphics.getDeltaTime();
+        spriteTime += Gdx.graphics.getDeltaTime();
         Animation<Texture> animation = isRunning? hero.getRunAnimation() : hero.getIdleAnimation();
-        if (animation.isAnimationFinished(time))
-            time = 0f;
-        playerSprite.setRegion(animation.getKeyFrame(time));
-        playerSprite.setSize(playerSprite.getWidth(), playerSprite.getHeight());
-        playerSprite.setCenter(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        if (animation.isAnimationFinished(spriteTime))
+            spriteTime = 0f;
+        playerSprite.setRegion(animation.getKeyFrame(spriteTime));
     }
 
     public Sprite getPlayerSprite() {
@@ -59,22 +60,46 @@ public class Player extends User {
 
     public void addX(int speed) {
         posX += Gdx.graphics.getDeltaTime() * speed * App.playerMovementCoefficient;
-        posX = Math.min(posX, 1884); // background.png width is 3776
-        posX = Math.max(posX, -1884);
+        posX = Math.min(posX, GameAssetManager.backgroundWidth / 2f); // background.png width is 3776
+        posX = Math.max(posX, -GameAssetManager.backgroundWidth / 2f);
     }
 
     public void addY(int speed) {
         posY += Gdx.graphics.getDeltaTime() * speed * App.playerMovementCoefficient;
-        posY = Math.min(posY, 1340); // background.png height is 2688
-        posY = Math.max(posY, -1340);
+        posY = Math.min(posY, GameAssetManager.backgroundHeight / 2f); // background.png height is 2688
+        posY = Math.max(posY, -GameAssetManager.backgroundHeight / 2f);
     }
 
-    public void setTime(float time) {
-        this.time = time;
+    public void setSpriteTime(float spriteTime) {
+        this.spriteTime = spriteTime;
     }
 
     public void setRunning(boolean running) {
         isRunning = running;
+    }
+
+    public int getAmmo() {
+        return ammo;
+    }
+
+    public void addAmmo(int amount) {
+        ammo += amount;
+    }
+
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public CollisionRect getCollisionRect() {
+        return new CollisionRect(
+            Gdx.graphics.getWidth() / 2f - playerSprite.getWidth() / 2f + posX,
+            Gdx.graphics.getHeight() / 2f - playerSprite.getHeight() / 2f + posY,
+            playerSprite.getWidth(), playerSprite.getHeight()
+        );
     }
 
     private void copyUser(User user) {
@@ -83,5 +108,23 @@ public class Player extends User {
         this.hero = user.hero;
         this.gameDuration = user.gameDuration;
         this.autoReload = user.autoReload;
+    }
+
+    public void reduceHp(int amount) {
+        if (invincibleTime > 0f)
+            return;
+        this.hp -= amount;
+    }
+
+    public void setInvincible() {
+        if (invincibleTime > 0f)
+            return;
+        invincibleTime = 1f;
+    }
+
+    public void updateInvincibleTime() {
+        invincibleTime -= Gdx.graphics.getDeltaTime();
+        if (invincibleTime <= 0f)
+            invincibleTime = 0f;
     }
 }

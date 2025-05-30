@@ -12,7 +12,7 @@ public class CollisionRect {
     }
 
     public boolean collide(CollisionRect other) {
-        return x < other.x + other.width && y < other.y + other.height && x > other.x && y > other.y;
+        return x < other.x + other.width && y < other.y + other.height && x + width > other.x && y + height > other.y;
     }
 
     public void move(float deltaX, float deltaY) {
