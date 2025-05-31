@@ -2,14 +2,12 @@ package com.tilldawn.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.tilldawn.Main;
-import com.tilldawn.model.Bullet;
-import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Monster;
-import com.tilldawn.model.Player;
+import com.tilldawn.model.*;
 import com.tilldawn.model.enums.KeyBind;
 import com.tilldawn.view.GameView;
 
@@ -44,7 +42,14 @@ public class WeaponController {
 
     private void checkAutoAim() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            player.setAutoAim(!player.isAutoAim());
+            if (player.isAutoAim()) {
+                player.setAutoAim(false);
+                Main.getMain().setCursor();
+            }
+            else {
+                player.setAutoAim(true);
+                Main.getMain().removeCursor();
+            }
         }
         if (player.isAutoAim()) {
             Monster monster = gameController.getMonsterController().getClosestMonster();
@@ -54,7 +59,7 @@ public class WeaponController {
                     Gdx.graphics.getHeight() - (int) (monster.getY() - player.getY())
                 );
                 Main.getBatch().draw(
-                    GameAssetManager.getInstance().getAimTexture(),
+                    GameAssetManager.getInstance().getCursorTexture(),
                     monster.getX() - player.getX() + monster.getSprite().getWidth() / 2f,
                     monster.getY() - player.getY() + monster.getSprite().getHeight() / 2f
                 );
@@ -89,6 +94,8 @@ public class WeaponController {
         if (player.getAmmo() == 0 || isReloading)
             return;
         if (KeyBind.Shoot.isJustPressed()) {
+            if (App.isSfxEnabled())
+                GameAssetManager.getInstance().getShootSfx().play(1f);
             float[] directions = getBulletDirections();
             for (int i = 0; i < directions.length; i++) {
                 bullets.add(new Bullet(

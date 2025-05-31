@@ -38,13 +38,13 @@ public class StatusController { // handles ammo, hearts, timer and ...
         initLevelBar();
     }
 
-    public void update(float timePassed) {
+    public void update() {
         updateHeartTimer();
         drawShadow();
         drawAmmo();
         drawHearts();
         drawKills();
-        drawTime(timePassed);
+        drawTime(player.getSurvivedTime());
         drawLevel();
     }
 
@@ -127,7 +127,9 @@ public class StatusController { // handles ammo, hearts, timer and ...
         float remainingTime = player.getGameDuration() * 60 - timePassed;
         int seconds = (int) (remainingTime % 60);
         int minutes = (int) (remainingTime / 60);
-        Label timeLabel = new Label(minutes + " : " + seconds, GameAssetManager.getInstance().getSkin());
+        String sec = seconds < 10? "0" + seconds: "" + seconds;
+        String min = minutes < 10? "0" + minutes: "" + minutes;
+        Label timeLabel = new Label(min + " : " + sec, GameAssetManager.getInstance().getSkin());
         timeLabel.setPosition(Gdx.graphics.getWidth() / 2f - 10, Gdx.graphics.getHeight() - 50);
         timeLabel.draw(Main.getBatch(), 1);
     }

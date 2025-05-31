@@ -27,10 +27,10 @@ public class MonsterController {
         generateTrees();
     }
 
-    public void update(float timePassed) {
+    public void update() {
         updateTimers();
-        generateTentacleMonsters(timePassed);
-        generateEyeBat(timePassed);
+        generateTentacleMonsters(player.getSurvivedTime());
+        generateEyeBat(player.getSurvivedTime());
         cleanMonsters();
         updateSprites();
         moveMonsters();

@@ -83,11 +83,22 @@ public class Main extends Game {
         batch.setShader(grayscaleShader);
     }
 
-    private void setCursor() {
+    public void setCursor() {
         Texture texture = GameAssetManager.getInstance().getCursorTexture();
         texture.getTextureData().prepare();
         Pixmap cursorPixmap = GameAssetManager.getInstance().getCursorTexture().getTextureData().consumePixmap();
         cursor = Gdx.graphics.newCursor(cursorPixmap, 0, 0);
         Gdx.graphics.setCursor(cursor);
+        cursorPixmap.dispose();
+    }
+
+    public void removeCursor() {
+        Texture texture = GameAssetManager.getInstance().getCursorTexture();
+        Pixmap pixmap = new Pixmap(texture.getWidth(), texture.getHeight(), Pixmap.Format.RGBA8888);
+        pixmap.setColor(0, 0, 0, 0);
+        pixmap.fill();
+        cursor = Gdx.graphics.newCursor(pixmap, 0, 0);
+        Gdx.graphics.setCursor(cursor);
+        pixmap.dispose();
     }
 }

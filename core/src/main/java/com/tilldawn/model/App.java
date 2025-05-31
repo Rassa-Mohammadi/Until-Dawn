@@ -16,7 +16,7 @@ public class App {
     private static ArrayList<Output> questions;
 
     static {
-        loggedInUser = new User("rassa", "R@Ssa1384"); // TODO
+        loggedInUser = new User("rassa", "R@Ssa1384", false); // TODO
         questions = new ArrayList<>();
         questions.add(Output.FatherName);
         questions.add(Output.Turk);

@@ -32,7 +32,7 @@ public class AppMenuController {
     }
 
     public void createGuest() {
-        User user = new User("Guest", "Guest Password");
+        User user = new User("Guest", "Guest Password", true);
         App.setLoggedInUser(user);
     }
 

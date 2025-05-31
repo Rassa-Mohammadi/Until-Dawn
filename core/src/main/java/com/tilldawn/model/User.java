@@ -13,19 +13,22 @@ import com.tilldawn.model.enums.Weapon;
 public class User {
     protected String username;
     protected String password;
-    protected int points = 0;
     protected SecurityQuestion securityQuestion = null;
     protected String avatarPath;
     protected boolean isGuest = false;
     protected Weapon weapon = Weapon.SMG;
     protected Hero hero = Hero.Shana;
-    protected Integer gameDuration = 5;
+    protected Integer gameDuration = 2;
     protected boolean autoReload = false;
+    private int points = 0;
+    private int totalKills = 0;
+    private float maxSurvivedTime = 0f;
 
-    public User(String username, String password) {
+    public User(String username, String password, boolean isGuest) {
         this.username = username;
         this.password = password;
         avatarPath = GameAssetManager.getInstance().getRandomAvatar();
+        this.isGuest = isGuest;
     }
 
     public String getUsername() {
@@ -92,6 +95,34 @@ public class User {
         this.autoReload = autoReload;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
+    public void addPoints(int amount) {
+        this.points += amount;
+    }
+
+    public int getTotalKills() {
+        return totalKills;
+    }
+
+    public void addTotalKills(int amount) {
+        this.totalKills += amount;
+    }
+
+    public float getMaxSurvivedTime() {
+        return maxSurvivedTime;
+    }
+
+    public void setMaxSurvivedTime(float maxSurvivedTime) {
+        this.maxSurvivedTime = maxSurvivedTime;
+    }
+
+    public boolean isGuest() {
+        return isGuest;
+    }
+
     public Table getInfo() {
         Table table = new Table();
         Image avatar = new Image(getAvatarTexture());
@@ -117,4 +148,5 @@ public class User {
             return new Result(Output.PasswordCapitalLetter.getString(), Color.RED);
         return new Result("Strong password", Color.GREEN, false);
     }
+
 }

@@ -1,7 +1,6 @@
 package com.tilldawn.view.menus.hintmenu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -102,7 +101,7 @@ public class HintMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.back();
             }
         });
@@ -110,7 +109,7 @@ public class HintMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.goToAbilityMenu();
             }
         });
@@ -118,7 +117,7 @@ public class HintMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.goToCheatCodesMenu();
             }
         });

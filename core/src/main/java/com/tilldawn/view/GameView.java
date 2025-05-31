@@ -26,6 +26,10 @@ public class GameView implements Screen, InputProcessor {
         this.controller.setView(this);
     }
 
+    public GameController getController() {
+        return controller;
+    }
+
     @Override
     public boolean keyDown(int i) {
         return false;

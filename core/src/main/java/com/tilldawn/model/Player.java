@@ -18,9 +18,10 @@ public class Player extends User {
     private int kills;
     private int xps;
     private int level;
+    private float survivedTime;
 
     public Player(User user) {
-        super(user.username, user.password);
+        super(user.username, user.password, user.isGuest);
         copyUser(user);
         this.playerSprite = new Sprite(hero.getIdleAnimation().getKeyFrame(0f));
         this.weaponSprite = new Sprite(weapon.getSprite());
@@ -35,6 +36,7 @@ public class Player extends User {
         this.kills = 0;
         this.xps = 0;
         this.level = 1;
+        this.survivedTime = 0f;
     }
 
     public void updateSprite() {
@@ -174,5 +176,21 @@ public class Player extends User {
 
     public int getLevel() {
         return level;
+    }
+
+    public float getSurvivedTime() {
+        return survivedTime;
+    }
+
+    public void addSurvivedTime(float amount) {
+        survivedTime += amount;
+    }
+
+    public String getFormatedTime() {
+        int seconds = (int) (survivedTime / 60);
+        int minutes = (int) (survivedTime % 60);
+        String sec = seconds < 10? "0" + seconds: "" + seconds;
+        String min = minutes < 10? "0" + minutes: "" + minutes;
+        return sec + ":" + min;
     }
 }

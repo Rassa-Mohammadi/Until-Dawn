@@ -16,13 +16,25 @@ import com.tilldawn.model.music.Track;
 
 class SFXManager {
     private Sound buttonClick;
+    private Sound shoot;
+    private Sound levelUp;
 
     {
         buttonClick = Gdx.audio.newSound(Gdx.files.internal("SFX/AudioClip/UI Click 36.wav"));
+        shoot = Gdx.audio.newSound(Gdx.files.internal("SFX/AudioClip/single_shot.wav"));
+        levelUp = Gdx.audio.newSound(Gdx.files.internal("SFX/AudioClip/Special & Powerup (13).wav"));
     }
 
     public Sound getButtonClick() {
         return buttonClick;
+    }
+
+    public Sound getShoot() {
+        return shoot;
+    }
+
+    public Sound getLevelUp() {
+        return levelUp;
     }
 }
 
@@ -108,8 +120,16 @@ public class GameAssetManager {
         return avatarFiles;
     }
 
-    public Sound getButtonClick() {
+    public Sound getButtonClickSfx() {
         return sfxManager.getButtonClick();
+    }
+
+    public Sound getShootSfx() {
+        return sfxManager.getShoot();
+    }
+
+    public Sound getLevelUpSfx() {
+        return sfxManager.getLevelUp();
     }
 
     public Texture getBackgroundTexture() {

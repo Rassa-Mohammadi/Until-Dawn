@@ -32,7 +32,7 @@ public class RegisterMenuController {
             return passwordResult;
         Output question = Output.getPhrase(questionString);
         assert question != null;
-        User user = new User(username, password);
+        User user = new User(username, password, false);
         user.setSecurityQuestion(new SecurityQuestion(question, answer));
         App.addUser(user);
         Main.getMain().getScreen().dispose();

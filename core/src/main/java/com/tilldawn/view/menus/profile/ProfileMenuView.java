@@ -107,7 +107,7 @@ public class ProfileMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.goToChangeUsernameMenu();
             }
         });
@@ -115,7 +115,7 @@ public class ProfileMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.goToChangePasswordMenu();
             }
         });
@@ -123,7 +123,7 @@ public class ProfileMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.deleteAccount();
             }
         });
@@ -131,7 +131,7 @@ public class ProfileMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.goToAvatarMenu();
             }
         });
@@ -139,7 +139,7 @@ public class ProfileMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.back();
             }
         });

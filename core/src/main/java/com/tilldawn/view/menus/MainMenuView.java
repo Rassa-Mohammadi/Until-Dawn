@@ -115,7 +115,7 @@ public class MainMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.goToSetting();
             }
         });
@@ -123,7 +123,7 @@ public class MainMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.goToProfile();
             }
         });
@@ -131,7 +131,7 @@ public class MainMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.goToPregame();
             }
         });
@@ -139,7 +139,7 @@ public class MainMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 // TODO
             }
         });
@@ -147,7 +147,7 @@ public class MainMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.goToHint();
             }
         });
@@ -155,7 +155,7 @@ public class MainMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.logout();
             }
         });

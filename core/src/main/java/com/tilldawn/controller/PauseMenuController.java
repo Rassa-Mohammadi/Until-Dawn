@@ -2,9 +2,11 @@ package com.tilldawn.controller;
 
 import com.badlogic.gdx.Game;
 import com.tilldawn.Main;
+import com.tilldawn.controller.menus.EndGameMenuController;
 import com.tilldawn.controller.menus.MainMenuController;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.view.GameView;
+import com.tilldawn.view.menus.EndGameMenuView;
 import com.tilldawn.view.menus.MainMenuView;
 import com.tilldawn.view.menus.PauseMenuView;
 
@@ -24,6 +26,10 @@ public class PauseMenuController {
 
     public void giveUp() {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
+        Main.getMain().setScreen(new EndGameMenuView(
+            new EndGameMenuController(),
+            GameAssetManager.getInstance().getSkin(),
+            false, pausedGameView.getController().getPlayer()
+        ));
     }
 }

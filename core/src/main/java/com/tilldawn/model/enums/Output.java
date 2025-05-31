@@ -37,6 +37,7 @@ public enum Output {
     CheatCodes("Cheat codes", "Codes de triche"),
     Resume("Resume", "Reprendre"),
     GiveUp("Give Up", "Abandonner"),
+    Continue("Continue", "Continuer"),
     // titles
     RegisterMenu("Register Menu", "Menu d'inscription"),
     LoginMenu("Login Menu", "Menu de connexion"),
@@ -67,6 +68,7 @@ public enum Output {
     FatherName("What is your father name?", "quel est le nom de ton père"),
     Turk("Are you Turk?", "Es tu Turk?"),
     // labels
+    Username("Username: ", "Nom d'utilisateur: "),
     MusicVolume("Music volume", "Volume de la musique"),
     MusicTrack("Music track", "Morceau de musique"),
     KeyBinds("Key binds", "Raccourcis clavier"),
@@ -86,6 +88,11 @@ public enum Output {
     Ammocrease("Increases weapon's ammo limit by five", "Augmente la limite de munitions de l'arme de cinq"),
     Speedy("Doubles player's speed for 10 seconds", "Double la vitesse du joueur pendant 10 secondes"),
     Level("Level ", "Niveau "),
+    YouWon("You Won", "Tu as gagné"),
+    YouLost("You Lost", "Tu as perdu"),
+    TimeSurvived("The amount of time you survived: ", "Le temps pendant lequel vous avez survécu: "),
+    Kills("Kills: ", "Victimes: "),
+    PointsEarned("Points earned: ", "Points gagnés: "),
     // check box
     BlackAndWhite("Black and white", "Noir et Blanc"),
     AutoReload("Auto Reload", "Rechargement Automatique"),;

@@ -97,7 +97,7 @@ public class PauseMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.resume();
             }
         });
@@ -105,7 +105,7 @@ public class PauseMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.giveUp();
             }
         });

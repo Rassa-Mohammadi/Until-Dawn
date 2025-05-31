@@ -116,7 +116,7 @@ public class RecoverPasswordMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 recoveryResult.set(controller.recoverPassword(questionAnswer.getText(), newPassword.getText()));
             }
         });
@@ -124,7 +124,7 @@ public class RecoverPasswordMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
-                    GameAssetManager.getInstance().getButtonClick().play(1.0f);
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.back();
             }
         });
