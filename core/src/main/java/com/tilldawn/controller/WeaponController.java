@@ -2,14 +2,11 @@ package com.tilldawn.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.tilldawn.Main;
 import com.tilldawn.model.*;
 import com.tilldawn.model.enums.KeyBind;
-import com.tilldawn.view.GameView;
+import com.tilldawn.model.client.Player;
 
 import java.util.ArrayList;
 

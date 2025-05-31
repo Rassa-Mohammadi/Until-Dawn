@@ -1,8 +1,15 @@
 package com.tilldawn.model;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tilldawn.model.enums.Output;
+import com.tilldawn.model.client.User;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class App {
     public static final int playerMovementCoefficient = 70;
@@ -16,7 +23,8 @@ public class App {
     private static ArrayList<Output> questions;
 
     static {
-        loggedInUser = new User("rassa", "R@Ssa1384", false); // TODO
+        loadUsers();
+//        loggedInUser = new User("rassa", "R@Ssa1384", false); // TODO
         questions = new ArrayList<>();
         questions.add(Output.FatherName);
         questions.add(Output.Turk);
@@ -60,5 +68,58 @@ public class App {
 
     public static void deleteUser(User user) {
         users.remove(user);
+    }
+
+    public static void loadUsers() {
+        File file = new File("users.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Map<String, ArrayList<Object>> data = objectMapper.readValue(
+                file,
+                new TypeReference<Map<String, ArrayList<Object>>>() {}
+            );
+            for (String username : data.keySet()) {
+                ArrayList<Object> userData = data.get(username);
+                User user = new User();
+                user.setUsername(username);
+                user.setPassword((String) userData.get(0));
+                SecurityQuestion securityQuestion = new SecurityQuestion(
+                    Output.getPhrase((String) userData.get(1)),
+                    (String) userData.get(2)
+                );
+                user.setSecurityQuestion(securityQuestion);
+                user.setAvatar((String) userData.get(3));
+                user.setAutoReload((boolean) userData.get(4));
+                user.setPoints((int) userData.get(5));
+                user.setTotalKills((int) userData.get(6));
+                user.setMaxSurvivedTime(((Double) userData.get(7)).floatValue());
+                users.add(user);
+            }
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public static void saveUsers() {
+        File file = new File("users.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, ArrayList<Object>> data = new HashMap<>();
+        for (User user : users) {
+            ArrayList<Object> userData = new ArrayList<>();
+            userData.add(user.getPassword());
+            userData.add(user.getSecurityQuestion().getQuestion().getString()); // security question output type
+            userData.add(user.getSecurityQuestion().getAnswer());
+            userData.add(user.getAvatarPath());
+            userData.add(user.isAutoReload());
+            userData.add(user.getPoints());
+            userData.add(user.getTotalKills());
+            userData.add(user.getMaxSurvivedTime());
+            data.put(user.getUsername(), userData);
+        }
+        try {
+            objectMapper.writeValue(file, data);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 }

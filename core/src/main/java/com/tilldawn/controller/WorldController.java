@@ -1,11 +1,10 @@
 package com.tilldawn.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.tilldawn.Main;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Player;
+import com.tilldawn.model.client.Player;
 
 public class WorldController {
     private Player player;

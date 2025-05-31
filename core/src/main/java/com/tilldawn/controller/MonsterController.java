@@ -6,7 +6,7 @@ import com.tilldawn.Main;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.Monster;
-import com.tilldawn.model.Player;
+import com.tilldawn.model.client.Player;
 import com.tilldawn.model.enums.MonsterType;
 import com.tilldawn.view.XpDrop;
 

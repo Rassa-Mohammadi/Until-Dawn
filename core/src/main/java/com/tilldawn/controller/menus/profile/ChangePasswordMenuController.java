@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.tilldawn.Main;
 import com.tilldawn.model.*;
 import com.tilldawn.model.enums.Output;
+import com.tilldawn.model.client.User;
 import com.tilldawn.view.menus.profile.ChangePasswordMenuView;
 import com.tilldawn.view.menus.profile.ProfileMenuView;
 

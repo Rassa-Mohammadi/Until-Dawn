@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.tilldawn.Main;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Player;
+import com.tilldawn.model.client.Player;
 import com.tilldawn.model.enums.Output;
 
 public class StatusController { // handles ammo, hearts, timer and ...

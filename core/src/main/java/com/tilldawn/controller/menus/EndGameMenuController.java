@@ -3,8 +3,8 @@ package com.tilldawn.controller.menus;
 import com.tilldawn.Main;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Player;
-import com.tilldawn.model.User;
+import com.tilldawn.model.client.Player;
+import com.tilldawn.model.client.User;
 import com.tilldawn.view.menus.EndGameMenuView;
 import com.tilldawn.view.menus.MainMenuView;
 
@@ -22,9 +22,7 @@ public class EndGameMenuController {
     }
 
     public void updateStats(Player player) {
-        if (player.isGuest())
-            return;
-        User user = App.getUser(player.getUsername());
+        User user = App.getLoggedInUser();
         assert user != null;
         user.addPoints((int) player.getSurvivedTime() * player.getKills());
         user.addTotalKills(player.getKills());

@@ -1,11 +1,7 @@
 package com.tilldawn.controller;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.tilldawn.Main;
-import com.tilldawn.model.Player;
+import com.tilldawn.model.client.Player;
 import com.tilldawn.model.enums.KeyBind;
 
 public class PlayerController {

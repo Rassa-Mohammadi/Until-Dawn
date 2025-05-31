@@ -1,11 +1,12 @@
 package com.tilldawn.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.Input;
 import com.tilldawn.Main;
 import com.tilldawn.controller.menus.ChooseAbilityMenuController;
 import com.tilldawn.controller.menus.EndGameMenuController;
 import com.tilldawn.model.*;
+import com.tilldawn.model.client.Player;
 import com.tilldawn.view.GameView;
 import com.tilldawn.view.XpDrop;
 import com.tilldawn.view.menus.ChooseAbilityMenuView;
@@ -36,7 +37,6 @@ public class GameController {
     public void updateGame() {
         if (view == null)
             return;
-        player.addSurvivedTime(Gdx.graphics.getDeltaTime());
         if (player.getSurvivedTime() >= player.getGameDuration() * 60)
             goToEndGameMenu(true);
         if (player.getHp() <= 0)
@@ -44,6 +44,7 @@ public class GameController {
         checkMonsterCollision();
         checkBulletCollision();
         harvestXp();
+        handleCheatCodes();
         worldController.update();
         monsterController.update();
         playerController.update();
@@ -90,6 +91,25 @@ public class GameController {
         ));
     }
 
+    private void handleCheatCodes() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+            player.reduceGameDuration(1);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+            player.addLevel(1);
+            upgradePlayer();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+            player.addHp(1);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
+            // TODO: go to boss fight
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) {
+            player.addWeaponDamage(1);
+        }
+    }
+
     private void checkMonsterCollision() {
         for (Monster monster : monsterController.getMonsters()) {
             if (monster.getCollisionRect().collide(player.getCollisionRect())) {
@@ -123,16 +143,19 @@ public class GameController {
                 removableXpDrops.add(xpDrop);
                 player.addXp(3);
                 statusController.getLevelBar().setValue(player.getXps());
-                if (player.hasLevelUp()) {
-                    if (App.isSfxEnabled())
-                        GameAssetManager.getInstance().getLevelUpSfx().play(1f);
-                    statusController.getLevelBar().setRange(0, player.getLevel() * 20);
-                    statusController.getLevelBar().setValue(player.getXps());
-                    chooseAbility();
-                }
+                if (player.hasLevelUp())
+                    upgradePlayer();
             }
         }
         monsterController.getXpDrops().removeAll(removableXpDrops);
+    }
+
+    private void upgradePlayer() {
+        if (App.isSfxEnabled())
+            GameAssetManager.getInstance().getLevelUpSfx().play(1f);
+        statusController.getLevelBar().setRange(0, player.getLevel() * 20);
+        statusController.getLevelBar().setValue(player.getXps());
+        chooseAbility();
     }
 
     private void chooseAbility() {

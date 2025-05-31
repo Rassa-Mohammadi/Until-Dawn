@@ -13,6 +13,7 @@ import com.tilldawn.Main;
 import com.tilldawn.controller.menus.RecoverPasswordController;
 import com.tilldawn.model.*;
 import com.tilldawn.model.enums.Output;
+import com.tilldawn.model.client.User;
 
 public class RecoverPasswordMenu implements Screen {
     private RecoverPasswordController controller;

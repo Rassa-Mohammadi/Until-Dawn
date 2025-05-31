@@ -17,7 +17,7 @@ import com.tilldawn.Main;
 import com.tilldawn.controller.menus.EndGameMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Player;
+import com.tilldawn.model.client.Player;
 import com.tilldawn.model.enums.Output;
 
 public class EndGameMenuView implements Screen {

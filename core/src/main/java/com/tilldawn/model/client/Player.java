@@ -1,12 +1,16 @@
-package com.tilldawn.model;
+package com.tilldawn.model.client;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.tilldawn.model.App;
+import com.tilldawn.model.CollisionRect;
+import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.enums.Ability;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Player extends User {
     private Sprite playerSprite;
@@ -22,12 +26,13 @@ public class Player extends User {
     private boolean isAutoAim = false;
     private int maxAmmo;
     private int ammo;
+    private int weaponDamage;
     private int weaponProjectile;
     private int kills;
     private int xps;
     private int level;
     private float survivedTime;
-    private ArrayList<Ability> abilities;
+    private Set<Ability> abilities;
 
     public Player(User user) {
         super(user.username, user.password, user.isGuest);
@@ -42,12 +47,13 @@ public class Player extends User {
         weaponSprite.setScale(3f);
         this.maxHp = this.hp = hero.getHp();
         this.maxAmmo = this.ammo = weapon.getMaxAmmo();
+        this.weaponDamage = weapon.getDamage();
         this.weaponProjectile = weapon.getProjectile();
         this.kills = 0;
         this.xps = 0;
         this.level = 1;
         this.survivedTime = 0f;
-        this.abilities = new ArrayList<>();
+        this.abilities = new HashSet<>();
     }
 
     public void updateSprite() {
@@ -122,12 +128,27 @@ public class Player extends User {
 
     public float getWeaponDamage() {
         if (weaponDamageTimer > 0f)
-            return weapon.getDamage() * 1.25f;
-        return weapon.getDamage();
+            return weaponDamage * 1.25f;
+        return weaponDamage;
+    }
+
+    public void addWeaponDamage(int amount) {
+        weaponDamage += amount;
     }
 
     public int getHp() {
         return hp;
+    }
+
+    public void reduceHp(int amount) {
+        if (invincibleTimer > 0f)
+            return;
+        this.hp -= amount;
+    }
+
+    public void addHp(int amount) {
+        hp += amount;
+        hp = Math.min(maxHp, hp);
     }
 
     public int getMaxHp() {
@@ -155,12 +176,6 @@ public class Player extends User {
         this.autoReload = user.autoReload;
     }
 
-    public void reduceHp(int amount) {
-        if (invincibleTimer > 0f)
-            return;
-        this.hp -= amount;
-    }
-
     public void setInvincible() {
         if (invincibleTimer > 0f)
             return;
@@ -176,6 +191,8 @@ public class Player extends User {
     }
 
     public void updateTimers() {
+        survivedTime += Gdx.graphics.getDeltaTime();
+
         invincibleTimer -= Gdx.graphics.getDeltaTime();
         if (invincibleTimer <= 0f)
             invincibleTimer = 0f;
@@ -234,12 +251,12 @@ public class Player extends User {
         return level;
     }
 
-    public float getSurvivedTime() {
-        return survivedTime;
+    public void addLevel(int amount) {
+        level += amount;
     }
 
-    public void addSurvivedTime(float amount) {
-        survivedTime += amount;
+    public float getSurvivedTime() {
+        return survivedTime;
     }
 
     public String getFormatedTime() {
@@ -250,7 +267,15 @@ public class Player extends User {
         return sec + ":" + min;
     }
 
-    public ArrayList<Ability> getAbilities() {
+    public Set<Ability> getAbilities() {
         return abilities;
+    }
+
+    public void addAbility(Ability ability) {
+        abilities.add(ability);
+    }
+
+    public void reduceGameDuration(int amount) {
+        gameDuration -= amount;
     }
 }

@@ -1,4 +1,4 @@
-package com.tilldawn.model;
+package com.tilldawn.model.client;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Scaling;
+import com.tilldawn.model.GameAssetManager;
+import com.tilldawn.model.Result;
+import com.tilldawn.model.SecurityQuestion;
 import com.tilldawn.model.enums.Hero;
 import com.tilldawn.model.enums.Output;
 import com.tilldawn.model.enums.Weapon;
@@ -31,6 +34,8 @@ public class User {
         this.isGuest = isGuest;
     }
 
+    public User() {}
+
     public String getUsername() {
         return username;
     }
@@ -53,6 +58,10 @@ public class User {
 
     public SecurityQuestion getSecurityQuestion() {
         return securityQuestion;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
     }
 
     public Texture getAvatarTexture() {
@@ -103,12 +112,20 @@ public class User {
         this.points += amount;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     public int getTotalKills() {
         return totalKills;
     }
 
     public void addTotalKills(int amount) {
         this.totalKills += amount;
+    }
+
+    public void setTotalKills(int totalKills) {
+        this.totalKills = totalKills;
     }
 
     public float getMaxSurvivedTime() {

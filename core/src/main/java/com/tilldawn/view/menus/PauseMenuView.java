@@ -16,7 +16,7 @@ import com.tilldawn.Main;
 import com.tilldawn.controller.PauseMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Player;
+import com.tilldawn.model.client.Player;
 import com.tilldawn.model.enums.Ability;
 import com.tilldawn.model.enums.Output;
 import com.tilldawn.view.GameView;
