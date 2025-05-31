@@ -4,21 +4,30 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.tilldawn.model.enums.Ability;
+
+import java.util.ArrayList;
 
 public class Player extends User {
     private Sprite playerSprite;
     private Sprite weaponSprite;
     private float spriteTime = 0f;
-    private float invincibleTime = 0f;
+    private float invincibleTimer = 0f;
+    private float weaponDamageTimer = 0f;
+    private float speedTimer = 0f;
     private float posX, posY;
+    private int maxHp;
     private int hp;
     private boolean isRunning = false;
     private boolean isAutoAim = false;
+    private int maxAmmo;
     private int ammo;
+    private int weaponProjectile;
     private int kills;
     private int xps;
     private int level;
     private float survivedTime;
+    private ArrayList<Ability> abilities;
 
     public Player(User user) {
         super(user.username, user.password, user.isGuest);
@@ -31,12 +40,14 @@ public class Player extends User {
         playerSprite.setCenter(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         weaponSprite.setCenter(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         weaponSprite.setScale(3f);
-        this.hp = hero.getHp();
-        this.ammo = weapon.getMaxAmmo();
+        this.maxHp = this.hp = hero.getHp();
+        this.maxAmmo = this.ammo = weapon.getMaxAmmo();
+        this.weaponProjectile = weapon.getProjectile();
         this.kills = 0;
         this.xps = 0;
         this.level = 1;
         this.survivedTime = 0f;
+        this.abilities = new ArrayList<>();
     }
 
     public void updateSprite() {
@@ -56,6 +67,8 @@ public class Player extends User {
     }
 
     public int getSpeed() {
+        if (speedTimer > 0f)
+            return hero.getSpeed() * 2;
         return hero.getSpeed();
     }
 
@@ -87,6 +100,14 @@ public class Player extends User {
         isRunning = running;
     }
 
+    public int getMaxAmmo() {
+        return maxAmmo;
+    }
+
+    public void addMaxAmmo(int amount) {
+        maxAmmo += amount;
+    }
+
     public int getAmmo() {
         return ammo;
     }
@@ -99,8 +120,23 @@ public class Player extends User {
         this.ammo = ammo;
     }
 
+    public float getWeaponDamage() {
+        if (weaponDamageTimer > 0f)
+            return weapon.getDamage() * 1.25f;
+        return weapon.getDamage();
+    }
+
     public int getHp() {
         return hp;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public void addMaxHp(int amount) {
+        hp += amount;
+        maxHp += amount;
     }
 
     public CollisionRect getCollisionRect() {
@@ -120,25 +156,45 @@ public class Player extends User {
     }
 
     public void reduceHp(int amount) {
-        if (invincibleTime > 0f)
+        if (invincibleTimer > 0f)
             return;
         this.hp -= amount;
     }
 
     public void setInvincible() {
-        if (invincibleTime > 0f)
+        if (invincibleTimer > 0f)
             return;
-        invincibleTime = 1f;
+        invincibleTimer = 1f;
     }
 
-    public void updateInvincibleTime() {
-        invincibleTime -= Gdx.graphics.getDeltaTime();
-        if (invincibleTime <= 0f)
-            invincibleTime = 0f;
+    public void setWeaponDamageTimer() {
+        weaponDamageTimer = 10f;
+    }
+
+    public void setSpeedTimer() {
+        speedTimer = 10f;
+    }
+
+    public void updateTimers() {
+        invincibleTimer -= Gdx.graphics.getDeltaTime();
+        if (invincibleTimer <= 0f)
+            invincibleTimer = 0f;
+
+        weaponDamageTimer -= Gdx.graphics.getDeltaTime();
+        if (weaponDamageTimer <= 0f)
+            weaponDamageTimer = 0f;
+
+        speedTimer -= Gdx.graphics.getDeltaTime();
+        if (speedTimer <= 0f)
+            speedTimer = 0f;
     }
 
     public int getProjectile() {
-        return weapon.getProjectile();
+        return weaponProjectile;
+    }
+
+    public void addProjectile(int amount) {
+        weaponProjectile += amount;
     }
 
     public boolean isAutoAim() {
@@ -192,5 +248,9 @@ public class Player extends User {
         String sec = seconds < 10? "0" + seconds: "" + seconds;
         String min = minutes < 10? "0" + minutes: "" + minutes;
         return sec + ":" + min;
+    }
+
+    public ArrayList<Ability> getAbilities() {
+        return abilities;
     }
 }

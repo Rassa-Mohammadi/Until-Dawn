@@ -51,6 +51,7 @@ public enum Output {
     AbilitiesMenu("Abilities Menu", "Menu des capacités"),
     CheatCodesMenu("Cheat Codes Menu", "Menu des codes de triche"),
     PauseMenu("Pause Menu", "Menu de pause"),
+    ChooseAbility("Choose Ability", "Choisir la capacité"),
     // errors
     UsernameExists("Username already exists", "Ce nom d'utilisateur existe déjà"),
     PasswordEmpty("Password is empty", "Le mot de passe est vide"),
@@ -95,7 +96,13 @@ public enum Output {
     PointsEarned("Points earned: ", "Points gagnés: "),
     // check box
     BlackAndWhite("Black and white", "Noir et Blanc"),
-    AutoReload("Auto Reload", "Rechargement Automatique"),;
+    AutoReload("Auto Reload", "Rechargement Automatique"),
+    // cheat codes
+    DecreaseTime("Decreases remaining time by one minute", "Diminue le temps restant d'une minute"),
+    IncreaseLevel("Increases player level", "Augmente le niveau du joueur"),
+    IncreaseHp("Increases player HP by one", "Augmente les PV du joueur d'un"),
+    GoToBossFight("Go to boss fight", "Aller au combat de boss"),
+    IncreaseDamage("Increases weapon damage", "Augmente les dégâts des armes");
 
     private final String english;
     private final String french;

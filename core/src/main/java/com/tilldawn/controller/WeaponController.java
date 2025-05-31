@@ -76,8 +76,8 @@ public class WeaponController {
 
     private void startReload() {
         isReloading = true;
-        int amount = player.getWeapon().getMaxAmmo() - player.getAmmo();
-        reloadTime = player.getWeapon().getReloadTime() * amount / player.getWeapon().getMaxAmmo();
+        int amount = player.getMaxAmmo() - player.getAmmo();
+        reloadTime = player.getWeapon().getReloadTime() * amount / player.getMaxAmmo();
     }
 
     private void updateReloadTime() {
@@ -85,7 +85,7 @@ public class WeaponController {
             return;
         reloadTime -= Gdx.graphics.getDeltaTime();
         if (reloadTime <= 0f) {
-            player.setAmmo(player.getWeapon().getMaxAmmo());
+            player.setAmmo(player.getMaxAmmo());
             isReloading = false;
         }
     }

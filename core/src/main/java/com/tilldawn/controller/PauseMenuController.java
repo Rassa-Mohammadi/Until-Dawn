@@ -32,4 +32,8 @@ public class PauseMenuController {
             false, pausedGameView.getController().getPlayer()
         ));
     }
+
+    public GameView getPausedGameView() {
+        return pausedGameView;
+    }
 }

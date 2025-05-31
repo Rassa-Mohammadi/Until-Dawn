@@ -2,45 +2,49 @@ package com.tilldawn.view.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
-import com.tilldawn.controller.menus.EndGameMenuController;
+import com.tilldawn.controller.menus.ChooseAbilityMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Player;
+import com.tilldawn.model.enums.Ability;
+import com.tilldawn.model.enums.Hero;
 import com.tilldawn.model.enums.Output;
+import com.tilldawn.view.GameView;
 
-public class EndGameMenuView implements Screen {
-    private EndGameMenuController controller;
-    private Player player;
+import java.util.List;
+
+public class ChooseAbilityMenuView implements Screen {
+    private ChooseAbilityMenuController controller;
     private Texture appBackgroundTexture;
+    private GameView pausedGame;
     private Stage stage;
     private Table table;
     private Label menuTitle;
+    private SelectBox<String> abilitySelectBox;
     private TextButton continueButton;
 
-    public EndGameMenuView(EndGameMenuController controller, Skin skin, boolean hasWon, Player player) {
+    public ChooseAbilityMenuView(ChooseAbilityMenuController controller, Skin skin, GameView pausedGame) {
         this.controller = controller;
-        this.player = player;
-        this.menuTitle = new Label(hasWon? Output.YouWon.getString() : Output.YouLost.getString(), skin);
-        menuTitle.setFontScale(3f);
-        menuTitle.setColor(hasWon? Color.GREEN: Color.RED);
         this.table = new Table();
+        this.pausedGame = pausedGame;
         this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
+        this.menuTitle = new Label(Output.ChooseAbility.getString(), skin);
+        menuTitle.setFontScale(2.5f);
         this.continueButton = new TextButton(Output.Continue.getString(), skin);
+        initAbilitySelectBox();
         setListeners();
         this.controller.setView(this);
-        controller.updateStats(player);
     }
 
     @Override
@@ -53,33 +57,9 @@ public class EndGameMenuView implements Screen {
 
         GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
 
-        table.top().add(menuTitle).pad(50).row();
-        Label label = new Label(
-            Output.Username.getString() + player.getUsername(),
-            GameAssetManager.getInstance().getSkin()
-        );
-        label.setFontScale(1.5f);
-        table.add(label).pad(30).row();
-        label = new Label(
-            Output.TimeSurvived.getString() + player.getFormatedTime(),
-            GameAssetManager.getInstance().getSkin()
-        );
-        label.setFontScale(1.5f);
-        table.add(label).pad(30).row();
-        label = new Label(
-            Output.Kills.getString() + player.getKills(),
-            GameAssetManager.getInstance().getSkin()
-        );
-        label.setFontScale(1.5f);
-        table.add(label).pad(30).row();
-        label = new Label(
-            Output.PointsEarned.getString() + (int) (player.getSurvivedTime() * player.getKills()),
-            GameAssetManager.getInstance().getSkin()
-        );
-        label.setColor(Color.GREEN);
-        label.setFontScale(1.5f);
-        table.add(label).pad(30).row();
-        table.add(continueButton).pad(30).row();
+        table.add(menuTitle).pad(30).row();
+        table.add(abilitySelectBox).pad(20).row();
+        table.add(continueButton).pad(20).row();
 
         stage.addActor(table);
     }
@@ -119,14 +99,25 @@ public class EndGameMenuView implements Screen {
 
     }
 
+    private void initAbilitySelectBox() {
+        abilitySelectBox = new SelectBox<>(GameAssetManager.getInstance().getSkin());
+        List<Ability> abilityList = Ability.get3RandomAbility();
+        Array<String> array = new Array<>();
+        for (Ability ability : abilityList) {
+            array.add(ability.name());
+        }
+        abilitySelectBox.setItems(array);
+    }
+
     private void setListeners() {
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
                     GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
-                controller.goToMainMenu();
+                controller.back(pausedGame, abilitySelectBox.getSelected());
             }
         });
+
     }
 }

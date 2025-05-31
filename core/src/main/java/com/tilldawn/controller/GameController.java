@@ -3,10 +3,12 @@ package com.tilldawn.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tilldawn.Main;
+import com.tilldawn.controller.menus.ChooseAbilityMenuController;
 import com.tilldawn.controller.menus.EndGameMenuController;
 import com.tilldawn.model.*;
 import com.tilldawn.view.GameView;
 import com.tilldawn.view.XpDrop;
+import com.tilldawn.view.menus.ChooseAbilityMenuView;
 import com.tilldawn.view.menus.EndGameMenuView;
 import com.tilldawn.view.menus.PauseMenuView;
 
@@ -103,7 +105,7 @@ public class GameController {
             // bullet collision with monsters
             for (Monster monster : monsterController.getMonsters()) {
                 if (bullet.getCollisionRect().collide(monster.getCollisionRect()) && bullet.isFriendly()) {
-                    monster.reduceHp(player.getWeapon().getDamage());
+                    monster.reduceHp(player.getWeaponDamage());
                     monster.setKnockback();
                     removableBullets.add(bullet);
                 }
@@ -126,10 +128,19 @@ public class GameController {
                         GameAssetManager.getInstance().getLevelUpSfx().play(1f);
                     statusController.getLevelBar().setRange(0, player.getLevel() * 20);
                     statusController.getLevelBar().setValue(player.getXps());
-                    // TODO: menu entekhab ability
+                    chooseAbility();
                 }
             }
         }
         monsterController.getXpDrops().removeAll(removableXpDrops);
+    }
+
+    private void chooseAbility() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new ChooseAbilityMenuView(
+            new ChooseAbilityMenuController(),
+            GameAssetManager.getInstance().getSkin(),
+            view
+        ));
     }
 }

@@ -88,7 +88,7 @@ public class StatusController { // handles ammo, hearts, timer and ...
             heartSprite.setPosition(20 + heartSprite.getWidth() * i, Gdx.graphics.getHeight() - heartSprite.getHeight() - 30);
             heartSprite.draw(Main.getBatch());
         }
-        for (int i = player.getHp(); i < player.getHero().getHp(); i++) {
+        for (int i = player.getHp(); i < player.getMaxHp(); i++) {
             Sprite heartSprite = new Sprite(new Texture("Images/Sprite/HeartAnimation_3.png"));
             heartSprite.setScale(2f);
             heartSprite.setPosition(20 + heartSprite.getWidth() * i, Gdx.graphics.getHeight() - heartSprite.getHeight() - 30);

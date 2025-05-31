@@ -17,7 +17,7 @@ public class PlayerController {
     }
 
     public void update() {
-        player.updateInvincibleTime();
+        player.updateTimers();
         player.updateSprite();
         handleWalk();
         handleFlip();

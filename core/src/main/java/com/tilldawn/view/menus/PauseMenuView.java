@@ -2,13 +2,13 @@ package com.tilldawn.view.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -16,6 +16,8 @@ import com.tilldawn.Main;
 import com.tilldawn.controller.PauseMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
+import com.tilldawn.model.Player;
+import com.tilldawn.model.enums.Ability;
 import com.tilldawn.model.enums.Output;
 import com.tilldawn.view.GameView;
 
@@ -25,6 +27,7 @@ public class PauseMenuView implements Screen {
     private Stage stage;
     private Table table;
     private Label menuTitle;
+    private CheckBox blackAndWhiteCheckBox;
     private TextButton resumeButton;
     private TextButton giveUpButton;
 
@@ -34,6 +37,8 @@ public class PauseMenuView implements Screen {
         this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.menuTitle = new Label(Output.PauseMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
+        this.blackAndWhiteCheckBox = new CheckBox(Output.BlackAndWhite.getString(), skin);
+        blackAndWhiteCheckBox.setChecked(Main.getMain().isBlackAndWhite());
         this.resumeButton = new TextButton(Output.Resume.getString(), skin);
         this.giveUpButton = new TextButton(Output.GiveUp.getString(), skin);
         setListeners();
@@ -50,9 +55,13 @@ public class PauseMenuView implements Screen {
 
         GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
 
-        table.add(menuTitle).pad(20).row();
-        table.add(resumeButton).pad(20).row();
-        table.add(giveUpButton).pad(20).row();
+        table.add(menuTitle).pad(30).row();
+        Table cheatCodes = getCheatCodeTable();
+        table.add(cheatCodes).row();
+        table.add(getAbilities()).padTop(20).pad(10).row();
+        table.add(blackAndWhiteCheckBox).pad(10).row();
+        table.add(resumeButton).pad(10).row();
+        table.add(giveUpButton).pad(10).row();
 
         stage.addActor(table);
     }
@@ -92,7 +101,42 @@ public class PauseMenuView implements Screen {
 
     }
 
+    private Table getCheatCodeTable() {
+        Table result = new Table();
+        Label label = new Label("1 -> " + Output.DecreaseTime.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10).fillX().row();
+        label = new Label("2 -> " + Output.IncreaseLevel.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10).fillX().row();
+        label = new Label("3 -> " + Output.IncreaseHp.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10).fillX().row();
+        label = new Label("4 -> " + Output.GoToBossFight.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10).fillX().row();
+        label = new Label("5 -> " + Output.IncreaseDamage.getString(), GameAssetManager.getInstance().getSkin());
+        result.add(label).pad(10).fillX().row();
+        return result;
+    }
+
+    private Label getAbilities() {
+        StringBuilder labelMessage = new StringBuilder("Abilities:");
+        Player player = controller.getPausedGameView().getController().getPlayer();
+        for (Ability ability : player.getAbilities()) {
+            labelMessage.append("    ").append(ability.name());
+        }
+        Label result = new Label(labelMessage, GameAssetManager.getInstance().getSkin());
+        result.setColor(Color.GREEN);
+        return result;
+    }
+
     private void setListeners() {
+        blackAndWhiteCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (blackAndWhiteCheckBox.isChecked())
+                    Main.getMain().setBlackAndWhiteShader();
+                else
+                    Main.getMain().removeBlackAndWhiteShader();
+            }
+        });
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
