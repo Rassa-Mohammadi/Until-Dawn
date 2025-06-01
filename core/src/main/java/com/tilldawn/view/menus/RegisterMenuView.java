@@ -22,7 +22,6 @@ public class RegisterMenuView implements Screen {
     private RegisterMenuController controller;
     private Stage stage;
     private Label menuTitle;
-    private Texture appBackgroundTexture;
     private Result registerResult;
     private TextField username;
     private TextField password;
@@ -44,7 +43,6 @@ public class RegisterMenuView implements Screen {
         this.controller = controller;
         this.menuTitle = new Label(Output.RegisterMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
-        appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.registerResult = new Result();
         this.username = new TextField("", skin);
         this.username.setMessageText(Output.EnterUsername.getString());
@@ -69,7 +67,7 @@ public class RegisterMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.top().add(menuTitle).padTop(20);
         table.row().pad(10, 0, 10, 0);

@@ -23,7 +23,6 @@ public class MainMenuView implements Screen {
     public Table table;
     private Stage stage;
     private Label menuTitle;
-    private Texture appBackgroundTexture;
     private TextButton settingButton;
     private TextButton profileButton;
     private TextButton pregameButton;
@@ -37,7 +36,6 @@ public class MainMenuView implements Screen {
         this.table = new Table();
         this.menuTitle = new Label(Output.MainMenu.getString(), skin);
         this.menuTitle.setFontScale(2.5f);
-        appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.settingButton = new TextButton(Output.Settings.getString(), skin);
         this.profileButton = new TextButton(Output.Profile.getString(), skin);
         this.pregameButton = new TextButton(Output.Pregame.getString(), skin);
@@ -57,7 +55,7 @@ public class MainMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
         Table userInfo = App.getLoggedInUser().getInfo();
         Table buttonTable = new Table();
         buttonTable.add(settingButton).pad(10).fillX();
@@ -140,7 +138,7 @@ public class MainMenuView implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (App.isSfxEnabled())
                     GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
-                // TODO
+                controller.goToScoreboard();
             }
         });
         hintButton.addListener(new ClickListener() {

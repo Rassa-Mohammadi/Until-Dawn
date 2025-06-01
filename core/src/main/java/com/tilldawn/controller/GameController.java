@@ -53,6 +53,8 @@ public class GameController {
     }
 
     public void goToPauseMenu() {
+        Main.getMain().setCursor();
+        player.setAutoAim(false);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new PauseMenuView(new PauseMenuController(), view, GameAssetManager.getInstance().getSkin()));
     }
@@ -82,6 +84,8 @@ public class GameController {
     }
 
     private void goToEndGameMenu(boolean hasWon) {
+        Main.getMain().setCursor();
+        player.setAutoAim(false);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new EndGameMenuView(
             new EndGameMenuController(),
@@ -93,7 +97,7 @@ public class GameController {
 
     private void handleCheatCodes() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-            player.reduceGameDuration(1);
+            player.addSurvivedTime(60);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
             player.addLevel(1);
@@ -159,6 +163,8 @@ public class GameController {
     }
 
     private void chooseAbility() {
+        Main.getMain().setCursor();
+        player.setAutoAim(false);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new ChooseAbilityMenuView(
             new ChooseAbilityMenuController(),

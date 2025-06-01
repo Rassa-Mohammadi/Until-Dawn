@@ -2,7 +2,6 @@ package com.tilldawn.view.menus.hintmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -23,14 +22,12 @@ public class CheatCodeMenuView implements Screen {
     private CheatCodeMenuController controller;
     private Stage stage;
     private Table table;
-    private Texture appBackgroundTexture;
     private Label menuTitle;
     private TextButton backButton;
 
     public CheatCodeMenuView(CheatCodeMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.menuTitle = new Label(Output.CheatCodesMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.backButton = new TextButton(Output.Back.toString(), skin);
@@ -43,7 +40,7 @@ public class CheatCodeMenuView implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.setFillParent(true);
         table.center();

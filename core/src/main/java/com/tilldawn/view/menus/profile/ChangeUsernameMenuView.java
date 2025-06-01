@@ -23,7 +23,6 @@ public class ChangeUsernameMenuView implements Screen {
     private ChangeUsernameMenuController controller;
     private Stage stage;
     private Table table;
-    private Texture appBackgroundTexture;
     private Result changeResult;
     private TextField newUsernameField;
     private TextButton changeUsernameButton;
@@ -33,7 +32,6 @@ public class ChangeUsernameMenuView implements Screen {
     public ChangeUsernameMenuView(ChangeUsernameMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.changeResult = new Result();
         this.newUsernameField = new TextField("", skin);
         newUsernameField.setMessageText(Output.EnterNewUsername.getString());
@@ -51,7 +49,7 @@ public class ChangeUsernameMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.add(changeResult.getMessage()).pad(10).row();
         table.add(newUsernameField).width(GameAssetManager.fieldLength).pad(10).row();

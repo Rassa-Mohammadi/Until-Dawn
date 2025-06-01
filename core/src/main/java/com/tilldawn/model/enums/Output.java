@@ -69,7 +69,7 @@ public enum Output {
     FatherName("What is your father name?", "quel est le nom de ton père"),
     Turk("Are you Turk?", "Es tu Turk?"),
     // labels
-    Username("Username: ", "Nom d'utilisateur: "),
+    Username("Username", "Nom d'utilisateur"),
     MusicVolume("Music volume", "Volume de la musique"),
     MusicTrack("Music track", "Morceau de musique"),
     KeyBinds("Key binds", "Raccourcis clavier"),
@@ -92,8 +92,11 @@ public enum Output {
     YouWon("You Won", "Tu as gagné"),
     YouLost("You Lost", "Tu as perdu"),
     TimeSurvived("The amount of time you survived: ", "Le temps pendant lequel vous avez survécu: "),
-    Kills("Kills: ", "Victimes: "),
+    Kills("Kills", "Victimes"),
     PointsEarned("Points earned: ", "Points gagnés: "),
+    Score("Score", "Score"),
+    MaxSurvivedTime("Max Survived Time", "Temps de survie maximal"),
+    SortedBy("Sorted by", "Trié par"),
     // check box
     BlackAndWhite("Black and white", "Noir et Blanc"),
     AutoReload("Auto Reload", "Rechargement Automatique"),

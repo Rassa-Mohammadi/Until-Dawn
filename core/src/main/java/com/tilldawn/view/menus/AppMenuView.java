@@ -21,7 +21,6 @@ public class AppMenuView implements Screen {
     private Stage stage;
     private final Texture gameTitleTexture;
     private final Image gameTitleImage;
-    private final Texture appBackgroundTexture;
     private final TextButton registerButton;
     private final TextButton loginButton;
     private final TextButton playAsGuestButton;
@@ -33,7 +32,6 @@ public class AppMenuView implements Screen {
         this.controller = controller;
         this.gameTitleTexture = new Texture(Gdx.files.internal("Images/Sprite/T_20Logo.png"));
         this.gameTitleImage = new Image(gameTitleTexture);
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.registerButton = new TextButton(Output.Register.getString(), skin);
         this.loginButton = new TextButton(Output.Login.getString(), skin);
         this.playAsGuestButton = new TextButton(Output.PlayAsGuest.getString(), skin);
@@ -52,7 +50,7 @@ public class AppMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         gameTitleImage.setScaling(Scaling.fit);
         table.add(gameTitleImage).width(400).height(200).pad(10);
@@ -67,7 +65,6 @@ public class AppMenuView implements Screen {
         table.add(playAsGuestButton).fillX();
         table.row().pad(10, 0, 10, 0);
         table.add(exitButton).fillX();
-        table.pack();
 
         stage.addActor(table);
     }

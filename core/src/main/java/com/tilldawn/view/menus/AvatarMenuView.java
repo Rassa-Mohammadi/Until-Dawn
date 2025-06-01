@@ -25,17 +25,15 @@ public class AvatarMenuView implements Screen {
     private AvatarMenuController controller;
     private Stage stage;
     private Table table;
-    private Texture appBackgroundTexture;
     private Label menuTitle;
     private Image currentAvatar;
     private Table avatarGrid;
-    private TextButton chooseButton; // TODO
+    private TextButton chooseButton;
     private TextButton backButton;
 
     public AvatarMenuView(AvatarMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.menuTitle = new Label(Output.AvatarMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.currentAvatar = new Image(App.getLoggedInUser().getAvatarTexture());
@@ -51,7 +49,7 @@ public class AvatarMenuView implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.setFillParent(true);
         currentAvatar.setScaling(Scaling.fit);

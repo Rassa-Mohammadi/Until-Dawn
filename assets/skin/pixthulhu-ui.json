@@ -5,7 +5,10 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	}
     font2: {
       file: font-export.fnt
-    }
+    },
+    whitefont: {
+      file: "Fonts/lantern_white.fnt"
+    },
 	subtitle: {
 		file: font-subtitle-export.fnt
 	}

@@ -18,7 +18,6 @@ import com.tilldawn.model.Result;
 
 public class LoginMenuView implements Screen {
     private LoginMenuController controller;
-    private Texture appBackgroundTexture;
     public Table table;
     private Stage stage;
     private Label menuTitle;
@@ -34,7 +33,6 @@ public class LoginMenuView implements Screen {
         this.table = new Table();
         this.menuTitle = new Label(Output.LoginMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
-        appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         loginResult = new Result();
         usernameField = new TextField("", skin);
         usernameField.setMessageText(Output.EnterUsername.getString());
@@ -55,7 +53,7 @@ public class LoginMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.top().add(menuTitle).padTop(20);
         table.row().pad(10, 0, 10, 0);

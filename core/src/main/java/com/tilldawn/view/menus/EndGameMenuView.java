@@ -23,7 +23,6 @@ import com.tilldawn.model.enums.Output;
 public class EndGameMenuView implements Screen {
     private EndGameMenuController controller;
     private Player player;
-    private Texture appBackgroundTexture;
     private Stage stage;
     private Table table;
     private Label menuTitle;
@@ -36,7 +35,6 @@ public class EndGameMenuView implements Screen {
         menuTitle.setFontScale(3f);
         menuTitle.setColor(hasWon? Color.GREEN: Color.RED);
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.continueButton = new TextButton(Output.Continue.getString(), skin);
         setListeners();
         this.controller.setView(this);
@@ -51,11 +49,11 @@ public class EndGameMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.top().add(menuTitle).pad(50).row();
         Label label = new Label(
-            Output.Username.getString() + player.getUsername(),
+            Output.Username.getString() + ": " + player.getUsername(),
             GameAssetManager.getInstance().getSkin()
         );
         label.setFontScale(1.5f);
@@ -67,7 +65,7 @@ public class EndGameMenuView implements Screen {
         label.setFontScale(1.5f);
         table.add(label).pad(30).row();
         label = new Label(
-            Output.Kills.getString() + player.getKills(),
+            Output.Kills.getString() + ": " +  player.getKills(),
             GameAssetManager.getInstance().getSkin()
         );
         label.setFontScale(1.5f);

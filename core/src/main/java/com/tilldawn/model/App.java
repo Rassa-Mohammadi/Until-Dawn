@@ -7,9 +7,7 @@ import com.tilldawn.model.client.User;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class App {
     public static final int playerMovementCoefficient = 70;
@@ -68,6 +66,43 @@ public class App {
 
     public static void deleteUser(User user) {
         users.remove(user);
+    }
+
+    public static ArrayList<User> getSortedUsers(String sortType) {
+        ArrayList<User> result = new ArrayList<>(users);
+        if (sortType.equals(Output.Score.getString())) {
+            Collections.sort(result, new Comparator<User>() {
+                @Override
+                public int compare(User user1, User user2) {
+                    return user2.getPoints() - user1.getPoints();
+                }
+            });
+        }
+        else if (sortType.equals(Output.Username.getString())) {
+            Collections.sort(result, new Comparator<User>() {
+                @Override
+                public int compare(User user1, User user2) {
+                    return user1.getUsername().compareTo(user2.getUsername());
+                }
+            });
+        }
+        else if (sortType.equals(Output.Kills.getString())) {
+            Collections.sort(result, new Comparator<User>() {
+                @Override
+                public int compare(User user1, User user2) {
+                    return user2.getTotalKills() - user1.getTotalKills();
+                }
+            });
+        }
+        else if (sortType.equals(Output.MaxSurvivedTime.getString())) {
+            Collections.sort(result, new Comparator<User>() {
+                @Override
+                public int compare(User user1, User user2) {
+                    return Float.compare(user2.getMaxSurvivedTime(), user1.getMaxSurvivedTime());
+                }
+            });
+        }
+        return result;
     }
 
     public static void loadUsers() {

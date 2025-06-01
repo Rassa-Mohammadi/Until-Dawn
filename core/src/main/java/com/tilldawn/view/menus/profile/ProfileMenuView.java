@@ -19,7 +19,6 @@ public class ProfileMenuView implements Screen {
     private ProfileMenuController controller;
     private Stage stage;
     private Table table;
-    private Texture appBackgroundTexture;
     private Label menuTitle;
     private TextButton changeUsername;
     private TextButton changePassword;
@@ -30,7 +29,6 @@ public class ProfileMenuView implements Screen {
     public ProfileMenuView(ProfileMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.menuTitle = new Label(Output.ProfileMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.changeUsername = new TextButton(Output.ChangeUsername.getString(), skin);
@@ -50,13 +48,13 @@ public class ProfileMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         Table buttonTable = new Table();
         buttonTable.add(changeUsername).pad(10).fillX().row();
         buttonTable.add(changePassword).pad(10).fillX().row();
-        buttonTable.add(deleteAccountButton).pad(10).fillX().row();
         buttonTable.add(avatarButton).pad(10).fillX().row();
+        buttonTable.add(deleteAccountButton).pad(10).fillX().row();
         buttonTable.add(backButton).pad(10).row();
         Table contentTable = App.getLoggedInUser().getInfo();
 

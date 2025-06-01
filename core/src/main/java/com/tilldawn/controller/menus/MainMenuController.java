@@ -36,6 +36,11 @@ public class MainMenuController {
         Main.getMain().setScreen(new HintMenuView(new HintMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 
+    public void goToScoreboard() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new ScoreboardView(new ScoreboardController(), GameAssetManager.getInstance().getSkin()));
+    }
+
     public void logout() {
         App.setLoggedInUser(null);
         Main.getMain().getScreen().dispose();

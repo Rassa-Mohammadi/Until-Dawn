@@ -23,7 +23,6 @@ import com.tilldawn.view.GameView;
 
 public class PauseMenuView implements Screen {
     private PauseMenuController controller;
-    private Texture appBackgroundTexture;
     private Stage stage;
     private Table table;
     private Label menuTitle;
@@ -34,7 +33,6 @@ public class PauseMenuView implements Screen {
     public PauseMenuView(PauseMenuController pauseMenuController, GameView pausedGame, Skin skin) {
         this.controller = pauseMenuController;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.menuTitle = new Label(Output.PauseMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.blackAndWhiteCheckBox = new CheckBox(Output.BlackAndWhite.getString(), skin);
@@ -53,7 +51,7 @@ public class PauseMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.add(menuTitle).pad(30).row();
         Table cheatCodes = getCheatCodeTable();

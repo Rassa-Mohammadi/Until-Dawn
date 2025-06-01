@@ -62,6 +62,33 @@ public class Player extends User {
         if (animation.isAnimationFinished(spriteTime))
             spriteTime = 0f;
         playerSprite.setRegion(animation.getKeyFrame(spriteTime));
+        // setting animation when player is damaged
+        float transparency;
+        if (((int) (invincibleTimer / 0.1f)) % 2 == 1)
+            transparency = 0.5f;
+        else
+            transparency = 1f;
+        playerSprite.setColor(playerSprite.getColor().r, playerSprite.getColor().g, playerSprite.getColor().b, transparency);
+    }
+
+    public void updateTimers() {
+        addSurvivedTime(Gdx.graphics.getDeltaTime());
+
+        invincibleTimer -= Gdx.graphics.getDeltaTime();
+        if (invincibleTimer <= 0f)
+            invincibleTimer = 0f;
+
+        weaponDamageTimer -= Gdx.graphics.getDeltaTime();
+        if (weaponDamageTimer <= 0f) {
+            abilities.remove(Ability.DAMAGER);
+            weaponDamageTimer = 0f;
+        }
+
+        speedTimer -= Gdx.graphics.getDeltaTime();
+        if (speedTimer <= 0f) {
+            abilities.remove(Ability.SPEEDY);
+            speedTimer = 0f;
+        }
     }
 
     public Sprite getPlayerSprite() {
@@ -179,7 +206,7 @@ public class Player extends User {
     public void setInvincible() {
         if (invincibleTimer > 0f)
             return;
-        invincibleTimer = 1f;
+        invincibleTimer = 2f;
     }
 
     public void setWeaponDamageTimer() {
@@ -188,22 +215,6 @@ public class Player extends User {
 
     public void setSpeedTimer() {
         speedTimer = 10f;
-    }
-
-    public void updateTimers() {
-        survivedTime += Gdx.graphics.getDeltaTime();
-
-        invincibleTimer -= Gdx.graphics.getDeltaTime();
-        if (invincibleTimer <= 0f)
-            invincibleTimer = 0f;
-
-        weaponDamageTimer -= Gdx.graphics.getDeltaTime();
-        if (weaponDamageTimer <= 0f)
-            weaponDamageTimer = 0f;
-
-        speedTimer -= Gdx.graphics.getDeltaTime();
-        if (speedTimer <= 0f)
-            speedTimer = 0f;
     }
 
     public int getProjectile() {
@@ -257,6 +268,10 @@ public class Player extends User {
 
     public float getSurvivedTime() {
         return survivedTime;
+    }
+
+    public void addSurvivedTime(float amount) {
+        survivedTime += amount;
     }
 
     public String getFormatedTime() {

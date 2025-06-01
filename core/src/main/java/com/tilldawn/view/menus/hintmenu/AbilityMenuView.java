@@ -23,14 +23,12 @@ public class AbilityMenuView implements Screen {
     private AbilityMenuController controller;
     private Stage stage;
     private Table table;
-    private Texture appBackgroundTexture;
     private Label menuTitle;
     private TextButton backButton;
 
     public AbilityMenuView(AbilityMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         menuTitle = new Label(Output.AbilitiesMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.backButton = new TextButton(Output.Back.getString(), skin);
@@ -43,7 +41,7 @@ public class AbilityMenuView implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.setFillParent(true);
         table.add(menuTitle).center().pad(20).row();

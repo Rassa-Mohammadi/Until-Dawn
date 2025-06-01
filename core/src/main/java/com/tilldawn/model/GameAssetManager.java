@@ -46,6 +46,7 @@ public class GameAssetManager {
     public final static int backgroundHeight = 2680;
     private static GameAssetManager instance;
     private final Texture backgroundTexture;
+    private final Texture leavesTexture;
     private final Texture cursorTexture;
     private final Texture bulletTexture;
     private final Texture ammoTexture;
@@ -67,6 +68,7 @@ public class GameAssetManager {
 
     private GameAssetManager() {
         backgroundTexture = new Texture("Images/Texture2D/background.png");
+        leavesTexture = new Texture("Images/Sprite/T_TitleLeaves.png");
         cursorTexture = new Texture("Images/Texture2D/T_Cursor.png");
         bulletTexture = new Texture("Images/Texture2D/bullet.png");
         ammoTexture = new Texture("Images/Texture2D/T_AmmoIcon.png");
@@ -89,8 +91,8 @@ public class GameAssetManager {
         return skin;
     }
 
-    public void addSymmetrical(Stage stage, Table table, Texture texture) {
-        Image image = new Image(texture);
+    public void addSymmetricalLeaves(Stage stage, Table table) {
+        Image image = new Image(leavesTexture);
         float imageRatio = image.getWidth() / image.getHeight();
         float fitHeight = stage.getHeight();
         float fitWidth = fitHeight * imageRatio;
@@ -100,7 +102,7 @@ public class GameAssetManager {
         table.addActor(image);
 
         // right side leaves
-        TextureRegion region = new TextureRegion(texture);
+        TextureRegion region = new TextureRegion(leavesTexture);
         region.flip(true, false);
         Image imageCopy = new Image(region);
         imageCopy.setPosition(stage.getWidth() - fitWidth, 0);

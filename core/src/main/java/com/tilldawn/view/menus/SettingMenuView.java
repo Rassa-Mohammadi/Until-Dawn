@@ -22,7 +22,6 @@ import com.tilldawn.model.music.Track;
 
 public class SettingMenuView implements Screen {
     private SettingMenuController controller;
-    private Texture appBackgroundTexture;
     private Stage stage;
     private Table table;
     private Label menuTitle;
@@ -53,7 +52,6 @@ public class SettingMenuView implements Screen {
     public SettingMenuView(SettingMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.menuTitle = new Label(Output.SettingMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.volumeSlider = new Slider(0, 1, 0.01f, false, skin);
@@ -83,7 +81,7 @@ public class SettingMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.top().add(menuTitle).row();
         Label label = new Label(Output.MusicVolume.getString(), GameAssetManager.getInstance().getSkin());

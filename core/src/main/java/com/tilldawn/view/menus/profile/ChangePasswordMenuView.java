@@ -23,7 +23,6 @@ public class ChangePasswordMenuView implements Screen {
     private ChangePasswordMenuController controller;
     private Stage stage;
     private Table table;
-    private Texture appBackgroundTexture;
     private Result changeResult;
     private TextField oldPasswordField;
     private TextField newPasswordField;
@@ -33,7 +32,6 @@ public class ChangePasswordMenuView implements Screen {
     public ChangePasswordMenuView(ChangePasswordMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.changeResult = new Result();
         this.oldPasswordField = new TextField("", skin);
         oldPasswordField.setMessageText(Output.EnterOldPassword.getString());
@@ -53,7 +51,7 @@ public class ChangePasswordMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.add(changeResult.getMessage()).pad(10).row();
         table.add(oldPasswordField).width(GameAssetManager.fieldLength).pad(10).row();

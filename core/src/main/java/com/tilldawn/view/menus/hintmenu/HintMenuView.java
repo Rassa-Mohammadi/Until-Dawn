@@ -24,7 +24,6 @@ public class HintMenuView implements Screen {
     private HintMenuController controller;
     private Stage stage;
     private Table table;
-    private Texture appBackgroundTexture;
     private Label menuTitle;
     private TextButton abilityDescriptionButton;
     private TextButton cheatCodesButton;
@@ -33,7 +32,6 @@ public class HintMenuView implements Screen {
     public HintMenuView(HintMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.menuTitle = new Label(Output.HintMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.abilityDescriptionButton = new TextButton(Output.AbilityDescription.getString(), skin);
@@ -48,7 +46,7 @@ public class HintMenuView implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.setFillParent(true);
         table.add(menuTitle).center().pad(20).row();

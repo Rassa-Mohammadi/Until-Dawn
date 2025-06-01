@@ -3,13 +3,10 @@ package com.tilldawn.view.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -18,7 +15,6 @@ import com.tilldawn.controller.menus.ChooseAbilityMenuController;
 import com.tilldawn.model.App;
 import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.enums.Ability;
-import com.tilldawn.model.enums.Hero;
 import com.tilldawn.model.enums.Output;
 import com.tilldawn.view.GameView;
 
@@ -26,7 +22,6 @@ import java.util.List;
 
 public class ChooseAbilityMenuView implements Screen {
     private ChooseAbilityMenuController controller;
-    private Texture appBackgroundTexture;
     private GameView pausedGame;
     private Stage stage;
     private Table table;
@@ -38,7 +33,6 @@ public class ChooseAbilityMenuView implements Screen {
         this.controller = controller;
         this.table = new Table();
         this.pausedGame = pausedGame;
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.menuTitle = new Label(Output.ChooseAbility.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.continueButton = new TextButton(Output.Continue.getString(), skin);
@@ -55,7 +49,7 @@ public class ChooseAbilityMenuView implements Screen {
         table.setFillParent(true);
         table.center();
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.add(menuTitle).pad(30).row();
         table.add(abilitySelectBox).pad(20).row();

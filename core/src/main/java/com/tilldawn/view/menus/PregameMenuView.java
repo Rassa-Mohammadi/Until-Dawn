@@ -27,7 +27,6 @@ public class PregameMenuView implements Screen {
     private PregameMenuController controller;
     private Stage stage;
     private Table table;
-    private Texture appBackgroundTexture;
     private Label menuTitle;
     private Image weaponImage;
     private SelectBox<String> weaponsSelectBox;
@@ -47,7 +46,6 @@ public class PregameMenuView implements Screen {
     public PregameMenuView(PregameMenuController controller, Skin skin) {
         this.controller = controller;
         this.table = new Table();
-        this.appBackgroundTexture = new Texture(Gdx.files.internal("Images/Sprite/T_TitleLeaves.png"));
         this.menuTitle = new Label(Output.PregameMenu.getString(), skin);
         menuTitle.setFontScale(2.5f);
         this.backButton = new TextButton(Output.Back.getString(), skin);
@@ -62,7 +60,7 @@ public class PregameMenuView implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        GameAssetManager.getInstance().addSymmetrical(stage, table, appBackgroundTexture);
+        GameAssetManager.getInstance().addSymmetricalLeaves(stage, table);
 
         table.setFillParent(true);
         table.defaults().pad(10);
