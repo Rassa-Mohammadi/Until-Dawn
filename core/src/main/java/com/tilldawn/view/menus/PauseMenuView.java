@@ -3,7 +3,6 @@ package com.tilldawn.view.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -109,7 +108,7 @@ public class PauseMenuView implements Screen {
         result.add(label).pad(10).fillX().row();
         label = new Label("4 -> " + Output.GoToBossFight.getString(), GameAssetManager.getInstance().getSkin());
         result.add(label).pad(10).fillX().row();
-        label = new Label("5 -> " + Output.IncreaseDamage.getString(), GameAssetManager.getInstance().getSkin());
+        label = new Label("5 -> " + Output.DestroyMonsters.getString(), GameAssetManager.getInstance().getSkin());
         result.add(label).pad(10).fillX().row();
         return result;
     }

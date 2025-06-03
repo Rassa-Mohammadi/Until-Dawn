@@ -1,20 +1,24 @@
-package com.tilldawn.model;
+package com.tilldawn.model.monsters;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.tilldawn.model.App;
+import com.tilldawn.model.CollisionRect;
+import com.tilldawn.model.GameAssetManager;
 import com.tilldawn.model.enums.MonsterType;
 
 public class Monster {
-    private MonsterType type;
-    private float spriteTime;
-    private Sprite sprite;
-    private float posX, posY;
-    private float hp;
-    private boolean isExploding = false;
-    private float knockbackTimer = 0f;
+    protected MonsterType type;
+    protected float spriteTime;
+    protected Sprite sprite;
+    protected float posX, posY;
+    protected float hp;
+    protected boolean isExploding = false;
+    protected float knockbackTimer = 0f;
+    protected boolean isFlipped = false;
 
     public Monster(MonsterType type, float posX, float posY) {
         this.type = type;
@@ -39,6 +43,8 @@ public class Monster {
             spriteTime = 0f;
         }
         sprite.setRegion(animation.getKeyFrame(spriteTime));
+        if (isFlipped)
+            sprite.flip(true, false);
     }
 
     public void move(Vector2 direction) {
@@ -80,6 +86,8 @@ public class Monster {
         if (hp <= 0f && !isExploding) {
             isExploding = true;
             spriteTime = 0f;
+            if (App.isSfxEnabled())
+                GameAssetManager.getInstance().getKillSfx().play(1f);
         }
     }
 
@@ -110,5 +118,9 @@ public class Monster {
 
     public boolean isDead() {
         return hp <= 0f && !isExploding;
+    }
+
+    public void setFlipped(boolean flipped) {
+        isFlipped = flipped;
     }
 }

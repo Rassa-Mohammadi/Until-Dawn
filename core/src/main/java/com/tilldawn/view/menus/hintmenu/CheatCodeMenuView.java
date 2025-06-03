@@ -2,7 +2,6 @@ package com.tilldawn.view.menus.hintmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -53,7 +52,7 @@ public class CheatCodeMenuView implements Screen {
         table.add(label).pad(20).fillX().row();
         label = new Label("4 -> " + Output.GoToBossFight.getString(), GameAssetManager.getInstance().getSkin());
         table.add(label).pad(20).fillX().row();
-        label = new Label("5 -> " + Output.IncreaseDamage.getString(), GameAssetManager.getInstance().getSkin());
+        label = new Label("5 -> " + Output.DestroyMonsters.getString(), GameAssetManager.getInstance().getSkin());
         table.add(label).pad(20).fillX().row();
         table.add(backButton).pad(20).row();
 
@@ -66,6 +65,7 @@ public class CheatCodeMenuView implements Screen {
         Main.getBatch().begin();
         Main.getBatch().end();
         stage.act(delta);
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 

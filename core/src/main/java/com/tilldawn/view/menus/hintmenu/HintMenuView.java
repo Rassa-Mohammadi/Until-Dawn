@@ -66,6 +66,7 @@ public class HintMenuView implements Screen {
         Main.getBatch().begin();
         Main.getBatch().end();
         stage.act(delta);
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 

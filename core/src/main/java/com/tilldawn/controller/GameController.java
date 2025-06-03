@@ -7,6 +7,7 @@ import com.tilldawn.controller.menus.ChooseAbilityMenuController;
 import com.tilldawn.controller.menus.EndGameMenuController;
 import com.tilldawn.model.*;
 import com.tilldawn.model.client.Player;
+import com.tilldawn.model.monsters.Monster;
 import com.tilldawn.view.GameView;
 import com.tilldawn.view.XpDrop;
 import com.tilldawn.view.menus.ChooseAbilityMenuView;
@@ -28,7 +29,7 @@ public class GameController {
         this.view = view;
         this.player = new Player(App.getLoggedInUser());
         worldController = new WorldController(player);
-        playerController = new PlayerController(player);
+        playerController = new PlayerController(this, player);
         weaponController = new WeaponController(this, player);
         monsterController = new MonsterController(player);
         statusController = new StatusController(player);
@@ -110,7 +111,7 @@ public class GameController {
             // TODO: go to boss fight
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) {
-            player.addWeaponDamage(1);
+            monsterController.clearMonsters();
         }
     }
 
@@ -118,7 +119,6 @@ public class GameController {
         for (Monster monster : monsterController.getMonsters()) {
             if (monster.getCollisionRect().collide(player.getCollisionRect())) {
                 player.reduceHp(1);
-                player.setInvincible();
             }
         }
     }
@@ -134,10 +134,17 @@ public class GameController {
                     removableBullets.add(bullet);
                 }
             }
-            // enemy bullet collision with player
-            // TODO:
         }
         weaponController.getBullets().removeAll(removableBullets);
+        // bullet collision with players
+        removableBullets = new ArrayList<>();
+        for (Bullet bullet : monsterController.getBullets()) {
+            if (bullet.getCollisionRect().collide(player.getCollisionRect())) {
+                player.reduceHp(1);
+                removableBullets.add(bullet);
+            }
+        }
+        monsterController.getBullets().removeAll(removableBullets);
     }
 
     private void harvestXp() {

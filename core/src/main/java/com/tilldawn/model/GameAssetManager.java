@@ -18,11 +18,15 @@ class SFXManager {
     private Sound buttonClick;
     private Sound shoot;
     private Sound levelUp;
+    private Sound hit;
+    private Sound kill;
 
     {
         buttonClick = Gdx.audio.newSound(Gdx.files.internal("SFX/AudioClip/UI Click 36.wav"));
         shoot = Gdx.audio.newSound(Gdx.files.internal("SFX/AudioClip/single_shot.wav"));
         levelUp = Gdx.audio.newSound(Gdx.files.internal("SFX/AudioClip/Special & Powerup (13).wav"));
+        hit = Gdx.audio.newSound(Gdx.files.internal("SFX/AudioClip/Blood_Splash.wav"));
+        kill = Gdx.audio.newSound(Gdx.files.internal("SFX/AudioClip/Death.wav"));
     }
 
     public Sound getButtonClick() {
@@ -36,6 +40,14 @@ class SFXManager {
     public Sound getLevelUp() {
         return levelUp;
     }
+
+    public Sound getHit() {
+        return hit;
+    }
+
+    public Sound getKill() {
+        return kill;
+    }
 }
 
 public class GameAssetManager {
@@ -47,6 +59,7 @@ public class GameAssetManager {
     private static GameAssetManager instance;
     private final Texture backgroundTexture;
     private final Texture leavesTexture;
+    private final Texture zoneTexture;
     private final Texture cursorTexture;
     private final Texture bulletTexture;
     private final Texture ammoTexture;
@@ -69,6 +82,7 @@ public class GameAssetManager {
     private GameAssetManager() {
         backgroundTexture = new Texture("Images/Texture2D/background.png");
         leavesTexture = new Texture("Images/Sprite/T_TitleLeaves.png");
+        zoneTexture = new Texture("Images/Sprite/Zone.png");
         cursorTexture = new Texture("Images/Texture2D/T_Cursor.png");
         bulletTexture = new Texture("Images/Texture2D/bullet.png");
         ammoTexture = new Texture("Images/Texture2D/T_AmmoIcon.png");
@@ -134,8 +148,20 @@ public class GameAssetManager {
         return sfxManager.getLevelUp();
     }
 
+    public Sound getHitSfx() {
+        return sfxManager.getHit();
+    }
+
+    public Sound getKillSfx() {
+        return sfxManager.getKill();
+    }
+
     public Texture getBackgroundTexture() {
         return backgroundTexture;
+    }
+
+    public Texture getZoneTexture() {
+        return zoneTexture;
     }
 
     public Texture getCursorTexture() {

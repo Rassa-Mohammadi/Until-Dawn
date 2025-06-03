@@ -12,8 +12,8 @@ import java.util.*;
 public class App {
     public static final int playerMovementCoefficient = 70;
     public static final int friendlyBulletMovementCoefficient = 800;
-    public static final int nonFriendlyBulletMovementCoefficient = 200;
-    public static final int monsterMovementCoefficient = 40;
+    public static final int nonFriendlyBulletMovementCoefficient = 300;
+    public static final int monsterMovementCoefficient = 20;
     private static boolean isFrench = false;
     private static boolean sfxEnabled = true;
     private static ArrayList<User> users = new ArrayList<>();
@@ -22,7 +22,6 @@ public class App {
 
     static {
         loadUsers();
-//        loggedInUser = new User("rassa", "R@Ssa1384", false); // TODO
         questions = new ArrayList<>();
         questions.add(Output.FatherName);
         questions.add(Output.Turk);

@@ -5,10 +5,12 @@ import com.tilldawn.model.client.Player;
 import com.tilldawn.model.enums.KeyBind;
 
 public class PlayerController {
+    private GameController gameController;
     private Player player;
     private boolean isFacedRight = true;
 
-    public PlayerController(Player player) {
+    public PlayerController(GameController gameController, Player player) {
+        this.gameController = gameController;
         this.player = player;
     }
 
@@ -45,6 +47,8 @@ public class PlayerController {
     private void handleFlip() {
         if (!isFacedRight)
             player.getPlayerSprite().setFlip(true, false);
+        if (player.isRunning())
+            gameController.getMonsterController().flipMonsters();
     }
 
 }

@@ -2,6 +2,7 @@ package com.tilldawn.model.enums;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import org.w3c.dom.Text;
 
 public enum MonsterType {
     Tree(new Animation<>(
@@ -16,21 +17,25 @@ public enum MonsterType {
         new Texture("Images/Sprite/BrainMonster_1.png"),
         new Texture("Images/Sprite/BrainMonster_2.png"),
         new Texture("Images/Sprite/BrainMonster_3.png")
-    ), null, 25, 1, null),
+    ), null, 25, 2, null),
     EyeBat(new Animation<>(
-        0.12f,
+        0.2f,
         new Texture("Images/Sprite/T_EyeBat_0.png"),
         new Texture("Images/Sprite/T_EyeBat_1.png"),
         new Texture("Images/Sprite/T_EyeBat_2.png")
-    ), null, 50, 2, null),
+    ), null, 50, 1, null),
     Elder(new Animation<>(
-        0.12f,
+        0.2f,
         new Texture("Images/Sprite/T_HasturBoss_1.png"),
         new Texture("Images/Sprite/T_HasturBoss_2.png"),
         new Texture("Images/Sprite/T_HasturBoss_3.png"),
         new Texture("Images/Sprite/T_HasturBoss_4.png"),
         new Texture("Images/Sprite/T_HasturBoss_5.png")
-    ), null, 400, 0, 10);
+    ), new Animation<>(
+        0.12f,
+        new Texture("Images/Sprite/T_HasturBossAttack_0.png"),
+        new Texture("Images/Sprite/T_HasturBossAttack_1.png")
+    ), 400, 0, 20);
 
     public static final Animation<Texture> deathAnimation = new Animation<>(
         0.12f,

@@ -7,6 +7,7 @@ import com.tilldawn.Main;
 import com.tilldawn.model.*;
 import com.tilldawn.model.enums.KeyBind;
 import com.tilldawn.model.client.Player;
+import com.tilldawn.model.monsters.Monster;
 
 import java.util.ArrayList;
 

@@ -70,6 +70,7 @@ public class ChangePasswordMenuView implements Screen {
         changeResult.update(delta);
         stage.act(delta);
         stage.getBatch().setShader(Main.getBatch().getShader());
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 

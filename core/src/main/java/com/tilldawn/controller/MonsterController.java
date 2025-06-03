@@ -1,13 +1,16 @@
 package com.tilldawn.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.tilldawn.Main;
-import com.tilldawn.model.App;
-import com.tilldawn.model.GameAssetManager;
-import com.tilldawn.model.Monster;
+import com.tilldawn.model.*;
 import com.tilldawn.model.client.Player;
 import com.tilldawn.model.enums.MonsterType;
+import com.tilldawn.model.monsters.Elder;
+import com.tilldawn.model.monsters.EyeBat;
+import com.tilldawn.model.monsters.Monster;
 import com.tilldawn.view.XpDrop;
 
 import java.util.ArrayList;
@@ -17,13 +20,19 @@ public class MonsterController {
     private Player player;
     private ArrayList<Monster> monsters;
     private ArrayList<XpDrop> xpDrops;
+    private ArrayList<Bullet> bullets;
     private float tentacleMonsterSpawnTimer = 3f;
-
+    private float eyeBatMonsterSpawnTimer = 10f;
+    private float elderMonsterTimer = 5f;
+    private float zoneTimer = 0f;
+    private boolean bossFightStarted = false;
+    private boolean elderIsDead = false;
 
     public MonsterController(Player player) {
         this.player = player;
         this.monsters = new ArrayList<>();
         this.xpDrops = new ArrayList<>();
+        this.bullets = new ArrayList<>();
         generateTrees();
     }
 
@@ -31,8 +40,12 @@ public class MonsterController {
         updateTimers();
         generateTentacleMonsters(player.getSurvivedTime());
         generateEyeBat(player.getSurvivedTime());
+        generateElderMonster();
         cleanMonsters();
+        checkZone();
         updateSprites();
+        updateBullets();
+        monsterAttack();
         moveMonsters();
         draw();
         setTimers();
@@ -55,16 +68,53 @@ public class MonsterController {
         return closestMonster;
     }
 
+    public void clearMonsters() {
+        ArrayList<Monster> removableMonsters = new ArrayList<>();
+        for (Monster monster : monsters) {
+            if (monster.getType() != MonsterType.Tree && monster.getType() != MonsterType.Elder)
+                removableMonsters.add(monster);
+        }
+        monsters.removeAll(removableMonsters);
+    }
+
+    public void flipMonsters() {
+        for (Monster monster : monsters) {
+            if (monster.getX() > player.getX() + Gdx.graphics.getWidth() / 2f)
+                monster.setFlipped(true);
+            else
+                monster.setFlipped(false);
+        }
+    }
+
     private void updateTimers() {
         for (Monster monster : monsters) {
             monster.updateKnockback();
+            if (monster instanceof EyeBat)
+                ((EyeBat) monster).updateShootTimer();
+            if (monster instanceof Elder)
+                ((Elder) monster).updateTimer();
         }
         tentacleMonsterSpawnTimer -= Gdx.graphics.getDeltaTime();
+        eyeBatMonsterSpawnTimer -= Gdx.graphics.getDeltaTime();
+        if (bossFightStarted)
+            zoneTimer += Gdx.graphics.getDeltaTime();
     }
 
     private void setTimers() {
         if (tentacleMonsterSpawnTimer <= 0f)
             tentacleMonsterSpawnTimer = 3f;
+
+        if (eyeBatMonsterSpawnTimer <= 0f)
+            eyeBatMonsterSpawnTimer = 10f;
+    }
+
+    private void checkZone() {
+        float radius = getZoneSize() / 2f;
+        float deltaX = player.getX() * player.getX();
+        float deltaY = player.getY() * player.getY();
+        if (deltaX + deltaY > radius * radius) {
+            player.reduceHp(1);
+        }
     }
 
     private void cleanMonsters() {
@@ -74,6 +124,8 @@ public class MonsterController {
                 removableMonsters.add(monster);
                 player.addKill(1);
                 xpDrops.add(new XpDrop(monster.getX(), monster.getY()));
+                if (monster instanceof Elder)
+                    elderIsDead = true;
             }
         }
         monsters.removeAll(removableMonsters);
@@ -91,9 +143,54 @@ public class MonsterController {
 
     private void moveMonsters() {
         for (Monster monster : monsters) {
-            Vector2 direction = getMovementDirection(monster);
-            monster.move(direction);
+            if (monster instanceof Elder) {
+                Elder elder = (Elder) monster;
+                Vector2 direction = getMovementDirection(elder, elder.getMoveTimer() > 0f);
+                ((Elder) monster).dash(direction);
+            }
+            else {
+                Vector2 direction = getMovementDirection(monster, false);
+                monster.move(direction);
+            }
         }
+    }
+
+    private void updateBullets() {
+        ArrayList<Bullet> removableBullets = new ArrayList<>();
+        for (Bullet bullet : bullets) {
+            bullet.move();
+            if (bullet.isOut())
+                removableBullets.add(bullet);
+        }
+        bullets.removeAll(removableBullets);
+    }
+
+    private void monsterAttack() {
+        for (Monster monster : monsters) {
+            if (monster instanceof EyeBat) {
+                shoot((EyeBat) monster);
+            }
+        }
+    }
+
+
+    private void shoot(EyeBat eyeBat) {
+        if (eyeBat.getShootTimer() > 0f)
+            return;
+        float angle = calculateAngle(eyeBat);
+        bullets.add(new Bullet(
+            eyeBat.getX(),
+            eyeBat.getY(),
+            angle,
+            false
+        ));
+        eyeBat.setShootTimer();
+    }
+
+    private float calculateAngle(EyeBat eyeBat) {
+        float playerX = player.getX() + Gdx.graphics.getWidth() / 2f;
+        float playerY = player.getY() + Gdx.graphics.getHeight() / 2f;
+        return MathUtils.atan2(playerY - eyeBat.getY(), playerX - eyeBat.getX()) * MathUtils.radiansToDegrees;
     }
 
     private void draw() {
@@ -113,12 +210,36 @@ public class MonsterController {
             );
             xpDrop.getSprite().draw(Main.getBatch());
         }
+        // drawing bullets
+        for (Bullet bullet : bullets) {
+            bullet.getSprite().setPosition(
+                bullet.getX() - player.getX(),
+                bullet.getY() - player.getY()
+            );
+            bullet.getSprite().draw(Main.getBatch());
+        }
+        // drawing zone
+        if (bossFightStarted && !elderIsDead) {
+            Sprite zoneSprite = new Sprite(GameAssetManager.getInstance().getZoneTexture());
+            zoneSprite.setSize(getZoneSize(), getZoneSize());
+            zoneSprite.setCenter(
+                Gdx.graphics.getWidth() / 2f - player.getX(),
+                Gdx.graphics.getHeight() / 2f - player.getY()
+            );
+            zoneSprite.draw(Main.getBatch());
+        }
+    }
+
+    private float getZoneSize() {
+        float size = GameAssetManager.getInstance().getBackgroundTexture().getWidth() * 1.5f;
+        size *= (1 - (zoneTimer / 120));
+        return size;
     }
 
     private void generateTentacleMonsters(float timePassed) {
         if (tentacleMonsterSpawnTimer > 0f)
             return;
-        for (int i = 0; i < timePassed / 30f; i++) {
+        for (int i = 0; i < timePassed / 90f; i++) {
             Monster tentacle = new Monster(MonsterType.TentacleMonster, 0, 0);
             setPosition(tentacle);
             monsters.add(tentacle);
@@ -126,7 +247,24 @@ public class MonsterController {
     }
 
     private void generateEyeBat(float timePassed) {
+        if (eyeBatMonsterSpawnTimer > 0f)
+            return;
+        if (timePassed < (float) (player.getGameDuration() * 60) / 4)
+            return;
+        for (int i = 0; i < (4 * player.getSurvivedTime() - player.getGameDuration() * 60 + 30) / 90; i++) {
+            Monster eyeBat = new EyeBat(MonsterType.EyeBat, 0, 0);
+            setPosition(eyeBat);
+            monsters.add(eyeBat);
+        }
+    }
 
+    private void generateElderMonster() {
+        if (player.getSurvivedTime() < (float) (player.getGameDuration() * 60) / 2 || bossFightStarted)
+            return;
+        Monster elder = new Elder(MonsterType.Elder, 0, 0);
+        setPosition(elder);
+        monsters.add(elder);
+        bossFightStarted = true;
     }
 
     private void generateTrees() {
@@ -150,15 +288,15 @@ public class MonsterController {
         }
     }
 
-    private Vector2 getMovementDirection(Monster monster) {
+    private Vector2 getMovementDirection(Monster monster, boolean isDashing) {
         float deltaX = player.getX() + Gdx.graphics.getWidth() / 2f - monster.getX();
         float deltaY = player.getY() + Gdx.graphics.getHeight() / 2f - monster.getY();
         Vector2 direction = new Vector2(deltaX, deltaY);
         float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         direction.x /= distance;
         direction.y /= distance;
-        direction.x *= monster.getType().getSpeed();
-        direction.y *= monster.getType().getSpeed();
+        direction.x *= isDashing? monster.getType().getDashSpeed(): monster.getType().getSpeed();
+        direction.y *= isDashing? monster.getType().getDashSpeed(): monster.getType().getSpeed();
         direction.x *= Gdx.graphics.getDeltaTime();
         direction.y *= Gdx.graphics.getDeltaTime();
         direction.x *= App.monsterMovementCoefficient;
@@ -208,5 +346,9 @@ public class MonsterController {
 
     public ArrayList<XpDrop> getXpDrops() {
         return xpDrops;
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
     }
 }

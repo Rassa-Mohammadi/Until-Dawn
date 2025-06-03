@@ -90,6 +90,7 @@ public class GameView implements Screen, InputProcessor {
         controller.updateGame();
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
     }
 

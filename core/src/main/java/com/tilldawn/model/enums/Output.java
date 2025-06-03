@@ -105,7 +105,7 @@ public enum Output {
     IncreaseLevel("Increases player level", "Augmente le niveau du joueur"),
     IncreaseHp("Increases player HP by one", "Augmente les PV du joueur d'un"),
     GoToBossFight("Go to boss fight", "Aller au combat de boss"),
-    IncreaseDamage("Increases weapon damage", "Augmente les dégâts des armes");
+    DestroyMonsters("destroys all monsters except elder and trees", "détruit tous les monstres sauf Elder et les arbres\n");
 
     private final String english;
     private final String french;

@@ -133,6 +133,10 @@ public class Player extends User {
         isRunning = running;
     }
 
+    public boolean isRunning() {
+        return isRunning;
+    }
+
     public int getMaxAmmo() {
         return maxAmmo;
     }
@@ -170,6 +174,9 @@ public class Player extends User {
     public void reduceHp(int amount) {
         if (invincibleTimer > 0f)
             return;
+        if (App.isSfxEnabled())
+            GameAssetManager.getInstance().getHitSfx().play(1f);
+        setInvincible();
         this.hp -= amount;
     }
 
@@ -203,7 +210,7 @@ public class Player extends User {
         this.autoReload = user.autoReload;
     }
 
-    public void setInvincible() {
+    private void setInvincible() {
         if (invincibleTimer > 0f)
             return;
         invincibleTimer = 2f;
