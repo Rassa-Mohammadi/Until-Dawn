@@ -31,7 +31,7 @@ public class GameController {
         worldController = new WorldController(player);
         playerController = new PlayerController(this, player);
         weaponController = new WeaponController(this, player);
-        monsterController = new MonsterController(player);
+        monsterController = new MonsterController(this, player);
         statusController = new StatusController(player);
     }
 
@@ -80,6 +80,10 @@ public class GameController {
         return monsterController;
     }
 
+    public GameView getView() {
+        return view;
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -108,7 +112,8 @@ public class GameController {
             player.addHp(1);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
-            // TODO: go to boss fight
+            player.setSurvivedTime(Math.max(player.getSurvivedTime(), (float) (player.getGameDuration() * 60) / 2));
+            monsterController.generateElderMonster();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) {
             monsterController.clearMonsters();

@@ -28,6 +28,7 @@ public class PauseMenuView implements Screen {
     private CheckBox blackAndWhiteCheckBox;
     private TextButton resumeButton;
     private TextButton giveUpButton;
+    private TextButton saveButton;
 
     public PauseMenuView(PauseMenuController pauseMenuController, GameView pausedGame, Skin skin) {
         this.controller = pauseMenuController;
@@ -38,6 +39,7 @@ public class PauseMenuView implements Screen {
         blackAndWhiteCheckBox.setChecked(Main.getMain().isBlackAndWhite());
         this.resumeButton = new TextButton(Output.Resume.getString(), skin);
         this.giveUpButton = new TextButton(Output.GiveUp.getString(), skin);
+        this.saveButton = new TextButton(Output.Save.getString(), skin);
         setListeners();
         this.controller.setView(this, pausedGame);
     }
@@ -54,10 +56,13 @@ public class PauseMenuView implements Screen {
 
         table.add(menuTitle).pad(30).row();
         Table cheatCodes = getCheatCodeTable();
-        table.add(cheatCodes).row();
         table.add(getAbilities()).padTop(20).pad(10).row();
+        table.add(cheatCodes).row();
         table.add(blackAndWhiteCheckBox).pad(10).row();
-        table.add(resumeButton).pad(10).row();
+        Table tempTable = new Table();
+        tempTable.add(resumeButton).pad(10);
+        tempTable.add(saveButton).pad(10);
+        table.add(tempTable).row();
         table.add(giveUpButton).pad(10).row();
 
         stage.addActor(table);
@@ -114,7 +119,7 @@ public class PauseMenuView implements Screen {
     }
 
     private Label getAbilities() {
-        StringBuilder labelMessage = new StringBuilder("Abilities:");
+        StringBuilder labelMessage = new StringBuilder();
         Player player = controller.getPausedGameView().getController().getPlayer();
         for (Ability ability : player.getAbilities()) {
             labelMessage.append("    ").append(ability.name());
@@ -148,6 +153,13 @@ public class PauseMenuView implements Screen {
                 if (App.isSfxEnabled())
                     GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
                 controller.giveUp();
+            }
+        });
+        saveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (App.isSfxEnabled())
+                    GameAssetManager.getInstance().getButtonClickSfx().play(1.0f);
             }
         });
     }

@@ -281,6 +281,10 @@ public class Player extends User {
         survivedTime += amount;
     }
 
+    public void setSurvivedTime(float survivedTime) {
+        this.survivedTime = survivedTime;
+    }
+
     public String getFormatedTime() {
         int seconds = (int) (survivedTime / 60);
         int minutes = (int) (survivedTime % 60);

@@ -23,6 +23,7 @@ public class ChangePasswordMenuController {
         Result result = User.isPasswordWeak(newPassword);
         if (result.hasError())
             return result;
+        App.getLoggedInUser().setPassword(newPassword);
         back();
         return new Result("Password changed successfully", Color.GREEN, false);
     }

@@ -1,6 +1,7 @@
 package com.tilldawn.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -8,6 +9,7 @@ import com.tilldawn.Main;
 import com.tilldawn.model.*;
 import com.tilldawn.model.client.Player;
 import com.tilldawn.model.enums.MonsterType;
+import com.tilldawn.model.enums.Output;
 import com.tilldawn.model.monsters.Elder;
 import com.tilldawn.model.monsters.EyeBat;
 import com.tilldawn.model.monsters.Monster;
@@ -17,18 +19,19 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MonsterController {
+    private GameController gameController;
     private Player player;
     private ArrayList<Monster> monsters;
     private ArrayList<XpDrop> xpDrops;
     private ArrayList<Bullet> bullets;
     private float tentacleMonsterSpawnTimer = 3f;
     private float eyeBatMonsterSpawnTimer = 10f;
-    private float elderMonsterTimer = 5f;
     private float zoneTimer = 0f;
     private boolean bossFightStarted = false;
     private boolean elderIsDead = false;
 
-    public MonsterController(Player player) {
+    public MonsterController(GameController gameController, Player player) {
+        this.gameController = gameController;
         this.player = player;
         this.monsters = new ArrayList<>();
         this.xpDrops = new ArrayList<>();
@@ -84,6 +87,16 @@ public class MonsterController {
             else
                 monster.setFlipped(false);
         }
+    }
+
+    public void generateElderMonster() {
+        if (player.getSurvivedTime() < (float) (player.getGameDuration() * 60) / 2 || bossFightStarted)
+            return;
+        Monster elder = new Elder(MonsterType.Elder, 0, 0);
+        setPosition(elder);
+        monsters.add(elder);
+        bossFightStarted = true;
+        gameController.getView().setMessage(new Result(Output.BossFightStarted.getString(), Color.RED));
     }
 
     private void updateTimers() {
@@ -256,15 +269,6 @@ public class MonsterController {
             setPosition(eyeBat);
             monsters.add(eyeBat);
         }
-    }
-
-    private void generateElderMonster() {
-        if (player.getSurvivedTime() < (float) (player.getGameDuration() * 60) / 2 || bossFightStarted)
-            return;
-        Monster elder = new Elder(MonsterType.Elder, 0, 0);
-        setPosition(elder);
-        monsters.add(elder);
-        bossFightStarted = true;
     }
 
     private void generateTrees() {

@@ -37,6 +37,7 @@ public enum Output {
     CheatCodes("Cheat codes", "Codes de triche"),
     Resume("Resume", "Reprendre"),
     GiveUp("Give Up", "Abandonner"),
+    Save("Save", "Sauvegarder"),
     Continue("Continue", "Continuer"),
     // titles
     RegisterMenu("Register Menu", "Menu d'inscription"),
@@ -97,6 +98,7 @@ public enum Output {
     Score("Score", "Score"),
     MaxSurvivedTime("Max Survived Time", "Temps de survie maximal"),
     SortedBy("Sorted by", "Trié par"),
+    BossFightStarted("Boss Fight Started", "Le combat contre le boss a commencé"),
     // check box
     BlackAndWhite("Black and white", "Noir et Blanc"),
     AutoReload("Auto Reload", "Rechargement Automatique"),

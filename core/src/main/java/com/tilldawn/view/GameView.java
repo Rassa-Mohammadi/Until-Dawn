@@ -11,18 +11,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Main;
 import com.tilldawn.controller.GameController;
+import com.tilldawn.model.Result;
 
 public class GameView implements Screen, InputProcessor {
     private final GameController controller;
     private Stage stage;
+    private Table table;
+    private Result message;
 
     public GameView(GameController controller, Skin skin) {
         this.controller = controller;
+        this.table = new Table();
+        this.message = new Result();
         this.controller.setView(this);
     }
 
@@ -79,6 +85,10 @@ public class GameView implements Screen, InputProcessor {
     public void show() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
+        table.setFillParent(true);
+        table.center();
+        table.add(message.getMessage()).padBottom(200);
+        stage.addActor(table);
     }
 
     @Override
@@ -89,6 +99,7 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().begin();
         controller.updateGame();
         Main.getBatch().end();
+        message.update(Gdx.graphics.getDeltaTime());
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().setShader(Main.getBatch().getShader());
         stage.draw();
@@ -117,5 +128,10 @@ public class GameView implements Screen, InputProcessor {
     @Override
     public void dispose() {
 
+    }
+
+    public void setMessage(Result newMessage) {
+        message.set(newMessage);
+        message.getMessage().setFontScale(3f);
     }
 }
